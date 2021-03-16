@@ -1,0 +1,51 @@
+version: "3.7"
+services:
+  database:
+    image: mysql:8.0.20
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: operational
+    # To open the client, run 'mysql -u root -p'
+
+  backend:
+    build: ./outwit-backend
+    depends_on:
+      - database
+    environment:
+      NODE_ENV: "${ENV}"
+      SERVER_PORT: 3000
+      DB_HOST: database
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: 123456
+      DB_DATABASE: operational
+    volumes:
+      - "./outwit-backend:/app"
+
+  frontend:
+    build: ./outwit-frontend
+    stdin_open: true
+    depends_on:
+      - backend
+    environment:
+      NODE_ENV: "${ENV}"
+    volumes:
+      - "./outwit-frontend:/app"
+
+  reverse-proxy:
+    build: "./outwit-reverse-proxy"
+    depends_on:
+      - backend
+      - frontend
+    ports:
+      - "80:80"
+      - "443:443"
+
+volumes:
+  db_data: {}
+
+# ENV is either "production" or "development". Remember to set it when running docker-compose.

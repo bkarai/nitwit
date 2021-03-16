@@ -1,0 +1,9 @@
+[submodule "outwit-reverse-proxy"]
+	path = outwit-reverse-proxy
+	url = git@github.com:bkarai/outwit-reverse-proxy.git
+[submodule "outwit-backend"]
+	path = outwit-backend
+	url = git@github.com:bkarai/outwit-backend.git
+[submodule "outwit-frontend"]
+	path = outwit-frontend
+	url = git@github.com:bkarai/outwit-frontend.git
