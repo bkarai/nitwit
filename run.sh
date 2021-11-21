@@ -36,7 +36,6 @@ function is_linux() {
 ENV=${1:-development};
 
 log "Running app in ${ENV} mode";
-log "Using configuration for OS: ${OS_NAME}}";
 
 if [[ is_mac ]]; then
     OS_FILE_NAME_PART="mac";
@@ -47,6 +46,7 @@ else
     return 1;
 fi
 
+log "Using configuration for ${OS_FILE_NAME_PART}";
 load_env_file ".${OS_FILE_NAME_PART}.${ENV}.env";
 
 docker-compose up ${@:2};
