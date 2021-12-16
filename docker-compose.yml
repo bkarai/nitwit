@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   database:
-    image: mariadb:10.7
+    image: "${DB_IMAGE}"
     command: --default-authentication-plugin=mysql_native_password
     volumes:
       - db_data:/var/lib/mysql
