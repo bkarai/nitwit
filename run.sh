@@ -49,4 +49,4 @@ fi
 log "Using configuration for ${OS_FILE_NAME_PART}";
 load_env_file ".${OS_FILE_NAME_PART}.${ENV}.env";
 
-docker-compose up ${@:2};
+docker-compose ${@:2};
