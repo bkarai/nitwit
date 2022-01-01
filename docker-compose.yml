@@ -31,6 +31,8 @@ services:
     stdin_open: true
     depends_on:
       - backend
+    ports:
+      - "3000:3000"
     environment:
       NODE_ENV: "${ENV}"
     volumes:
