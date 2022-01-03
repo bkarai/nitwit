@@ -1,0 +1,6 @@
+.loading-screen {
+  margin: auto;
+  align-items: center;
+  display: flex;
+  overflow: hidden;
+};

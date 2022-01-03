@@ -1,0 +1,28 @@
+{
+  "name": "outwit-backend",
+  "version": "1.0.0",
+  "description": "Backend (API) for Outwit",
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "dev": "yarn install && nodemon src/server.js --exec 'yarn run lint && node'",
+    "start": "node src/server.js",
+    "lint": "eslint ./src",
+    "clean": "rm -rf node_modules"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.17.2",
+    "express-winston": "^4.0.5",
+    "is-valid-port": "^1.0.0",
+    "mysql": "^2.18.1",
+    "uuid": "^8.3.1",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.5.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.3",
+    "nodemon": "^2.0.15"
+  }
+}
