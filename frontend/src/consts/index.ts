@@ -1,6 +1,3 @@
-// Cookies
-export const USER_ACCESS_KEY_COOKIE = 'userAccessKey';
-
 // API
 export const API_PREFIX = '/api';
 

@@ -1,6 +1,5 @@
 export { default as Layout } from './Layout';
 export { default as LoadingScreen } from './LoadingScreen';
-export { default as NameModal } from './NameModal';
 export { default as Square } from './Square';
 export { default as NewGameButton } from './NewGameButton';
 export { White as WhitePieceIcon } from './PieceIcon';

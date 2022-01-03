@@ -4,17 +4,24 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import toastr from 'toastr';
 
-import GameStatus from './GameStatus';
 import WaitingForPlayer from './WaitingForPlayer';
 import { State, Player } from 'store';
-
 import { updateGameMeta, finishTurn } from 'actions';
 import useGameReady from './UseGameReady';
 import usePollForGameData from './UsePollForGameData';
 import { API_PREFIX } from 'consts';
 import { LoadingScreen, Timeline, GameBoard } from 'components';
 import { LoadingWrapper } from './styles';
-import { getTimelinePosition } from './GameStatus/util';
+
+function getTimelinePosition(hasWinner: boolean, ready: boolean) {
+  if (hasWinner) {
+    return 'game-ended';
+  } else if (ready) {
+    return 'game-in-progress';
+  } else {
+    return 'p1-joined';
+  }
+};
 
 const WAIT_FOR_JOINER_POLL_SECONDS = 5;
 
@@ -90,11 +97,9 @@ function Game({
         </LoadingWrapper>) :
         (
           <>
-            {isReady ? (
-              <>
-                <GameStatus />
-                <GameBoard />
-              </>
+            {isReady ?
+            (
+              <GameBoard />
             ) : (
               <WaitingForPlayer matchAccessKey={matchAccessKey} />
             )
