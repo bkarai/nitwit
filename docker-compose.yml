@@ -12,7 +12,7 @@ services:
     # To open the client, run 'mysql -u root -p'
 
   backend:
-    build: ./outwit-backend
+    build: ./backend
     depends_on:
       - database
     environment:
@@ -24,10 +24,10 @@ services:
       DB_PASSWORD: 123456
       DB_DATABASE: operational
     volumes:
-      - "./outwit-backend:/app"
+      - "./backend:/app"
 
   frontend:
-    build: ./outwit-frontend
+    build: ./frontend
     stdin_open: true
     depends_on:
       - backend
@@ -36,10 +36,10 @@ services:
     environment:
       NODE_ENV: "${ENV}"
     volumes:
-      - "./outwit-frontend:/app"
+      - "./frontend:/app"
 
   reverse-proxy:
-    build: "./outwit-reverse-proxy"
+    build: "./proxy"
     depends_on:
       - backend
       - frontend
