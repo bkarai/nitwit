@@ -54,23 +54,17 @@ export default function Chip({
   onClick,
   selectedPiece,
 }: ChipProps) {
-  const pieceCharacterObject = getPieceSingleton(pieceCharacter as PieceString)
-  if (pieceCharacterObject.isWhite() && pieceCharacterObject.isStandard()) {
-    return <StandardChip isSelected={isSelected} onClick={onClick} variant="white" />
-  } else if (pieceCharacterObject.isBlack() && pieceCharacterObject.isStandard()) {
-    return <StandardChip isSelected={isSelected} onClick={onClick} variant="black" />
-  } else if (pieceCharacterObject.isWhite() && pieceCharacterObject.isPower()) {
-    return <PowerChip isSelected={isSelected} onClick={onClick} variant="white" />
-  } else if (pieceCharacterObject.isBlack() && pieceCharacterObject.isPower()) {
-    return <PowerChip isSelected={isSelected} onClick={onClick} variant="black" />
+  const pieceCharacterObject = getPieceSingleton(pieceCharacter as PieceString);
+
+  if (pieceCharacterObject.isEmpty()) {
+    return null;
   } else if (pieceCharacterObject.isMove()) {
     const selectedPieceObject = getPieceSingleton(selectedPiece as PieceString);
-    if (selectedPieceObject.isPower()) {
-      return <PowerChip isSelected={false} onClick={onClick} variant="move" />
-    } else {
-      return <StandardChip isSelected={false} onClick={onClick} variant="move" />
-    }
+    const Component = selectedPieceObject.isPower() ? PowerChip : StandardChip;
+    return <Component isSelected={false} onClick={onClick} variant='move'/>
   } else {
-    return null;
+    const Component = pieceCharacterObject.isPower() ? PowerChip : StandardChip;
+    const variant = pieceCharacterObject.isBlack() ? 'black' : 'white';
+    return <Component isSelected={isSelected} onClick={onClick} variant={variant}/>
   }
 }

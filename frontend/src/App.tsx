@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 
 import './App.css';
+import 'toastr/build/toastr.min.css';
 import pages from './pages';
 
 export default function App() {
