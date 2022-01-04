@@ -28,21 +28,19 @@ const variantMap = {
 
 function StandardChip({
   variant,
-  onClick,
   isSelected,
 }: StandardChipProps) {
   return (
-    <OuterCircle onClick={onClick} background={variantMap[variant]} opacity={isSelected ? '0.5' : 'initial'}/>
+    <OuterCircle background={variantMap[variant]} opacity={isSelected ? '0.5' : 'initial'}/>
   );
 }
 
 function PowerChip({
   variant,
-  onClick,
   isSelected,
 }: PowerChipProps) {
   return (
-    <OuterCircle onClick={onClick} background={variantMap[variant]} opacity={isSelected ? '0.5' : 'initial'}>
+    <OuterCircle background={variantMap[variant]} opacity={isSelected ? '0.5' : 'initial'}>
       <InnerCircle />
     </OuterCircle>
   );
@@ -61,10 +59,10 @@ export default function Chip({
   } else if (pieceCharacterObject.isMove()) {
     const selectedPieceObject = getPieceSingleton(selectedPiece as PieceString);
     const Component = selectedPieceObject.isPower() ? PowerChip : StandardChip;
-    return <Component isSelected={false} onClick={onClick} variant='move'/>
+    return <div style={{ height: '100%', width: '100%' }} onClick={onClick}> <Component isSelected={false} variant='move'/> </div>;
   } else {
     const Component = pieceCharacterObject.isPower() ? PowerChip : StandardChip;
     const variant = pieceCharacterObject.isBlack() ? 'black' : 'white';
-    return <Component isSelected={isSelected} onClick={onClick} variant={variant}/>
+    return <div style={{ width: '100%', height: '100%' }} onClick={onClick}> <Component isSelected={isSelected} variant={variant}/> </div>;
   }
 }

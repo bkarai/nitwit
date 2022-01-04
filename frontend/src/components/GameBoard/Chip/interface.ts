@@ -12,7 +12,6 @@ export interface ChipWrapperProps {
 
 export interface StandardChipProps {
   variant: 'white' | 'black' | 'move',
-  onClick: onClickHandler,
   isSelected: boolean,
 };
 
