@@ -1,6 +1,6 @@
 import React from "react";
 
-type onClickHandler = (event: React.MouseEvent<HTMLElement>) => void;
+type onMouseEvent = (event: React.MouseEvent<HTMLElement>) => void;
 
 export interface ChipWrapperProps {
   pieces: string,
@@ -21,7 +21,8 @@ export interface ChipProps {
   pieceCharacter: string,
   isSelected: boolean,
   selectedPiece: null | string,
-  onClick: onClickHandler,
+  onClick: onMouseEvent,
+  onHover: onMouseEvent,
 };
 
 export interface OuterCircleProps {

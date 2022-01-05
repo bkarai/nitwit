@@ -1,9 +1,8 @@
 import {
   Piece,
-  getPieceSingleton,
   PieceString,
-  MOVE,
-  EMPTY
+  MOVE_PIECE,
+  EMPTY_PIECE
 } from '../Piece';
 
 export class Board {
@@ -80,13 +79,13 @@ export class Board {
         potentialRow = potentialRow + rowVector;
         potentialColumn = potentialColumn + columnVector;
         if (pieceMovingFrom.isPower()) {
-          this.setPiece(moveRow, moveColumn, getPieceSingleton(MOVE));
+          this.setPiece(moveRow, moveColumn, MOVE_PIECE);
         }
       }
     }
 
     if ((moveRow !== null) && (moveColumn !== null)) {
-      this.setPiece(moveRow, moveColumn, getPieceSingleton(MOVE));
+      this.setPiece(moveRow, moveColumn, MOVE_PIECE);
     }
   }
 
@@ -119,7 +118,7 @@ export class Board {
   // Public Methods
   setPiece(row: number, column: number, piece: Piece): void {
     const index = this.getIndex(row, column);
-    this.board = this.board.substring(0,index) + piece.serialize() + this.board.substring(index+1);
+    this.board = this.board.substring(0,index) + piece.getType() + this.board.substring(index+1);
   }
 
   getPiece(row: number, column: number): Piece {
@@ -140,7 +139,7 @@ export class Board {
   }
 
   clearMoves(): void {
-    this.board = this.board.replaceAll(MOVE, EMPTY);
+    this.board = this.board.replaceAll(MOVE_PIECE.getType(), EMPTY_PIECE.getType());
   }
 
   getWinner(): null | 'white' | 'black' {

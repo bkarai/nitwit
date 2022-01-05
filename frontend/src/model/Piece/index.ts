@@ -8,11 +8,28 @@ export const BLACK_POWER = 'B';
 export type PieceString = typeof MOVE | typeof EMPTY | typeof WHITE_STANDARD | typeof WHITE_POWER | typeof BLACK_STANDARD | typeof BLACK_POWER;
 
 export class Piece {
-
   type: PieceString;
+  selected?: boolean;
+  hovered?: boolean;
+  row?: number;
+  column?: number;
 
-  constructor(type: PieceString) {
+  constructor(type: PieceString, {
+    selected,
+    hovered,
+    row,
+    column,
+  }: {
+    selected?: boolean;
+    hovered?: boolean;
+    row?: number;
+    column?: number;
+  } = {}) {
     this.type = type;
+    this.selected = selected;
+    this.hovered = hovered;
+    this.row = row;
+    this.column = column;
   }
 
   isWhite(): boolean {
@@ -39,7 +56,21 @@ export class Piece {
     return ((this.type === WHITE_POWER) || (this.type === BLACK_POWER));
   }
 
-  serialize(): string {
+  isHovered(): boolean {
+    if (this.hovered === undefined) {
+      throw new Error('Attempting to check hovered state of piece but a hovered state was not provided');
+    }
+    return this.hovered;
+  }
+
+  isSelected(): boolean {
+    if (this.selected === undefined) {
+      throw new Error('Attempting to check selected state of piece but a selected state was not provided');
+    }
+    return this.selected;
+  };
+
+  getType(): string {
     return this.type;
   }
 }
@@ -50,22 +81,3 @@ export const WHITE_STANDARD_PIECE = new Piece(WHITE_STANDARD);
 export const WHITE_POWER_PIECE = new Piece(WHITE_POWER);
 export const BLACK_STANDARD_PIECE = new Piece(BLACK_STANDARD);
 export const BLACK_POWER_PIECE = new Piece(BLACK_POWER);
-
-export function getPieceSingleton(type: PieceString): Piece {
-  switch(type){
-    case WHITE_STANDARD:
-      return WHITE_STANDARD_PIECE;
-    case WHITE_POWER:
-      return WHITE_POWER_PIECE;
-    case BLACK_STANDARD:
-      return BLACK_STANDARD_PIECE;
-    case BLACK_POWER:
-      return BLACK_POWER_PIECE;
-    case MOVE:
-      return MOVE_PIECE;
-    case EMPTY:
-      return EMPTY_PIECE;
-    default:
-      throw new Error(`Invalid piece: ${type}`);
-  }
-}

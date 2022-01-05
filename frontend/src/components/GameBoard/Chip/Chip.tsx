@@ -10,8 +10,8 @@ import {
 } from './styles';
 
 import {
-  getPieceSingleton,
   PieceString,
+  Piece,
 } from 'model/Piece';
 
 import {
@@ -50,19 +50,20 @@ export default function Chip({
   pieceCharacter,
   isSelected,
   onClick,
+  onHover,
   selectedPiece,
 }: ChipProps) {
-  const pieceCharacterObject = getPieceSingleton(pieceCharacter as PieceString);
+  const pieceCharacterObject = new Piece(pieceCharacter as PieceString);
 
   if (pieceCharacterObject.isEmpty()) {
     return null;
   } else if (pieceCharacterObject.isMove()) {
-    const selectedPieceObject = getPieceSingleton(selectedPiece as PieceString);
+    const selectedPieceObject = new Piece(selectedPiece as PieceString);
     const Component = selectedPieceObject.isPower() ? PowerChip : StandardChip;
-    return <div style={{ height: '100%', width: '100%' }} onClick={onClick}> <Component isSelected={false} variant='move'/> </div>;
+    return <div style={{ height: '100%', width: '100%' }} onClick={onClick} onMouseOver={onHover}> <Component isSelected={false} variant='move'/> </div>;
   } else {
     const Component = pieceCharacterObject.isPower() ? PowerChip : StandardChip;
     const variant = pieceCharacterObject.isBlack() ? 'black' : 'white';
-    return <div style={{ width: '100%', height: '100%' }} onClick={onClick}> <Component isSelected={isSelected} variant={variant}/> </div>;
+    return <div style={{ width: '100%', height: '100%' }} onClick={onClick} onMouseOver={onHover}> <Component isSelected={isSelected} variant={variant}/> </div>;
   }
 }

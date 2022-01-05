@@ -1,8 +1,7 @@
 import { Board } from 'model/Board';
 import {
   Piece,
-  getPieceSingleton,
-  EMPTY,
+  EMPTY_PIECE,
 } from 'model/Piece';
 
 import {
@@ -79,7 +78,7 @@ function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): St
       return state;
     } else {
       board.clearMoves();
-      board.setPiece(previouslySelectedRow, previouslySelectedColumn, getPieceSingleton(EMPTY));
+      board.setPiece(previouslySelectedRow, previouslySelectedColumn, EMPTY_PIECE);
       board.setPiece(nowSelectedRow, nowSelectedColumn, previouslySelectedPiece);
       return Object.assign({}, state, {
         board: board.serialize(),
