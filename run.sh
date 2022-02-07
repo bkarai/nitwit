@@ -15,10 +15,10 @@ function log() {
 }
 
 function is_os_type() {
-    if [ $1 == $(uname) ]; then
-        return 1;
-    else
+    if [[ "$1" == "$OS_TYPE" ]]; then
         return 0;
+    else
+        return 1;
     fi
 }
 
@@ -37,9 +37,9 @@ ENV="development";
 
 log "Running app in ${ENV} mode";
 
-if [[ is_mac ]]; then
+if is_mac; then
     OS_FILE_NAME_PART="mac";
-elif [[ is_linux ]]; then
+elif is_linux; then
     OS_FILE_NAME_PART="linux";
 else
     log "You are on an unsupported platform";
