@@ -1,83 +1,86 @@
-export const MOVE = 'm';
-export const EMPTY = 'x';
-export const WHITE_STANDARD = 'w';
-export const WHITE_POWER = 'W';
-export const BLACK_STANDARD = 'b';
-export const BLACK_POWER = 'B';
+import { Player } from '../Player';
+import { Spot } from '../Spot';
 
-export type PieceString = typeof MOVE | typeof EMPTY | typeof WHITE_STANDARD | typeof WHITE_POWER | typeof BLACK_STANDARD | typeof BLACK_POWER;
+export enum PieceType {
+  MOVE,
+  STANDARD,
+  POWER,
+};
+
+export enum PieceColor {
+  WHITE,
+  BLACK,
+}
 
 export class Piece {
-  type: PieceString;
-  selected?: boolean;
-  hovered?: boolean;
-  row?: number;
-  column?: number;
+  readonly type: PieceType;
+  readonly color: PieceColor | null;
+  player: Player | null;
+  spot: Spot;
 
-  constructor(type: PieceString, {
-    selected,
-    hovered,
-    row,
-    column,
-  }: {
-    selected?: boolean;
-    hovered?: boolean;
-    row?: number;
-    column?: number;
-  } = {}) {
+  constructor(type: PieceType, spot: Spot, color?: PieceColor) {
     this.type = type;
-    this.selected = selected;
-    this.hovered = hovered;
-    this.row = row;
-    this.column = column;
+    this.setSpot(spot);
+    this.color = color || null;
+    this.player = null;
   }
 
-  isWhite(): boolean {
-    return ((this.type === WHITE_STANDARD) || (this.type === WHITE_POWER));
+  setSpot(spot: Spot): void {
+    this.spot = spot;
+    this.spot.setPiece(this);
   }
 
-  isBlack(): boolean {
-    return ((this.type === BLACK_STANDARD) || (this.type === BLACK_POWER));
+  getSpot(): Spot {
+    return this.spot;
   }
 
   isMove(): boolean {
-    return this.type === MOVE;
-  }
-
-  isEmpty(): boolean {
-    return this.type === EMPTY;
+    return this.type === PieceType.MOVE;
   }
 
   isStandard(): boolean {
-    return ((this.type === WHITE_STANDARD) || (this.type === BLACK_STANDARD));
+    return this.type === PieceType.STANDARD;
   }
 
   isPower(): boolean {
-    return ((this.type === WHITE_POWER) || (this.type === BLACK_POWER));
+    return this.type === PieceType.POWER;
   }
 
-  isHovered(): boolean {
-    if (this.hovered === undefined) {
-      throw new Error('Attempting to check hovered state of piece but a hovered state was not provided');
+  setPlayer(player: Player): void {
+    this.player = player;
+  }
+
+  getPlayer(): Player | null {
+    return this.player;
+  }
+
+  isWhite(): boolean {
+    return this.color === PieceColor.WHITE;
+  }
+
+  isBlack(): boolean {
+    return this.color === PieceColor.BLACK;
+  }
+
+  serialize(): string {
+    if (this.isMove()) {
+      return 'm';
+    } else if (this.isWhite()) {
+      if (this.isStandard()) {
+        return 'w';
+      } else {
+        return 'W';
+      }
+    } else {
+      if (this.isStandard()) {
+        return 'b';
+      } else {
+        return 'B';
+      }
     }
-    return this.hovered;
   }
 
-  isSelected(): boolean {
-    if (this.selected === undefined) {
-      throw new Error('Attempting to check selected state of piece but a selected state was not provided');
-    }
-    return this.selected;
-  };
-
-  getType(): string {
-    return this.type;
+  destroy(): void {
+    this.spot.removePiece();
   }
-}
-
-export const MOVE_PIECE = new Piece(MOVE);
-export const EMPTY_PIECE = new Piece(EMPTY);
-export const WHITE_STANDARD_PIECE = new Piece(WHITE_STANDARD);
-export const WHITE_POWER_PIECE = new Piece(WHITE_POWER);
-export const BLACK_STANDARD_PIECE = new Piece(BLACK_STANDARD);
-export const BLACK_POWER_PIECE = new Piece(BLACK_POWER);
+};
