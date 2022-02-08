@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import { connect } from 'react-redux';
 import Chip from './Chip'
-import { selectPiece, hoverPiece } from 'actions';
-import { Board } from 'model/Board';
+import { selectPiece } from 'actions';
+import { Game } from 'model';
 
 import {
   ChipWrapperProps
@@ -15,19 +15,19 @@ function ChipWrapper({
   selectedPiece,
   dispatch,
 }: ChipWrapperProps) {
-  const board = new Board(pieces);
-  const pieceCharacter = board.getPiece(rowIndex, columnIndex).getType();
+  const board = new Game(pieces);
+  const pieceCharacter = board.getSpot(rowIndex, columnIndex).serialize();
 
   let selectedPieceObject = null;
   if ((selectedPiece.row !== null) && (selectedPiece.column !== null)) {
-    selectedPieceObject = board.getPiece(selectedPiece.row, selectedPiece.column).getType();
+    selectedPieceObject = board.getSpot(selectedPiece.row, selectedPiece.column).serialize();
   }
   const isSelected = selectedPiece.row === rowIndex && selectedPiece.column === columnIndex;
 
   const onClick = useCallback(() => dispatch(selectPiece({ row: rowIndex, column: columnIndex })),
   [dispatch, rowIndex, columnIndex]);
 
-  const onHover = useCallback(() => dispatch(hoverPiece({ row: rowIndex, column: columnIndex })), [dispatch, rowIndex, columnIndex]);
+  const onHover = useCallback(() => {}, []);
 
   return (
     <Chip onClick={onClick} onHover={onHover} pieceCharacter={pieceCharacter} isSelected={isSelected} selectedPiece={selectedPieceObject}/>

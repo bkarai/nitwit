@@ -1,83 +1,102 @@
-export const MOVE = 'm';
-export const EMPTY = 'x';
-export const WHITE_STANDARD = 'w';
-export const WHITE_POWER = 'W';
-export const BLACK_STANDARD = 'b';
-export const BLACK_POWER = 'B';
+import { Player } from '../Player';
+import { Spot } from '../Spot';
 
-export type PieceString = typeof MOVE | typeof EMPTY | typeof WHITE_STANDARD | typeof WHITE_POWER | typeof BLACK_STANDARD | typeof BLACK_POWER;
+export enum PieceType {
+  STANDARD,
+  POWER,
+};
 
-export class Piece {
-  type: PieceString;
-  selected?: boolean;
-  hovered?: boolean;
-  row?: number;
-  column?: number;
+export enum PieceColor {
+  WHITE,
+  BLACK,
+}
 
-  constructor(type: PieceString, {
-    selected,
-    hovered,
-    row,
-    column,
-  }: {
-    selected?: boolean;
-    hovered?: boolean;
-    row?: number;
-    column?: number;
-  } = {}) {
+export class BasePiece {
+  readonly type: PieceType;
+  readonly color: PieceColor | null;
+
+  constructor(type: PieceType, color: PieceColor | null = null) {
     this.type = type;
-    this.selected = selected;
-    this.hovered = hovered;
-    this.row = row;
-    this.column = column;
-  }
-
-  isWhite(): boolean {
-    return ((this.type === WHITE_STANDARD) || (this.type === WHITE_POWER));
-  }
-
-  isBlack(): boolean {
-    return ((this.type === BLACK_STANDARD) || (this.type === BLACK_POWER));
-  }
-
-  isMove(): boolean {
-    return this.type === MOVE;
-  }
-
-  isEmpty(): boolean {
-    return this.type === EMPTY;
+    this.color = color;
   }
 
   isStandard(): boolean {
-    return ((this.type === WHITE_STANDARD) || (this.type === BLACK_STANDARD));
+    return this.type === PieceType.STANDARD;
   }
 
   isPower(): boolean {
-    return ((this.type === WHITE_POWER) || (this.type === BLACK_POWER));
+    return this.type === PieceType.POWER;
   }
 
-  isHovered(): boolean {
-    if (this.hovered === undefined) {
-      throw new Error('Attempting to check hovered state of piece but a hovered state was not provided');
+  isWhite(): boolean {
+    return this.color === PieceColor.WHITE;
+  }
+
+  isBlack(): boolean {
+    return this.color === PieceColor.BLACK;
+  }
+
+  serialize(): string {
+    if (this.isWhite()) {
+      if (this.isStandard()) {
+        return 'w';
+      } else {
+        return 'W';
+      }
+    } else {
+      if (this.isStandard()) {
+        return 'b';
+      } else {
+        return 'B';
+      }
     }
-    return this.hovered;
   }
 
-  isSelected(): boolean {
-    if (this.selected === undefined) {
-      throw new Error('Attempting to check selected state of piece but a selected state was not provided');
+  static deserialize(data: string): BasePiece | null {
+    switch(data) {
+      case 'w':
+        return new BasePiece(PieceType.STANDARD, PieceColor.WHITE);
+      case 'W':
+        return new BasePiece(PieceType.POWER, PieceColor.WHITE);
+      case 'b':
+        return new BasePiece(PieceType.STANDARD, PieceColor.BLACK);
+      case 'B':
+        return new BasePiece(PieceType.POWER, PieceColor.BLACK);
+      default:
+        return null;
     }
-    return this.selected;
-  };
-
-  getType(): string {
-    return this.type;
   }
-}
+};
 
-export const MOVE_PIECE = new Piece(MOVE);
-export const EMPTY_PIECE = new Piece(EMPTY);
-export const WHITE_STANDARD_PIECE = new Piece(WHITE_STANDARD);
-export const WHITE_POWER_PIECE = new Piece(WHITE_POWER);
-export const BLACK_STANDARD_PIECE = new Piece(BLACK_STANDARD);
-export const BLACK_POWER_PIECE = new Piece(BLACK_POWER);
+export class Piece extends BasePiece {
+  player: Player | null;
+  spot: Spot;
+
+  constructor(type: PieceType, spot: Spot, color: PieceColor | null = null) {
+    super(type, color);
+    this.setSpot(spot);
+    this.player = null;
+  }
+
+  setSpot(spot: Spot): void {
+    this.spot?.removePiece();
+    this.spot = spot;
+    this.spot.setPiece(this);
+  }
+
+  getSpot(): Spot {
+    return this.spot;
+  }
+
+  setPlayer(player: Player): void {
+    this.player = player;
+  }
+
+  getPlayer(): Player | null {
+    return this.player;
+  }
+
+  destroy(): void {
+    this.spot.removePiece();
+  }
+};
