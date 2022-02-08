@@ -2,7 +2,6 @@ import { Player } from '../Player';
 import { Spot } from '../Spot';
 
 export enum PieceType {
-  MOVE,
   STANDARD,
   POWER,
 };
@@ -12,30 +11,13 @@ export enum PieceColor {
   BLACK,
 }
 
-export class Piece {
+export class BasePiece {
   readonly type: PieceType;
   readonly color: PieceColor | null;
-  player: Player | null;
-  spot: Spot;
 
-  constructor(type: PieceType, spot: Spot, color?: PieceColor) {
+  constructor(type: PieceType, color: PieceColor | null = null) {
     this.type = type;
-    this.setSpot(spot);
-    this.color = color || null;
-    this.player = null;
-  }
-
-  setSpot(spot: Spot): void {
-    this.spot = spot;
-    this.spot.setPiece(this);
-  }
-
-  getSpot(): Spot {
-    return this.spot;
-  }
-
-  isMove(): boolean {
-    return this.type === PieceType.MOVE;
+    this.color = color;
   }
 
   isStandard(): boolean {
@@ -44,14 +26,6 @@ export class Piece {
 
   isPower(): boolean {
     return this.type === PieceType.POWER;
-  }
-
-  setPlayer(player: Player): void {
-    this.player = player;
-  }
-
-  getPlayer(): Player | null {
-    return this.player;
   }
 
   isWhite(): boolean {
@@ -63,9 +37,7 @@ export class Piece {
   }
 
   serialize(): string {
-    if (this.isMove()) {
-      return 'm';
-    } else if (this.isWhite()) {
+    if (this.isWhite()) {
       if (this.isStandard()) {
         return 'w';
       } else {
@@ -78,6 +50,50 @@ export class Piece {
         return 'B';
       }
     }
+  }
+
+  static deserialize(data: string): BasePiece | null {
+    switch(data) {
+      case 'w':
+        return new BasePiece(PieceType.STANDARD, PieceColor.WHITE);
+      case 'W':
+        return new BasePiece(PieceType.POWER, PieceColor.WHITE);
+      case 'b':
+        return new BasePiece(PieceType.STANDARD, PieceColor.BLACK);
+      case 'B':
+        return new BasePiece(PieceType.POWER, PieceColor.BLACK);
+      default:
+        return null;
+    }
+  }
+};
+
+export class Piece extends BasePiece {
+  player: Player | null;
+  spot: Spot;
+
+  constructor(type: PieceType, spot: Spot, color: PieceColor | null = null) {
+    super(type, color);
+    this.setSpot(spot);
+    this.player = null;
+  }
+
+  setSpot(spot: Spot): void {
+    this.spot?.removePiece();
+    this.spot = spot;
+    this.spot.setPiece(this);
+  }
+
+  getSpot(): Spot {
+    return this.spot;
+  }
+
+  setPlayer(player: Player): void {
+    this.player = player;
+  }
+
+  getPlayer(): Player | null {
+    return this.player;
   }
 
   destroy(): void {

@@ -2,11 +2,9 @@ import {
   ACTION_FINISH_TURN,
   ACTION_SELECT_PIECE,
   ACTION_UPDATE_GAME_META,
-  ACTION_HOVER_PIECE,
 } from 'consts';
 
 import selectPieceReducer from './selectPieceReducer';
-import { hoverPieceReducer } from './hoverPieceReducer';
 
 import { 
   State
@@ -43,9 +41,6 @@ export default function rootReducer(state: State = initialState, action: { type:
   }
   if (action.type === ACTION_FINISH_TURN) {
     return {...state, userMadeMove: false}
-  }
-  if (action.type === ACTION_HOVER_PIECE) {
-    return hoverPieceReducer(state, action.payload);
   }
   return state;
 };

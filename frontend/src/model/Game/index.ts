@@ -1,6 +1,12 @@
-import { Piece, PieceColor, PieceType } from '../Piece';
-import { Spot } from '../Spot';
-import { Player } from '../Player';
+import {
+  BasePiece,
+  BaseSpot,
+  Piece,
+  PieceColor,
+  PieceType,
+  Player,
+  Spot
+} from '../';
 
 const INITIAL_BOARD_STATE =
 `\
@@ -46,7 +52,7 @@ export class Game {
       let piece;
       switch(pieceCharacter) {
         case 'm':
-          piece = new Piece(PieceType.MOVE, spot);
+          spot.setIsPotentialMove();
           break;
         case 'w':
           piece = new Piece(PieceType.STANDARD, spot, PieceColor.WHITE);
@@ -85,11 +91,11 @@ export class Game {
     return !!this.getSpot(row, column).getPiece()?.isPower();
   }
 
-  canBePlacedOnTile(piece: Piece): boolean {
+  canMoveToSpot(piece: Piece, spot: Spot): boolean {
     if (piece.isWhite()) {
-      return !piece.getSpot()?.isPartOfBlackGoal();
+      return !spot.isPartOfBlackGoal();
     } else {
-      return !piece.getSpot()?.isPartOfWhiteGoal();
+      return !spot.isPartOfWhiteGoal();
     }
   }
 
@@ -121,7 +127,7 @@ export class Game {
       const pieceMovingToNotInGoal = !spotMovingTo.isPartOfGoal();
       const movingOutOfGoal = pieceMovingFromInGoal && pieceMovingToNotInGoal;
 
-      if (!spotMovingTo.isEmpty() || !this.canBePlacedOnTile(pieceMovingFrom) || movingOutOfGoal) {
+      if (!spotMovingTo.isEmpty() || !this.canMoveToSpot(pieceMovingFrom, spotMovingTo) || movingOutOfGoal) {
         break;
       } else {
         moveRow = potentialRow;
@@ -129,13 +135,13 @@ export class Game {
         potentialRow = potentialRow + rowVector;
         potentialColumn = potentialColumn + columnVector;
         if (pieceMovingFrom.isPower()) {
-          this.pieces.push(new Piece(PieceType.MOVE, spotMovingTo))
+          spotMovingTo.setIsPotentialMove();
         }
       }
     }
 
-    if ((moveRow !== null) && (moveColumn !== null)) {
-      this.pieces.push(new Piece(PieceType.MOVE, this.getSpot(moveRow, moveColumn)))
+    if ((moveRow !== null) && (moveColumn !== null) && !pieceMovingFrom.isPower()) {
+      this.getSpot(moveRow, moveColumn).setIsPotentialMove();
     }
   }
 
@@ -165,6 +171,10 @@ export class Game {
     return true;
   }
 
+  forEachSpot(callbackFn: (spot: Spot) => void) {
+    this.spots.forEach((spotRow) => spotRow.forEach(callbackFn));
+  }
+
   // Public Methods
   getPiece(row: number, column: number): Piece | null {
     return this.getSpot(row, column).getPiece();
@@ -184,14 +194,7 @@ export class Game {
   }
 
   clearMoves(): void {
-    this.pieces = this.pieces.filter((piece) => {
-      if (piece.isMove()) {
-        piece.destroy();
-        return false;
-      } else {
-        return true;
-      }
-    });
+    this.forEachSpot((spot) => spot.clearIsPotentialMove());
   }
 
   getPlayerWithWhitePieces(): Player {
@@ -216,5 +219,19 @@ export class Game {
     return this.spots.reduce((acc, row) => {
       return acc + row.reduce((acc, spot) => acc + spot.serialize(), '');
     }, '');
+  }
+
+  prettyPrint(): void {
+    const serializedBoard = this.serialize();
+    let prettyString = '';
+    for (let row = 0; row < Game.NUMBER_OF_COLUMNS; row++) {
+      prettyString = prettyString + serializedBoard.substring(row * Game.NUMBER_OF_COLUMNS, (row + 1)* Game.NUMBER_OF_COLUMNS) + "\n";
+    }
+
+    console.log(prettyString);
+  }
+
+  static deserializeCharacter(data: string): BasePiece | BaseSpot | null  {
+    return BasePiece.deserialize(data) || BaseSpot.deserialize(data);
   }
 };

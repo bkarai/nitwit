@@ -1,7 +1,51 @@
 import { Coordinate } from '../Coordinate';
 import { Piece } from '../Piece';
 
-export class Spot {
+export enum SerializedSpot {
+  POTENTIAL_MOVE = 'm',
+  EMPTY = 'x',
+};
+
+export class BaseSpot {
+  potentialMove: boolean;
+
+  constructor(isPotentialMove: boolean = false) {
+    this.potentialMove = isPotentialMove;
+  }
+
+  static deserialize(data: string): BaseSpot | null {
+    if (data === SerializedSpot.POTENTIAL_MOVE) {
+      return new BaseSpot(true);
+    } else if (data === SerializedSpot.EMPTY) {
+      return new BaseSpot(false);
+    } else {
+      return null;
+    }
+  }
+
+  setIsPotentialMove(): void {
+    this.potentialMove = true;
+  }
+
+  clearIsPotentialMove(): void {
+    this.potentialMove = false;
+  }
+
+  isPotentialMove(): boolean {
+    return this.potentialMove;
+  }
+
+
+  serialize(): string {
+    if (this.potentialMove) {
+      return 'm';
+    } else {
+      return 'x';
+    }
+  }
+}
+
+export class Spot extends BaseSpot {
   static BLACK_GOAL_HIGHEST_ROW = 2;
   static BLACK_GOAL_HIGHEST_COLUMN = 2;
 
@@ -12,6 +56,7 @@ export class Spot {
   piece: Piece | null;
 
   constructor(row: number, column: number) {
+    super(false);
     this.location = { row, column };
     this.piece = null;
   }
@@ -56,10 +101,10 @@ export class Spot {
   }
 
   serialize(): string {
-   if (this.piece) {
+    if (this.piece) {
      return this.piece.serialize();
-   } else {
-     return 'x';
-   }
+    } else {
+      return super.serialize();
+    }
   }
 }

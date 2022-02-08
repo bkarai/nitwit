@@ -10,9 +10,10 @@ import {
 } from './styles';
 
 import {
-  PieceString,
-  Piece,
-} from 'model/Piece';
+  BasePiece,
+  BaseSpot,
+  Game,
+} from 'model';
 
 import {
   WHITE_COLOR,
@@ -53,17 +54,19 @@ export default function Chip({
   onHover,
   selectedPiece,
 }: ChipProps) {
-  const pieceCharacterObject = new Piece(pieceCharacter as PieceString);
+  const pieceCharacterObject = Game.deserializeCharacter(pieceCharacter);
 
-  if (pieceCharacterObject.isEmpty()) {
+  if (!pieceCharacterObject) {
     return null;
-  } else if (pieceCharacterObject.isMove()) {
-    const selectedPieceObject = new Piece(selectedPiece as PieceString);
+  } else if ((pieceCharacterObject instanceof BaseSpot) && pieceCharacterObject.isPotentialMove()) {
+    const selectedPieceObject = BasePiece.deserialize(selectedPiece as string) as BasePiece;
     const Component = selectedPieceObject.isPower() ? PowerChip : StandardChip;
     return <div style={{ height: '100%', width: '100%' }} onClick={onClick} onMouseOver={onHover}> <Component isSelected={false} variant='move'/> </div>;
-  } else {
+  } else if (pieceCharacterObject instanceof BasePiece) {
     const Component = pieceCharacterObject.isPower() ? PowerChip : StandardChip;
     const variant = pieceCharacterObject.isBlack() ? 'black' : 'white';
     return <div style={{ width: '100%', height: '100%' }} onClick={onClick} onMouseOver={onHover}> <Component isSelected={isSelected} variant={variant}/> </div>;
+  } else {
+    return null;
   }
 }
