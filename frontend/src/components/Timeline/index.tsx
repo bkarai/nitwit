@@ -25,7 +25,7 @@ const VALUES_MAP = [
 
 const steps = VALUES_MAP.map((e) => e.value);
 
-export default function Timeline({ position }: TimelineProps) {
+export function Timeline({ position }: TimelineProps) {
   const activeStep = VALUES_MAP.findIndex((step) => step.key === position);
 
   return (

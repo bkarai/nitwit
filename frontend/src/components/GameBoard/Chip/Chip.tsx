@@ -6,7 +6,7 @@ import {
 
 import {
   WHITE_COLOR,
-  BROWN_COLOR,
+  BLACK_COLOR,
   MOVE_COLOR,
 } from 'consts';
 
@@ -23,7 +23,7 @@ import {
 
 const variantMap = {
   white: WHITE_COLOR,
-  black: BROWN_COLOR,
+  black: BLACK_COLOR,
   move: MOVE_COLOR,
 };
 

@@ -8,5 +8,5 @@ export const ACTION_FINISH_TURN = 'FINISH_TURN';
 
 // Game
 export const WHITE_COLOR = '#FFFDD0';
-export const BROWN_COLOR = '#654321';
+export const BLACK_COLOR = '#654321';
 export const MOVE_COLOR = '#EBEBEE';

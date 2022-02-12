@@ -10,8 +10,7 @@ import { updateGameMeta, finishTurn } from 'actions';
 import useGameReady from './UseGameReady';
 import usePollForGameData from './UsePollForGameData';
 import { API_PREFIX } from 'consts';
-import { LoadingScreen, Timeline, GameBoard, ContentWrapper } from 'components';
-import { TimelinePosition } from 'components/Timeline';
+import { LoadingScreen, Timeline, TimelinePosition, GameBoard, ContentWrapper } from 'components';
 import { LoadingWrapper } from './styles';
 
 function getTimelinePosition(hasWinner: boolean, ready: boolean): TimelinePosition {
