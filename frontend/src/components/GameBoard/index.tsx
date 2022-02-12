@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Game } from 'model';
+import { Game, Spot } from 'model';
 import { BrownTile, OrangeTile, YellowTile } from './Tile';
 import Chip from './Chip';
 
@@ -14,6 +14,36 @@ const GameBoardWrapper = styled.div({
 
 const game = new Game();
 
+interface GameBoardSpot {
+  spot: Spot;
+};
+
+function GameBoardSpot({
+  spot
+}: GameBoardSpot) {
+  const { row, column } = spot.getLocation();
+  
+  if (spot.isPartOfBlackGoal()) {
+    return (
+      <BrownTile>
+        <Chip rowIndex={row} columnIndex={column}/>
+      </BrownTile>
+    );
+  } else if (spot.isPartOfWhiteGoal()) {
+    return (
+      <YellowTile>
+        <Chip rowIndex={row} columnIndex={column}/>
+      </YellowTile>
+    );
+  } else {
+    return (
+      <OrangeTile>
+        <Chip rowIndex={row} columnIndex={column}/>
+      </OrangeTile>
+    );
+  }
+};
+
 export function GameBoard() {
   return (
     <GameBoardWrapper>
@@ -23,21 +53,7 @@ export function GameBoard() {
             <tr key={rowIndex}>
               {row.map((spot, columnIndex) => (
                 <td key={columnIndex}>
-                  {spot.isPartOfBlackGoal() && (
-                    <BrownTile>
-                      <Chip rowIndex={rowIndex} columnIndex={columnIndex}/>
-                    </BrownTile>
-                  )}
-                  {!spot.isPartOfGoal() && (
-                    <OrangeTile>
-                      <Chip rowIndex={rowIndex} columnIndex={columnIndex}/>
-                    </OrangeTile>
-                  )}
-                  {spot.isPartOfWhiteGoal() && (
-                    <YellowTile>
-                      <Chip rowIndex={rowIndex} columnIndex={columnIndex}/>
-                    </YellowTile>
-                  )}
+                  <GameBoardSpot spot={spot}/>
                 </td>
               ))}
             </tr>
