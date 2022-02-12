@@ -1,8 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  StyledFooter,
-} from './styles';
+import styled from '@emotion/styled';
+
+export const StyledFooter = styled.footer({
+  position: 'fixed',
+  bottom: 0,
+  left: 0,
+  right: 0,
+});
+
+export const FooterContainer = styled.div({
+  margin: 'auto',
+  textAlign: 'center',
+});
 
 export default React.memo(function() {
   return (
