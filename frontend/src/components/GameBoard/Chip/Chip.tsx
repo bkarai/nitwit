@@ -1,15 +1,4 @@
 import {
-  StandardChipProps,
-  PowerChipProps,
-  ChipProps,
-} from './interface';
-
-import {
-  OuterCircle,
-  InnerCircle,
-} from './styles';
-
-import {
   BasePiece,
   BaseSpot,
   Game,
@@ -20,6 +9,17 @@ import {
   BROWN_COLOR,
   MOVE_COLOR,
 } from 'consts';
+
+import {
+  StandardChipProps,
+  PowerChipProps,
+  ChipProps,
+} from './interface';
+
+import {
+  OuterCircle,
+  InnerCircle,
+} from './styles';
 
 const variantMap = {
   white: WHITE_COLOR,

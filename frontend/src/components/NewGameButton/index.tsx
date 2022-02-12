@@ -15,7 +15,7 @@ function postMatch() {
   });
 }
 
-export default function NewGameButton() {
+export function NewGameButton() {
   return (
     <Button onClick={postMatch}>New Game</Button>
   );

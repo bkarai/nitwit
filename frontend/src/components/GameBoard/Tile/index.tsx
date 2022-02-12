@@ -1,11 +1,9 @@
 import { Square } from 'components';
 
-import {
-  GameTileProps,
-  BrownTileProps,
-  OrangeTileProps,
-  YellowTileProps,
-} from './interface';
+interface GameTileProps {
+  color: string,
+  children: React.ReactNode,
+};
 
 function GameTile({
   color,
@@ -17,6 +15,14 @@ function GameTile({
     </Square>
   );
 }
+
+interface ColorTileProps {
+  children: React.ReactNode,
+};
+
+type BrownTileProps = ColorTileProps;
+type OrangeTileProps = ColorTileProps;
+type YellowTileProps = ColorTileProps;
 
 export function BrownTile({
   children

@@ -1,7 +1,6 @@
-export interface SelectPiecePayload {
-  row: number,
-  column: number,
-};
+import { Coordinate } from "model";
+
+export type SelectPiecePayload = Coordinate;
 
 export interface UpdateGameMetaPayload {
   userType: null | 'white' | 'black';

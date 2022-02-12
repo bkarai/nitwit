@@ -10,7 +10,7 @@ import { updateGameMeta, finishTurn } from 'actions';
 import useGameReady from './UseGameReady';
 import usePollForGameData from './UsePollForGameData';
 import { API_PREFIX } from 'consts';
-import { LoadingScreen, Timeline, GameBoard } from 'components';
+import { LoadingScreen, Timeline, GameBoard, ContentWrapper } from 'components';
 import { TimelinePosition } from 'components/Timeline';
 import { LoadingWrapper } from './styles';
 
@@ -100,7 +100,9 @@ function Game({
           <>
             {isReady ?
             (
-              <GameBoard />
+              <ContentWrapper>
+                <GameBoard />
+              </ContentWrapper>
             ) : (
               <WaitingForPlayer matchAccessKey={matchAccessKey} />
             )

@@ -1,12 +1,19 @@
-import {
-  SquareProps
-} from './interface';
+import React from "react";
+import styled from '@emotion/styled';
 
-import {
-  SquareContainer
-} from './styles';
+export const SquareContainer = styled.div(({ $size, $color}: SquareProps) => ({
+  height: `${$size}px`,
+  width: `${$size}px`,
+  backgroundColor: $color,
+}));
 
-export default function Square(props: SquareProps) {
+export interface SquareProps {
+  $size: number,
+  $color: string,
+  children: React.ReactNode,
+};
+
+export function Square(props: SquareProps) {
   return (
     <SquareContainer {...props}>
       {props.children}
