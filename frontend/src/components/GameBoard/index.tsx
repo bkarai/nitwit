@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Game } from 'model';
 import { BrownTile, OrangeTile, YellowTile } from './Tile';
 import Chip from './Chip';
 
@@ -11,38 +12,29 @@ const GameBoardWrapper = styled.div({
   },
 });
 
-const layout = [
-  'bbbooooooo',
-  'bbbooooooo',
-  'bbbooooooo',
-  'oooooooooo',
-  'oooooooooo',
-  'oooooooooo',
-  'oooooooyyy',
-  'oooooooyyy',
-  'oooooooyyy',
-];
+const game = new Game();
+
 
 export function GameBoard() {
   return (
     <GameBoardWrapper>
       <table cellPadding="0" cellSpacing="0">
         <tbody>
-          {layout.map((row, rowIndex) => (
+          {game.getSpots().map((row, rowIndex) => (
             <tr key={rowIndex}>
-              {row.split('').map((tile, columnIndex) => (
+              {row.map((spot, columnIndex) => (
                 <td key={columnIndex}>
-                  {tile === 'b' && (
+                  {spot.isPartOfBlackGoal() && (
                     <BrownTile>
                       <Chip rowIndex={rowIndex} columnIndex={columnIndex}/>
                     </BrownTile>
                   )}
-                  {tile === 'o' && (
+                  {!spot.isPartOfGoal() && (
                     <OrangeTile>
                       <Chip rowIndex={rowIndex} columnIndex={columnIndex}/>
                     </OrangeTile>
                   )}
-                  {tile === 'y' && (
+                  {spot.isPartOfWhiteGoal() && (
                     <YellowTile>
                       <Chip rowIndex={rowIndex} columnIndex={columnIndex}/>
                     </YellowTile>

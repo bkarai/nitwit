@@ -189,6 +189,10 @@ export class Game {
     return true;
   }
 
+  getSpots() {
+    return this.spots;
+  }
+
   forEachSpot(callbackFn: (spot: Spot) => void) {
     this.spots.forEach((spotRow) => spotRow.forEach(callbackFn));
   }
