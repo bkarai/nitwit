@@ -8,6 +8,24 @@ import {
   Spot
 } from '../';
 
+enum Direction {
+  UP,
+  UP_RIGHT,
+  RIGHT,
+  DOWN_RIGHT,
+  DOWN,
+  DOWN_LEFT,
+  LEFT,
+  UP_LEFT,
+};
+
+const ROW_MOVEMENT_DIRECTIONS = [Direction.UP, Direction.DOWN, Direction.UP_LEFT, Direction.UP_RIGHT, Direction.DOWN_LEFT, Direction.DOWN_RIGHT];
+const COLUMN_MOVEMENT_DIRECTIONS = [Direction.LEFT, Direction.RIGHT, Direction.UP_LEFT, Direction.UP_RIGHT, Direction.DOWN_LEFT, Direction.DOWN_RIGHT];
+const DOWN_DIRECTIONS = [Direction.DOWN_LEFT, Direction.DOWN, Direction.DOWN_RIGHT];
+const RIGHT_DIRECTIONS = [Direction.UP_RIGHT, Direction.RIGHT, Direction.DOWN_RIGHT];
+const NON_DIAGONAL_DIRECTIONS = [Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT];
+const DIAGONAL_DIRECTIONS = [Direction.UP_RIGHT, Direction.DOWN_RIGHT, Direction.DOWN_LEFT, Direction.UP_LEFT];
+
 const INITIAL_BOARD_STATE =
 `\
 xxxxxxxxwb\
@@ -103,7 +121,7 @@ export class Game {
     return row >= 0 && row <= Game.MAX_ROW_INDEX && column >= 0 && column <= Game.MAX_COLUMN_INDEX;
   }
 
-  findMove(row: number, column: number, direction: 'u' | 'd' | 'l' | 'r' | 'ul' | 'ur' | 'dl' | 'dr'): void {
+  findMove(row: number, column: number, direction: Direction): void {
     let moveRow = null;
     let moveColumn = null;
     const pieceMovingFrom = this.getPiece(row, column);
@@ -114,10 +132,10 @@ export class Game {
 
     const pieceMovingFromInGoal = pieceMovingFrom.getSpot().isPartOfGoal();
 
-    const isMovingRow = ['u', 'd', 'ul', 'ur', 'dl', 'dr'].includes(direction);
-    const isMovingColumn = ['l', 'r', 'ul', 'ur', 'dl', 'dr'].includes(direction);
-    const rowVector = isMovingRow ? (['d', 'dl', 'dr'].includes(direction) ? 1 : -1) : 0;
-    const columnVector = isMovingColumn ? (['r', 'ur', 'dr'].includes(direction) ? 1 : -1) : 0;
+    const isMovingRow = ROW_MOVEMENT_DIRECTIONS.includes(direction);
+    const isMovingColumn = COLUMN_MOVEMENT_DIRECTIONS.includes(direction);
+    const rowVector = isMovingRow ? (DOWN_DIRECTIONS.includes(direction) ? 1 : -1) : 0;
+    const columnVector = isMovingColumn ? (RIGHT_DIRECTIONS.includes(direction) ? 1 : -1) : 0;
 
     let potentialRow = row + rowVector;
     let potentialColumn = column + columnVector;
@@ -181,15 +199,9 @@ export class Game {
   }
 
   findMoves(row: number, column: number): void {
-    this.findMove(row, column, 'd');
-    this.findMove(row, column, 'u');
-    this.findMove(row, column, 'l');
-    this.findMove(row, column, 'r');
+    NON_DIAGONAL_DIRECTIONS.forEach((direction) => this.findMove(row, column, direction));
     if (this.isPowerPiece(row, column)) {
-      this.findMove(row, column, 'ul');
-      this.findMove(row, column, 'ur');
-      this.findMove(row, column, 'dr');
-      this.findMove(row, column, 'dl');
+      DIAGONAL_DIRECTIONS.forEach((direction) => this.findMove(row, column, direction));
     }
   }
 

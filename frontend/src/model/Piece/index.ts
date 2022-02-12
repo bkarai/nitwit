@@ -1,5 +1,4 @@
-import { Player } from '../Player';
-import { Spot } from '../Spot';
+import { Player, Spot } from '../';
 
 export enum PieceType {
   STANDARD,
@@ -9,7 +8,7 @@ export enum PieceType {
 export enum PieceColor {
   WHITE,
   BLACK,
-}
+};
 
 export class BasePiece {
   readonly type: PieceType;
