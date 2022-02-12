@@ -6,3 +6,4 @@ export * from './PieceIcon';
 export * from './Timeline';
 export * from './ContentWrapper';
 export * from './GameBoard';
+export * from './WaitingForPlayer';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout } from 'components';
 
-export default function HomePageEnhancer(Component: React.ElementType) {
+export function pageEnhancer(Component: React.ElementType) {
   return function(props: any) {
     return (
       <Layout>

@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import Swal from 'sweetalert2';
 import {
   EmailShareButton,
@@ -11,10 +12,18 @@ import {
 } from 'react-share';
 
 import { ContentWrapper } from 'components';
-import { WaitingForPlayerProps } from './interface';
-import { IconWrapper } from './styles';
 
-export default function WaitingForPlayer({
+export const IconWrapper = styled.div({
+  svg: {
+    borderRadius: '50%',
+  },
+});
+
+interface WaitingForPlayerProps {
+  matchAccessKey: string;
+};
+
+export function WaitingForPlayer({
   matchAccessKey
 }: WaitingForPlayerProps) {
 

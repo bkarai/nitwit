@@ -2,11 +2,14 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { ParamTypes } from './interface';
 import { API_PREFIX } from 'consts';
 import { LoadingScreen, ContentWrapper } from 'components';
 
-export default function Join() {
+type ParamTypes = {
+  matchAccessKey: string;
+};
+
+export function Join() {
   const { matchAccessKey } = useParams<ParamTypes>();
   const navigate = useNavigate();
 

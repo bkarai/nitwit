@@ -1,17 +1,19 @@
+import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import toastr from 'toastr';
 
-import WaitingForPlayer from './WaitingForPlayer';
 import { State, Player } from 'store';
 import { updateGameMeta, finishTurn } from 'actions';
-import useGameReady from './UseGameReady';
-import usePollForGameData from './UsePollForGameData';
+import { useGameReady, usePollForGameData } from 'hooks';
 import { API_PREFIX } from 'consts';
-import { LoadingScreen, Timeline, TimelinePosition, GameBoard, ContentWrapper } from 'components';
-import { LoadingWrapper } from './styles';
+import { LoadingScreen, Timeline, TimelinePosition, GameBoard, ContentWrapper, WaitingForPlayer } from 'components';
+
+export const LoadingWrapper = styled.div({
+  marginTop: '20vh',
+});
 
 function getTimelinePosition(hasWinner: boolean, ready: boolean): TimelinePosition {
   if (hasWinner) {
@@ -29,7 +31,7 @@ type ParamTypes = {
   matchAccessKey: string,
 };
 
-function Game({
+function GameComponent({
   dispatch,
   pollForGameData,
   board,
@@ -123,4 +125,4 @@ const mapStateToProps = (state: State) => ({
   isWhiteTurn: state.isWhiteTurn,
 });
 
-export default connect(mapStateToProps)(Game);
+export const Game = connect(mapStateToProps)(GameComponent);

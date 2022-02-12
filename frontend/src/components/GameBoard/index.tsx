@@ -14,7 +14,6 @@ const GameBoardWrapper = styled.div({
 
 const game = new Game();
 
-
 export function GameBoard() {
   return (
     <GameBoardWrapper>

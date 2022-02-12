@@ -5,7 +5,7 @@ import { API_PREFIX } from 'consts';
 import { usePolling } from 'hooks';
 import { State } from 'store';
 
-export default function usePollForGameData(
+export function usePollForGameData(
   matchAccessKey: string,
   poll: boolean,
   pollTimeInMilliseconds: number,

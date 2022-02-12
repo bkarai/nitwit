@@ -1,6 +1,6 @@
 import { GameBoard } from "components";
 
-export default function Home() {
+export function Home() {
   return (
     <div>
       <GameBoard />

@@ -8,7 +8,7 @@ import { usePolling } from 'hooks';
 // It will control the polling for the game data
 // It will make the API call.
 
-export default function useGameReady(
+export function useGameReady(
   matchAccessKey: string,
   pollTimeInMilliseconds: number,
 ) {

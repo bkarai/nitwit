@@ -1,10 +1,10 @@
-import Home from './Home';
-import enhancer from '../enhancer';
+import { Home } from './Home';
+import { pageEnhancer } from '../pageEnhancer';
 
 const HomePage = {
-  Component: enhancer(Home),
+  Component: pageEnhancer(Home),
   path: '/',
   name: 'Home',
 };
 
-export default HomePage;
+export { HomePage as Home };

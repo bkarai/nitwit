@@ -1,10 +1,10 @@
-import Game from './Game';
-import enhancer from '../enhancer';
+import { Game } from './Game';
+import { pageEnhancer } from '../pageEnhancer';
 
 const GamePage = {
-  Component: enhancer(Game),
+  Component: pageEnhancer(Game),
   path: '/game/:matchAccessKey',
   name: 'Game',
 };
 
-export default GamePage;
+export { GamePage as Game };
