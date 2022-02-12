@@ -11,15 +11,16 @@ import useGameReady from './UseGameReady';
 import usePollForGameData from './UsePollForGameData';
 import { API_PREFIX } from 'consts';
 import { LoadingScreen, Timeline, GameBoard } from 'components';
+import { TimelinePosition } from 'components/Timeline';
 import { LoadingWrapper } from './styles';
 
-function getTimelinePosition(hasWinner: boolean, ready: boolean) {
+function getTimelinePosition(hasWinner: boolean, ready: boolean): TimelinePosition {
   if (hasWinner) {
-    return 'game-ended';
+    return TimelinePosition.GAME_ENDED;
   } else if (ready) {
-    return 'game-in-progress';
+    return TimelinePosition.GAME_IN_PROGRESS;
   } else {
-    return 'p1-joined';
+    return TimelinePosition.P1_JOINED;
   }
 };
 

@@ -1,10 +1,13 @@
+import styled from '@emotion/styled';
 import Footer from './Footer';
 import Header from './Header';
 
-import { LayoutWrapper, ContentWrapper } from './styles';
-import {
-  LayoutProps,
-} from './interface';
+const LayoutWrapper = styled.div({ height: '100%' });
+const ContentWrapper = styled.div({ height: '100%', width: '100%' });
+
+interface LayoutProps {
+  children: React.ReactNode;
+};
 
 export default function Layout({
   children
