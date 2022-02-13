@@ -1,32 +1,34 @@
 import { useCallback } from 'react';
 import { connect } from 'react-redux';
+
+import { State } from 'store';
 import { Chip } from './Chip'
 import { selectPiece } from 'actions';
-import { Game } from 'model';
+import { Coordinate, Game } from 'model';
 
 interface ChipWrapperProps {
-  pieces: string,
+  board: string,
   rowIndex: number,
   columnIndex: number,
-  selectedPiece: { row: number | null, column: number | null },
+  selectedPiece: Coordinate | null,
   dispatch: any
 };
 
 function ChipWrapper({
-  pieces,
+  board,
   rowIndex,
   columnIndex,
   selectedPiece,
   dispatch,
 }: ChipWrapperProps) {
-  const board = new Game(pieces);
-  const pieceCharacter = board.getSpot(rowIndex, columnIndex).serialize();
+  const game = new Game(board);
+  const pieceCharacter = game.getSpot(rowIndex, columnIndex).serialize();
 
   let selectedPieceObject = null;
-  if ((selectedPiece.row !== null) && (selectedPiece.column !== null)) {
-    selectedPieceObject = board.getSpot(selectedPiece.row, selectedPiece.column).serialize();
+  if ((selectedPiece?.row !== undefined) && (selectedPiece?.column !== undefined)) {
+    selectedPieceObject = game.getSpot(selectedPiece.row, selectedPiece.column).serialize();
   }
-  const isSelected = selectedPiece.row === rowIndex && selectedPiece.column === columnIndex;
+  const isSelected = selectedPiece?.row === rowIndex && selectedPiece?.column === columnIndex;
 
   const onClick = useCallback(() => dispatch(selectPiece({ row: rowIndex, column: columnIndex })),
   [dispatch, rowIndex, columnIndex]);
@@ -36,8 +38,8 @@ function ChipWrapper({
   );
 }
 
-const mapStateToProps = (state: any) => ({
-  pieces: state.board,
+const mapStateToProps = (state: State): Pick<ChipWrapperProps, 'board' | 'selectedPiece'> => ({
+  board: state.board,
   selectedPiece: state.selectedPiece,
 })
 

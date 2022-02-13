@@ -24,7 +24,7 @@ xwbxxxxxxx\
 wbxxxxxxxx\
 `,
   isWhiteTurn: true,
-  selectedPiece: { row: null, column: null },
+  selectedPiece: null,
   winner: null,
   userType: null,
   ready: false,

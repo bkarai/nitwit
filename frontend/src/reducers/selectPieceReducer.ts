@@ -1,4 +1,4 @@
-import { Game, Piece } from 'model';
+import { Coordinate, Game, Piece } from 'model';
 
 import {
   Player,
@@ -10,11 +10,11 @@ import {
 } from 'actions';
 
 interface StateFirstSelect extends State {
-  selectedPiece: { row: null, column: null },
+  selectedPiece: null,
 };
 
 interface StateSecondSelect extends State {
-  selectedPiece: { row: number, column: number },
+  selectedPiece: Coordinate,
 };
 
 // We can break up a select into two cases
@@ -68,7 +68,7 @@ function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): St
     board.clearMoves();
     return Object.assign({}, state, {
       board: board.serialize(),
-      selectedPiece: { row: null, column: null },
+      selectedPiece: null,
     });
   } else if (nowSelectedSpot.isPotentialMove()) {
     if (isSelectingWrongPiece(state.isWhiteTurn, previouslySelectedPiece, state.userType as Player)) {
@@ -78,7 +78,7 @@ function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): St
       previouslySelectedPiece.setSpot(board.getSpot(nowSelectedRow, nowSelectedColumn));
       return Object.assign({}, state, {
         board: board.serialize(),
-        selectedPiece: { row: null, column: null },
+        selectedPiece: null,
         isWhiteTurn: !state.isWhiteTurn,
         winner: board.getWinner(),
         userMadeMove: true,
@@ -97,10 +97,10 @@ function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): St
 }
 
 export default function selectPieceReducer(state: State, payload: SelectPiecePayload): State {
-  const previouslySelectedRow = state.selectedPiece.row;
-  const previouslySelectedColumn = state.selectedPiece.column;
+  const previouslySelectedRow = state.selectedPiece?.row;
+  const previouslySelectedColumn = state.selectedPiece?.column;
 
-  if (previouslySelectedRow === null && previouslySelectedColumn === null) {
+  if (previouslySelectedRow === undefined && previouslySelectedColumn === undefined) {
     return firstSelect(state as StateFirstSelect, payload);
   } else {
     return secondSelect(state as StateSecondSelect, payload);
