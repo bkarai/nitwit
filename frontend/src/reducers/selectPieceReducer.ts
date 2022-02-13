@@ -7,7 +7,7 @@ import {
 
 import {
   SelectPiecePayload
-} from 'actions/interface';
+} from 'actions';
 
 interface StateFirstSelect extends State {
   selectedPiece: { row: null, column: null },

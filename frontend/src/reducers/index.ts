@@ -25,7 +25,6 @@ wbxxxxxxxx\
 `,
   isWhiteTurn: true,
   selectedPiece: { row: null, column: null },
-  hoverPiece: { row: null, column: null },
   winner: null,
   userType: null,
   ready: false,

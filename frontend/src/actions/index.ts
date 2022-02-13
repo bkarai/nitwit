@@ -4,9 +4,9 @@ import {
   ACTION_FINISH_TURN,
 } from 'consts';
 
-import {
-  SelectPiecePayload,
-} from './interface';
+import { Coordinate } from "model";
+
+export type SelectPiecePayload = Coordinate;
 
 export function selectPiece(payload: SelectPiecePayload) {
   return { type: ACTION_SELECT_PIECE, payload };

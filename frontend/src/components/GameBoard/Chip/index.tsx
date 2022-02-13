@@ -31,10 +31,8 @@ function ChipWrapper({
   const onClick = useCallback(() => dispatch(selectPiece({ row: rowIndex, column: columnIndex })),
   [dispatch, rowIndex, columnIndex]);
 
-  const onHover = useCallback(() => {}, []);
-
   return (
-    <Chip onClick={onClick} onHover={onHover} pieceCharacter={pieceCharacter} isSelected={isSelected} selectedPiece={selectedPieceObject}/>
+    <Chip onClick={onClick} pieceCharacter={pieceCharacter} isSelected={isSelected} selectedPiece={selectedPieceObject}/>
   );
 }
 

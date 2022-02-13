@@ -56,14 +56,12 @@ interface ChipProps {
   isSelected: boolean,
   selectedPiece: null | string,
   onClick: onMouseEvent,
-  onHover: onMouseEvent,
 };
 
 export function Chip({
   pieceCharacter,
   isSelected,
   onClick,
-  onHover,
   selectedPiece,
 }: ChipProps) {
   const pieceCharacterObject = Game.deserializeCharacter(pieceCharacter);
