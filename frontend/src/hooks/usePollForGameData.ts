@@ -1,9 +1,8 @@
 import { useState, useCallback } from 'react';
-import axios from 'axios';
 
-import { API_PREFIX } from 'consts';
 import { usePolling } from 'hooks';
 import { State } from 'store';
+import { getMatch } from 'api';
 
 export function usePollForGameData(
   matchAccessKey: string,
@@ -14,7 +13,7 @@ export function usePollForGameData(
   const [gameData, setGameData] = useState({});
 
   const pollForGameData = useCallback(() => {
-    axios.get(`${API_PREFIX}/match/${matchAccessKey}`).then((response) => {
+    getMatch(matchAccessKey).then((response) => {
       setGameData({
         userType: response.data.userType,
         ready: response.data.ready,
