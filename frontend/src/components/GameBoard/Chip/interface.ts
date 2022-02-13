@@ -10,8 +10,14 @@ export interface ChipWrapperProps {
   dispatch: any
 };
 
+export enum ChipVariant {
+  WHITE,
+  BLACK,
+  MOVE,
+};
+
 export interface StandardChipProps {
-  variant: 'white' | 'black' | 'move',
+  variant: ChipVariant,
   isSelected: boolean,
 };
 

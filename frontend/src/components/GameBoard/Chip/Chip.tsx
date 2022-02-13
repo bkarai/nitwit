@@ -14,6 +14,7 @@ import {
   StandardChipProps,
   PowerChipProps,
   ChipProps,
+  ChipVariant,
 } from './interface';
 
 import {
@@ -21,10 +22,10 @@ import {
   InnerCircle,
 } from './styles';
 
-const variantMap = {
-  white: WHITE_COLOR,
-  black: BLACK_COLOR,
-  move: MOVE_COLOR,
+const VARIANT_COLOR_MAP = {
+  [ChipVariant.WHITE]: WHITE_COLOR,
+  [ChipVariant.BLACK]: BLACK_COLOR,
+  [ChipVariant.MOVE]: MOVE_COLOR,
 };
 
 function StandardChip({
@@ -32,7 +33,7 @@ function StandardChip({
   isSelected,
 }: StandardChipProps) {
   return (
-    <OuterCircle background={variantMap[variant]} opacity={isSelected ? '0.5' : 'initial'}/>
+    <OuterCircle background={VARIANT_COLOR_MAP[variant]} opacity={isSelected ? '0.5' : 'initial'}/>
   );
 }
 
@@ -41,7 +42,7 @@ function PowerChip({
   isSelected,
 }: PowerChipProps) {
   return (
-    <OuterCircle background={variantMap[variant]} opacity={isSelected ? '0.5' : 'initial'}>
+    <OuterCircle background={VARIANT_COLOR_MAP[variant]} opacity={isSelected ? '0.5' : 'initial'}>
       <InnerCircle />
     </OuterCircle>
   );
@@ -61,10 +62,10 @@ export default function Chip({
   } else if ((pieceCharacterObject instanceof BaseSpot) && pieceCharacterObject.isPotentialMove()) {
     const selectedPieceObject = BasePiece.deserialize(selectedPiece as string) as BasePiece;
     const Component = selectedPieceObject.isPower() ? PowerChip : StandardChip;
-    return <div style={{ height: '100%', width: '100%' }} onClick={onClick} onMouseOver={onHover}> <Component isSelected={false} variant='move'/> </div>;
+    return <div style={{ height: '100%', width: '100%' }} onClick={onClick} onMouseOver={onHover}> <Component isSelected={false} variant={ChipVariant.MOVE}/> </div>;
   } else if (pieceCharacterObject instanceof BasePiece) {
     const Component = pieceCharacterObject.isPower() ? PowerChip : StandardChip;
-    const variant = pieceCharacterObject.isBlack() ? 'black' : 'white';
+    const variant = pieceCharacterObject.isBlack() ? ChipVariant.BLACK : ChipVariant.WHITE;
     return <div style={{ width: '100%', height: '100%' }} onClick={onClick} onMouseOver={onHover}> <Component isSelected={isSelected} variant={variant}/> </div>;
   } else {
     return null;
