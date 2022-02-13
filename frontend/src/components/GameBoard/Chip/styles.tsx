@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 
-import {
-  OuterCircleProps
-} from './interface';
+export interface OuterCircleProps {
+  background: string;
+  opacity: string;
+};
 
 export const OuterCircle = styled.div`
   position: relative;

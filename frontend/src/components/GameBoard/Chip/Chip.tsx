@@ -1,54 +1,65 @@
+import React from "react";
+
 import {
   BasePiece,
   BaseSpot,
   Game,
 } from 'model';
-
 import {
   WHITE_COLOR,
   BLACK_COLOR,
   MOVE_COLOR,
 } from 'consts';
-
-import {
-  StandardChipProps,
-  PowerChipProps,
-  ChipProps,
-  ChipVariant,
-} from './interface';
-
 import {
   OuterCircle,
   InnerCircle,
 } from './styles';
 
-const VARIANT_COLOR_MAP = {
+type onMouseEvent = (event: React.MouseEvent<HTMLElement>) => void;
+
+enum ChipVariant {
+  WHITE,
+  BLACK,
+  MOVE,
+};
+
+const VARIANT_COLOR_MAP: { [key in ChipVariant]: string } = {
   [ChipVariant.WHITE]: WHITE_COLOR,
   [ChipVariant.BLACK]: BLACK_COLOR,
   [ChipVariant.MOVE]: MOVE_COLOR,
 };
 
-function StandardChip({
+interface ChipPresenterProps {
+  variant: ChipVariant;
+  isSelected: boolean;
+  isPower: boolean;
+  onClick: onMouseEvent;
+};
+
+function ChipPresenter({
   variant,
   isSelected,
-}: StandardChipProps) {
+  isPower,
+  onClick,
+}: ChipPresenterProps) {
   return (
-    <OuterCircle background={VARIANT_COLOR_MAP[variant]} opacity={isSelected ? '0.5' : 'initial'}/>
+    <div style={{ height: '100%', width: '100%' }} onClick={onClick}>
+      <OuterCircle background={VARIANT_COLOR_MAP[variant]} opacity={isSelected ? '0.5' : 'initial'}>
+        {isPower ? <InnerCircle /> : null}
+      </OuterCircle>
+    </div>
   );
 }
 
-function PowerChip({
-  variant,
-  isSelected,
-}: PowerChipProps) {
-  return (
-    <OuterCircle background={VARIANT_COLOR_MAP[variant]} opacity={isSelected ? '0.5' : 'initial'}>
-      <InnerCircle />
-    </OuterCircle>
-  );
-}
+interface ChipProps {
+  pieceCharacter: string,
+  isSelected: boolean,
+  selectedPiece: null | string,
+  onClick: onMouseEvent,
+  onHover: onMouseEvent,
+};
 
-export default function Chip({
+export function Chip({
   pieceCharacter,
   isSelected,
   onClick,
@@ -61,12 +72,10 @@ export default function Chip({
     return null;
   } else if ((pieceCharacterObject instanceof BaseSpot) && pieceCharacterObject.isPotentialMove()) {
     const selectedPieceObject = BasePiece.deserialize(selectedPiece as string) as BasePiece;
-    const Component = selectedPieceObject.isPower() ? PowerChip : StandardChip;
-    return <div style={{ height: '100%', width: '100%' }} onClick={onClick} onMouseOver={onHover}> <Component isSelected={false} variant={ChipVariant.MOVE}/> </div>;
+    return <ChipPresenter isSelected={false} onClick={onClick} isPower={selectedPieceObject.isPower()} variant={ChipVariant.MOVE}/>
   } else if (pieceCharacterObject instanceof BasePiece) {
-    const Component = pieceCharacterObject.isPower() ? PowerChip : StandardChip;
     const variant = pieceCharacterObject.isBlack() ? ChipVariant.BLACK : ChipVariant.WHITE;
-    return <div style={{ width: '100%', height: '100%' }} onClick={onClick} onMouseOver={onHover}> <Component isSelected={isSelected} variant={variant}/> </div>;
+    return  <ChipPresenter isSelected={isSelected} onClick={onClick} isPower={pieceCharacterObject.isPower()} variant={variant}/>;
   } else {
     return null;
   }

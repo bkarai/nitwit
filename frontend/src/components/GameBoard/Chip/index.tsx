@@ -1,12 +1,16 @@
 import { useCallback } from 'react';
 import { connect } from 'react-redux';
-import Chip from './Chip'
+import { Chip } from './Chip'
 import { selectPiece } from 'actions';
 import { Game } from 'model';
 
-import {
-  ChipWrapperProps
-} from './interface';
+interface ChipWrapperProps {
+  pieces: string,
+  rowIndex: number,
+  columnIndex: number,
+  selectedPiece: { row: number | null, column: number | null },
+  dispatch: any
+};
 
 function ChipWrapper({
   pieces,
