@@ -1,22 +1,15 @@
-import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 
-import { API_PREFIX } from 'consts';
+import { postMatch } from 'api';
 
-function postMatch() {
-  axios.post(`${API_PREFIX}/match`, {},
-  {
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    }
-  }).then((response) => {
-    window.location.href = `/game/${response.data.matchAccessKey}`;
+function onClickNewGameButton() {
+  postMatch().then((response) => {
+    window.location.href = `/game/${response.data.matchAccessKey}`
   });
 }
 
 export function NewGameButton() {
   return (
-    <Button onClick={postMatch}>New Game</Button>
+    <Button onClick={onClickNewGameButton}>New Game</Button>
   );
 }
