@@ -1,12 +1,14 @@
 import axios from 'axios';
-import { API_PREFIX } from 'consts';
+import { matchPath } from './util';
 
 interface CreateMatchResponse {
   matchAccessKey: string;
 };
 
+const MATCH_PATH = matchPath();
+
 export function createMatch() {
-  return axios.post<CreateMatchResponse>(`${API_PREFIX}/match`, {},
+  return axios.post<CreateMatchResponse>(MATCH_PATH, {},
   {
     headers: {
       'Content-Type': 'application/json',

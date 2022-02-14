@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { API_PREFIX } from 'consts';
+import { joinMatchPath } from './util';
 
 export function joinMatch(matchAccessKey: string) {
-  return axios.post(`${API_PREFIX}/match/${matchAccessKey}/join`, {},
+  return axios.post<null>(joinMatchPath(matchAccessKey), {},
   {
     headers: {
       'Content-Type': 'application/json',

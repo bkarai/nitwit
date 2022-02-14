@@ -2,13 +2,12 @@ import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import toastr from 'toastr';
 
+import { movePiece } from 'api';
 import { State, Player } from 'store';
 import { updateGameMeta, finishTurn } from 'actions';
 import { useGameReady, usePollForGameData } from 'hooks';
-import { API_PREFIX } from 'consts';
 import { LoadingScreen, Timeline, TimelinePosition, GameBoard, ContentWrapper, WaitingForPlayer } from 'components';
 
 export const LoadingWrapper = styled.div({
@@ -76,12 +75,7 @@ function GameComponent({
 
   useEffect(() => {
     if (userMadeMove) {
-      axios.post(`${API_PREFIX}/match/${matchAccessKey}/move`, { positions: board }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        }
-      }).then((response) => {
+      movePiece(matchAccessKey, board).then(() => {
         dispatch(finishTurn());
         toastr.success('You made your move', undefined, { newestOnTop: false });
         toastr.info(`It is now ${userType === 'white' ? 'Black' : 'White'}'s' turn`, undefined, { newestOnTop: false });
