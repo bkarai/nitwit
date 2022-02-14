@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { Game, Spot } from 'model';
-import { BrownTile, OrangeTile, YellowTile } from './Tile';
-import Chip from './Chip';
+import { Chip, BrownTile, OrangeTile, YellowTile } from 'components';
 
 const GameBoardWrapper = styled.div({
   display: 'flex',

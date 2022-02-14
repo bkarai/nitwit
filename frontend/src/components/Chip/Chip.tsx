@@ -5,15 +5,15 @@ import {
   BaseSpot,
   Game,
 } from 'model';
-import {
-  WHITE_COLOR,
-  BLACK_COLOR,
-  MOVE_COLOR,
-} from 'consts';
+
 import {
   OuterCircle,
   InnerCircle,
 } from './styles';
+
+const WHITE_COLOR = '#FFFDD0';
+const BLACK_COLOR = '#654321';
+const MOVE_COLOR = '#EBEBEE';
 
 type onMouseEvent = (event: React.MouseEvent<HTMLElement>) => void;
 

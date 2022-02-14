@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { connect } from 'react-redux';
 
 import { State } from 'store';
-import { Chip } from './Chip'
+import { Chip as ImportChip } from './Chip'
 import { selectPiece } from 'actions';
 import { Coordinate, Game } from 'model';
 
@@ -34,7 +34,7 @@ function ChipWrapper({
   [dispatch, rowIndex, columnIndex]);
 
   return (
-    <Chip onClick={onClick} pieceCharacter={pieceCharacter} isSelected={isSelected} selectedPiece={selectedPieceObject}/>
+    <ImportChip onClick={onClick} pieceCharacter={pieceCharacter} isSelected={isSelected} selectedPiece={selectedPieceObject}/>
   );
 }
 
@@ -43,4 +43,4 @@ const mapStateToProps = (state: State): Pick<ChipWrapperProps, 'board' | 'select
   selectedPiece: state.selectedPiece,
 })
 
-export default connect(mapStateToProps)(ChipWrapper);
+export const Chip = connect(mapStateToProps)(ChipWrapper);
