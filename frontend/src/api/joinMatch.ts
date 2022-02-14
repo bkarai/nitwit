@@ -1,12 +1,6 @@
 import axios from 'axios';
-import { joinMatchPath } from './util';
+import { joinMatchPath, AXIOS_CONFIG_POST } from './util';
 
 export function joinMatch(matchAccessKey: string) {
-  return axios.post<null>(joinMatchPath(matchAccessKey), {},
-  {
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    }
-  });
+  return axios.post<null>(joinMatchPath(matchAccessKey), {}, AXIOS_CONFIG_POST);
 }

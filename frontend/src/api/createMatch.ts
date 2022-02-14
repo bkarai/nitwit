@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { matchPath } from './util';
+import { matchPath, AXIOS_CONFIG_POST } from './util';
 
 interface CreateMatchResponse {
   matchAccessKey: string;
@@ -8,11 +8,5 @@ interface CreateMatchResponse {
 const MATCH_PATH = matchPath();
 
 export function createMatch() {
-  return axios.post<CreateMatchResponse>(MATCH_PATH, {},
-  {
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    }
-  });
+  return axios.post<CreateMatchResponse>(MATCH_PATH, {}, AXIOS_CONFIG_POST);
 }

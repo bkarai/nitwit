@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { matchPath } from './util';
+import { matchPath, AXIOS_CONFIG_GET } from './util';
 
 interface GetMatchResponse {
   isWhiteTurn: boolean;
@@ -10,5 +10,5 @@ interface GetMatchResponse {
 };
 
 export function getMatch(matchAccessKey: string) {
-  return axios.get<GetMatchResponse>(matchPath(matchAccessKey));
+  return axios.get<GetMatchResponse>(matchPath(matchAccessKey), AXIOS_CONFIG_GET);
 }
