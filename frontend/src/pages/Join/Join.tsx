@@ -1,8 +1,7 @@
-import axios from 'axios';
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { API_PREFIX } from 'consts';
+import { joinMatch } from 'api';
 import { LoadingScreen, ContentWrapper } from 'components';
 
 type ParamTypes = {
@@ -14,13 +13,9 @@ export function Join() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.post(`${API_PREFIX}/match/${matchAccessKey}/join`, {},
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      }
-    }).then((response) => {
+    // Annoying that I need to cast it as string. It's an
+    // issue with react-router
+    joinMatch(matchAccessKey as string).then(() => {
       navigate(`/game/${matchAccessKey}`, { replace: true });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

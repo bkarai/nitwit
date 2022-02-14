@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { API_PREFIX } from 'consts';
 
-interface PostMatchResponse {
+interface CreateMatchResponse {
   matchAccessKey: string;
 };
 
-export function postMatch() {
-  return axios.post<PostMatchResponse>(`${API_PREFIX}/match`, {},
+export function createMatch() {
+  return axios.post<CreateMatchResponse>(`${API_PREFIX}/match`, {},
   {
     headers: {
       'Content-Type': 'application/json',

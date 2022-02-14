@@ -1,13 +1,10 @@
 import { useState, useCallback } from 'react';
-import axios from 'axios';
-
-import { API_PREFIX } from 'consts';
 import { usePolling } from 'hooks';
+import { getMatch } from 'api';
 
 // This is going to implement (possibly only part of) the main game loop.
 // It will control the polling for the game data
 // It will make the API call.
-
 export function useGameReady(
   matchAccessKey: string,
   pollTimeInMilliseconds: number,
@@ -17,7 +14,7 @@ export function useGameReady(
   const [isLoading, setIsLoading] = useState(true);
 
   const pollForGameReady = useCallback(() => {
-    axios.get(`${API_PREFIX}/match/${matchAccessKey}`).then((response) => {
+    getMatch(matchAccessKey).then((response) => {
       setIsLoading(false);
 
       const {

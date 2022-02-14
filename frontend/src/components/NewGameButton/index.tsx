@@ -1,9 +1,8 @@
 import Button from 'react-bootstrap/Button';
-
-import { postMatch } from 'api';
+import { createMatch } from 'api';
 
 function onClickNewGameButton() {
-  postMatch().then((response) => {
+  createMatch().then((response) => {
     window.location.href = `/game/${response.data.matchAccessKey}`
   });
 }
