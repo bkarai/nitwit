@@ -13,13 +13,13 @@ const GameBoardWrapper = styled.div({
 
 const game = new Game();
 
-interface GameBoardSpot {
+interface GameBoardSpotProps {
   spot: Spot;
 };
 
 function GameBoardSpot({
   spot
-}: GameBoardSpot) {
+}: GameBoardSpotProps) {
   const { row, column } = spot.getLocation();
   
   if (spot.isPartOfBlackGoal()) {
