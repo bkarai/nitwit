@@ -1,4 +1,0 @@
-// Redux
-export const ACTION_SELECT_PIECE = 'SELECT_PIECE';
-export const ACTION_UPDATE_GAME_META = 'UPDATE_GAME_META';
-export const ACTION_FINISH_TURN = 'FINISH_TURN';
