@@ -1,9 +1,8 @@
 // This code is terrible, it should be refactored
 
-import { useCallback } from 'react';
-import { connect } from 'react-redux';
+import { useCallback, useContext } from 'react';
 
-import { State } from 'store';
+import { GameContext } from 'context';
 import { selectPiece } from 'actions';
 import { BasePiece, BaseSpot, Coordinate, Game } from 'model';
 import {
@@ -37,20 +36,16 @@ function ImportChip({
 }
 
 interface ChipWrapperProps {
-  board: string,
   rowIndex: number,
   columnIndex: number,
-  selectedPiece: Coordinate | null,
-  dispatch: any
 };
 
 function ChipWrapper({
-  board,
   rowIndex,
   columnIndex,
-  selectedPiece,
-  dispatch,
 }: ChipWrapperProps) {
+  const gameContext = useContext(GameContext);
+  const { state: { board, selectedPiece }, dispatch } = gameContext;
   const game = new Game(board);
   const pieceCharacter = game.getSpot(rowIndex, columnIndex).serialize();
 
@@ -70,9 +65,4 @@ function ChipWrapper({
   );
 }
 
-const mapStateToProps = (state: State): Pick<ChipWrapperProps, 'board' | 'selectedPiece'> => ({
-  board: state.board,
-  selectedPiece: state.selectedPiece,
-})
-
-export const EnhancedPiece = connect(mapStateToProps)(ChipWrapper);
+export const EnhancedPiece = ChipWrapper;

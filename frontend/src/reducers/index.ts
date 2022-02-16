@@ -10,7 +10,7 @@ import {
   State
 } from 'store';
 
-const initialState: State = {
+export const initialState: State = {
   board:
 `\
 xxxxxxxxwb\
@@ -31,7 +31,7 @@ wbxxxxxxxx\
   userMadeMove: false,
 }
 
-export default function rootReducer(state: State = initialState, action: { type: string, payload: any }): State {
+export function rootReducer(state: State = initialState, action: { type: string, payload: any }): State {
   if (action.type === ACTION_SELECT_PIECE) {
     return selectPieceReducer(state, action.payload);
   }
