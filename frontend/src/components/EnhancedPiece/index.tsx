@@ -4,7 +4,7 @@ import { useCallback, useContext } from 'react';
 
 import { GameContext } from 'context';
 import { selectPiece } from 'actions';
-import { BasePiece, BaseSpot, Coordinate, Game } from 'model';
+import { BasePiece, BaseSpot, Game } from 'model';
 import {
   Piece,
   PieceColor,

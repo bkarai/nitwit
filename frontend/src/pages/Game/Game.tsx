@@ -5,7 +5,6 @@ import toastr from 'toastr';
 
 import { GameContext } from 'context';
 import { movePiece } from 'api';
-import { State, Player } from 'store';
 import { updateGameMeta, finishTurn } from 'actions';
 import { useGameReady, usePollForGameData } from 'hooks';
 import { LoadingScreen, Timeline, GameBoard, ContentWrapper, WaitingForPlayer } from 'components';
