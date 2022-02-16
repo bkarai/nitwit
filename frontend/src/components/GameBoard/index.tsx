@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Game, Spot } from 'model';
-import { Chip, BrownTile, OrangeTile, YellowTile } from 'components';
+import { EnhancedPiece, BrownTile, OrangeTile, YellowTile } from 'components';
 
 const GameBoardWrapper = styled.div({
   display: 'flex',
@@ -25,19 +25,19 @@ function GameBoardSpot({
   if (spot.isPartOfBlackGoal()) {
     return (
       <BrownTile>
-        <Chip rowIndex={row} columnIndex={column}/>
+        <EnhancedPiece rowIndex={row} columnIndex={column}/>
       </BrownTile>
     );
   } else if (spot.isPartOfWhiteGoal()) {
     return (
       <YellowTile>
-        <Chip rowIndex={row} columnIndex={column}/>
+        <EnhancedPiece rowIndex={row} columnIndex={column}/>
       </YellowTile>
     );
   } else {
     return (
       <OrangeTile>
-        <Chip rowIndex={row} columnIndex={column}/>
+        <EnhancedPiece rowIndex={row} columnIndex={column}/>
       </OrangeTile>
     );
   }
