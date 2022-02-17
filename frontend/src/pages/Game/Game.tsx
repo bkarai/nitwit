@@ -1,14 +1,12 @@
 import styled from '@emotion/styled';
 import { useEffect, useReducer, useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import toastr from 'toastr';
 
 import { GameContext } from 'context';
 import { movePiece } from 'api';
 import { updateGameMeta, finishTurn } from 'actions';
-import { useGameReady, usePollForGameData } from 'hooks';
+import { useGameReady, usePollForGameData, useMatchAccessKey } from 'hooks';
 import { LoadingScreen, Timeline, GameBoard, ContentWrapper, WaitingForPlayer } from 'components';
-import { getTimelinePosition } from './util';
+import { getTimelinePosition, sendNotification, NotificationType } from './util';
 import { initialState, rootReducer } from 'reducers';
 
 export const LoadingWrapper = styled.div({
@@ -17,23 +15,14 @@ export const LoadingWrapper = styled.div({
 
 const WAIT_FOR_JOINER_POLL_SECONDS = 5;
 
-type ParamTypes = {
-  matchAccessKey: string,
-};
-
 function GameComponent() {
-
   const { state, dispatch } = useContext(GameContext);
 
   const pollForGameData = (state.isWhiteTurn && state.userType === 'black') || (!state.isWhiteTurn && state.userType === 'white') || !state.userType;
-  const board = state.board;
-  const userMadeMove = state.userMadeMove;
-  const ready = state.ready;
   const winner = !!state.winner;
-  const userType = state.userType;
-  const isWhiteTurn = state.isWhiteTurn;
+  const { board, userMadeMove, ready, userType, isWhiteTurn } = state;
 
-  const { matchAccessKey } = useParams<ParamTypes>() as ParamTypes;
+  const matchAccessKey = useMatchAccessKey();
 
   const [isLoading, isReady] = useGameReady(matchAccessKey, WAIT_FOR_JOINER_POLL_SECONDS * 1000);
   const gameData = usePollForGameData(matchAccessKey, pollForGameData, WAIT_FOR_JOINER_POLL_SECONDS * 1000);
@@ -47,7 +36,7 @@ function GameComponent() {
 
   useEffect(() => {
     if ((isWhiteTurn && userType === 'white') || (!isWhiteTurn && userType === 'black')) {
-        toastr.info('It is your turn!');
+      sendNotification('It is your turn!', NotificationType.INFO);
     }
   }, [isWhiteTurn]);
 
@@ -60,8 +49,8 @@ function GameComponent() {
     if (userMadeMove) {
       movePiece(matchAccessKey, board).then(() => {
         dispatch(finishTurn());
-        toastr.success('You made your move', undefined, { newestOnTop: false });
-        toastr.info(`It is now ${userType === 'white' ? 'Black' : 'White'}'s' turn`, undefined, { newestOnTop: false });
+        sendNotification('You made your move', NotificationType.SUCCESS);
+        sendNotification(`It is now ${userType === 'white' ? 'Black' : 'White'}'s' turn`, NotificationType.INFO);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -91,7 +80,6 @@ function GameComponent() {
   </>
   );
 }
-
 
 function MapStateToPropsMock() {
   const [state, dispatch] = useReducer(rootReducer, initialState);

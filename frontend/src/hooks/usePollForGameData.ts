@@ -4,13 +4,15 @@ import { usePolling } from 'hooks';
 import { State } from 'store';
 import { getMatch } from 'api';
 
+type GameData = Pick<State, 'userType' | 'ready' | 'winner' | 'isWhiteTurn' | 'board'> | {};
+
 export function usePollForGameData(
   matchAccessKey: string,
   poll: boolean,
   pollTimeInMilliseconds: number,
-): Pick<State, 'userType' | 'ready' | 'winner' | 'isWhiteTurn' | 'board'> {
+): GameData {
 
-  const [gameData, setGameData] = useState({});
+  const [gameData, setGameData] = useState<GameData>({});
 
   const pollForGameData = useCallback(() => {
     getMatch(matchAccessKey).then((response) => {
@@ -26,5 +28,5 @@ export function usePollForGameData(
 
   usePolling(pollForGameData, poll, pollTimeInMilliseconds);
 
-  return gameData as Pick<State, 'userType' | 'ready' | 'winner' | 'isWhiteTurn' | 'board'>;
+  return gameData;
 }
