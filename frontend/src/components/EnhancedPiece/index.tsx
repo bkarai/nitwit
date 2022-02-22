@@ -46,12 +46,12 @@ function ChipWrapper({
 }: ChipWrapperProps) {
   const gameContext = useContext(GameContext);
   const { state: { board, selectedPiece }, dispatch } = gameContext;
-  const game = new Board(board);
-  const pieceCharacter = game.getSpot(rowIndex, columnIndex).serialize();
+  const gameBoard = new Board(board);
+  const pieceCharacter = gameBoard.getSpot(rowIndex, columnIndex).serialize();
 
   let selectedPieceObject = null;
   if ((selectedPiece?.row !== undefined) && (selectedPiece?.column !== undefined)) {
-    selectedPieceObject = game.getSpot(selectedPiece.row, selectedPiece.column).serialize();
+    selectedPieceObject = gameBoard.getSpot(selectedPiece.row, selectedPiece.column).serialize();
   }
   const isSelected = selectedPiece?.row === rowIndex && selectedPiece?.column === columnIndex;
 

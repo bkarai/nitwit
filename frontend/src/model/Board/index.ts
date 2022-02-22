@@ -194,6 +194,14 @@ export class Board {
     return this.getSpot(row, column).getPiece();
   }
 
+  getWhitePieces(): Piece[] {
+    return this.pieces.filter((p) => p.isWhite());
+  }
+
+  getBlackPieces(): Piece[] {
+    return this.pieces.filter((p) => p.isBlack());
+  }
+
   findMoves(row: number, column: number): void {
     NON_DIAGONAL_DIRECTIONS.forEach((direction) => this.findMove(row, column, direction));
     if (this.isPowerPiece(row, column)) {
@@ -231,7 +239,7 @@ export class Board {
     console.log(prettyString);
   }
 
-  static deserializeCharacter(data: string): BasePiece | BaseSpot | null  {
+  static deserializeCharacter(data: string): BasePiece | BaseSpot | null {
     return BasePiece.deserialize(data) || BaseSpot.deserialize(data);
   }
 };

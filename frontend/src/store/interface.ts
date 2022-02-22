@@ -1,4 +1,4 @@
-import { Coordinate, Piece, PieceColor } from "model";
+import { Coordinate, PieceColor } from "model";
 
 export interface State {
   board: string,
