@@ -1,5 +1,4 @@
-import { Coordinate } from '../Coordinate';
-import { Piece } from '../Piece';
+import { Coordinate, Piece } from "model";
 
 export enum SerializedSpot {
   POTENTIAL_MOVE = 'm',

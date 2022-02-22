@@ -1,4 +1,4 @@
-import { Piece } from '../Piece';
+import { Piece } from 'model';
 
 export class Player {
   pieces: Piece[] | null;

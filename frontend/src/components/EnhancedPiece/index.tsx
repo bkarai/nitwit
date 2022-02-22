@@ -4,7 +4,7 @@ import { useCallback, useContext } from 'react';
 
 import { GameContext } from 'context';
 import { selectPiece } from 'actions';
-import { BasePiece, BaseSpot, Game } from 'model';
+import { BasePiece, BaseSpot, Board } from 'model';
 import {
   Piece,
   PieceColor,
@@ -21,7 +21,7 @@ function ImportChip({
   isSelected,
   selectedPiece,
 }: ImportChipProps) {
-  const pieceCharacterObject = Game.deserializeCharacter(pieceCharacter);
+  const pieceCharacterObject = Board.deserializeCharacter(pieceCharacter);
 
   if (!pieceCharacterObject) {
     return null;
@@ -46,7 +46,7 @@ function ChipWrapper({
 }: ChipWrapperProps) {
   const gameContext = useContext(GameContext);
   const { state: { board, selectedPiece }, dispatch } = gameContext;
-  const game = new Game(board);
+  const game = new Board(board);
   const pieceCharacter = game.getSpot(rowIndex, columnIndex).serialize();
 
   let selectedPieceObject = null;

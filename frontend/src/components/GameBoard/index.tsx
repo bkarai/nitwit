@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Game, Spot } from 'model';
+import { Board, Spot } from 'model';
 import { EnhancedPiece, BrownTile, OrangeTile, YellowTile } from 'components';
 
 const GameBoardWrapper = styled.div({
@@ -11,7 +11,7 @@ const GameBoardWrapper = styled.div({
   },
 });
 
-const game = new Game();
+const game = new Board();
 
 interface GameBoardSpotProps {
   spot: Spot;

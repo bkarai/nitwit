@@ -1,1 +1,1 @@
-export type { State, Player } from './interface';
+export * from './interface';

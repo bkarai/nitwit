@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { matchPath, AXIOS_CONFIG_GET } from './util';
+import { PieceColor } from 'model';
 
 interface GetMatchResponse {
   isWhiteTurn: boolean;
   positions: string;
   ready: boolean;
-  userType: 'black' | 'white';
-  winner: null | 'black' | 'white';
+  userType: PieceColor;
+  winner: null | PieceColor;
 };
 
 export function getMatch(matchAccessKey: string) {

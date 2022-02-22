@@ -1,7 +1,6 @@
-import { Coordinate, Game, Piece } from 'model';
+import { Coordinate, Board, Piece, PieceColor } from 'model';
 
 import {
-  Player,
   State,
 } from 'store';
 
@@ -21,21 +20,21 @@ interface StateSecondSelect extends State {
 // 1. The user is making an initial selection
 // 2, The user is making a follow up selection (i.e. a move)
 
-function isSelectingWrongPiece(isWhiteTurn: boolean, selectedPiece: Piece, userType: Player): boolean {
-  const whiteTurnAndMovingBlack = isWhiteTurn && (!selectedPiece.isWhite() || (userType === 'black'));
-  const blackTurnAndMovingWhite = !isWhiteTurn && (!selectedPiece.isBlack() || (userType === 'white'));
+function isSelectingWrongPiece(isWhiteTurn: boolean, selectedPiece: Piece, userType: PieceColor): boolean {
+  const whiteTurnAndMovingBlack = isWhiteTurn && (!selectedPiece.isWhite() || (userType === PieceColor.BLACK));
+  const blackTurnAndMovingWhite = !isWhiteTurn && (!selectedPiece.isBlack() || (userType === PieceColor.WHITE));
   return whiteTurnAndMovingBlack || blackTurnAndMovingWhite;
 }
 
 function firstSelect(state: StateFirstSelect, payload: SelectPiecePayload): State {
-  let board = new Game(state.board);
+  let board = new Board(state.board);
 
   const nowSelectedRow = payload.row;
   const nowSelectedColumn = payload.column;
   const nowSelectedPiece = board.getPiece(nowSelectedRow, nowSelectedColumn);
 
   if (nowSelectedPiece) {
-    if (isSelectingWrongPiece(state.isWhiteTurn, nowSelectedPiece, state.userType as Player)) {
+    if (isSelectingWrongPiece(state.isWhiteTurn, nowSelectedPiece, state.userType as PieceColor)) {
       return state;
     } else {
       board.findMoves(nowSelectedRow, nowSelectedColumn);
@@ -50,7 +49,7 @@ function firstSelect(state: StateFirstSelect, payload: SelectPiecePayload): Stat
 };
 
 function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): State {
-  let board = new Game(state.board);
+  let board = new Board(state.board);
 
   const nowSelectedRow = payload.row;
   const nowSelectedColumn = payload.column;
@@ -71,7 +70,7 @@ function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): St
       selectedPiece: null,
     });
   } else if (nowSelectedSpot.isPotentialMove()) {
-    if (isSelectingWrongPiece(state.isWhiteTurn, previouslySelectedPiece, state.userType as Player)) {
+    if (isSelectingWrongPiece(state.isWhiteTurn, previouslySelectedPiece, state.userType as PieceColor)) {
       return state;
     } else {
       board.clearMoves();
@@ -96,7 +95,7 @@ function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): St
   }
 }
 
-export default function selectPieceReducer(state: State, payload: SelectPiecePayload): State {
+export function selectPieceReducer(state: State, payload: SelectPiecePayload): State {
   const previouslySelectedRow = state.selectedPiece?.row;
   const previouslySelectedColumn = state.selectedPiece?.column;
 

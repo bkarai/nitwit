@@ -1,4 +1,4 @@
-import selectPieceReducer from './selectPieceReducer';
+import { selectPieceReducer } from './selectPieceReducer';
 
 import { 
   State

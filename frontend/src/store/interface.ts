@@ -1,13 +1,11 @@
-import { Coordinate } from "model";
-
-export type Player = 'white' | 'black';
+import { Coordinate, Piece, PieceColor } from "model";
 
 export interface State {
   board: string,
   isWhiteTurn: boolean,
   selectedPiece: Coordinate | null,
-  winner: null | Player,
-  userType: null | Player,
+  winner: null | PieceColor,
+  userType: null | PieceColor,
   ready: boolean,
   userMadeMove: boolean,
 };
