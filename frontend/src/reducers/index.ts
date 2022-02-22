@@ -3,20 +3,10 @@ import { selectPieceReducer } from './selectPieceReducer';
 import { 
   State
 } from 'store';
+import { INITIAL_BOARD_STATE } from 'model';
 
 export const initialState: State = {
-  board:
-`\
-xxxxxxxxwb\
-xxxxxxxwbx\
-xxxxxxwbxx\
-xxxxxwbxxx\
-xxxxWBxxxx\
-xxxwbxxxxx\
-xxwbxxxxxx\
-xwbxxxxxxx\
-wbxxxxxxxx\
-`,
+  board: INITIAL_BOARD_STATE,
   isWhiteTurn: true,
   selectedPiece: null,
   winner: null,

@@ -37,9 +37,9 @@ export class BaseSpot {
 
   serialize(): string {
     if (this.potentialMove) {
-      return 'm';
+      return SerializedSpot.POTENTIAL_MOVE;
     } else {
-      return 'x';
+      return SerializedSpot.EMPTY;
     }
   }
 }

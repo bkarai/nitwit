@@ -46,7 +46,8 @@ function ChipWrapper({
 }: ChipWrapperProps) {
   const gameContext = useContext(GameContext);
   const { state: { board, selectedPiece }, dispatch } = gameContext;
-  const gameBoard = new Board(board);
+  const gameBoard = new Board();
+  gameBoard.configure(board);
   const pieceCharacter = gameBoard.getSpot(rowIndex, columnIndex).serialize();
 
   let selectedPieceObject = null;

@@ -5,6 +5,7 @@ import {
   PieceColor,
   PieceType,
   Spot,
+  SerializedSpot,
 } from '..';
 
 enum Direction {
@@ -25,7 +26,7 @@ const RIGHT_DIRECTIONS = [Direction.UP_RIGHT, Direction.RIGHT, Direction.DOWN_RI
 const NON_DIAGONAL_DIRECTIONS = [Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT];
 const DIAGONAL_DIRECTIONS = [Direction.UP_RIGHT, Direction.DOWN_RIGHT, Direction.DOWN_LEFT, Direction.UP_LEFT];
 
-const INITIAL_BOARD_STATE =
+export const INITIAL_BOARD_STATE =
 `\
 xxxxxxxxwb\
 xxxxxxxwbx\
@@ -42,7 +43,14 @@ export class Board {
   spots: Spot[][];
   pieces: Piece[];
 
+  whiteStandardPieces: Piece[];
+  whitePowerPiece: Piece;
+  blackStandardPieces: Piece[];
+  blackPowerPiece: Piece;
+
   static NUMBER_OF_PIECES = 18;
+  static NUMBER_OF_PIECES_FOR_EACH_COLOR = Board.NUMBER_OF_PIECES / 2;
+  static NUMBER_OF_STANDARD_PIECES_FOR_EACH_COLOR = Board.NUMBER_OF_PIECES_FOR_EACH_COLOR - 1;
 
   static NUMBER_OF_COLUMNS = 10;
   static NUMBER_OF_ROWS = 9;
@@ -50,46 +58,35 @@ export class Board {
   static MAX_ROW_INDEX = Board.NUMBER_OF_ROWS - 1;
   static MAX_COLUMN_INDEX = Board.NUMBER_OF_COLUMNS - 1;
 
-  constructor(serializedBoardState: string = INITIAL_BOARD_STATE) {
-    const pieces = new Array<Piece>();
-    const spots = new Array<Spot[]>(Board.NUMBER_OF_ROWS);
+  constructor() {
+    this.pieces = new Array<Piece>();
+
+    this.spots = new Array<Spot[]>(Board.NUMBER_OF_ROWS);
     for (let row = 0; row < Board.NUMBER_OF_ROWS; row++) {
-      spots[row] = new Array<Spot>(Board.NUMBER_OF_COLUMNS);
+      this.spots[row] = new Array<Spot>(Board.NUMBER_OF_COLUMNS);
+      for (let column = 0; column < Board.NUMBER_OF_COLUMNS; column++) {
+        this.spots[row][column] = new Spot(row, column);
+      }
     }
 
-    this.pieces = pieces;
-    this.spots = spots;
+    for (let i = 0; i < Board.NUMBER_OF_STANDARD_PIECES_FOR_EACH_COLOR; i++) {
+      this.pieces.push(new Piece(PieceType.STANDARD, PieceColor.WHITE));
+    }
 
-    serializedBoardState.split('').forEach((pieceCharacter, index) => {
-      const row = Math.floor(index / Board.NUMBER_OF_COLUMNS);
-      const column = index % Board.NUMBER_OF_COLUMNS;
-      const spot = new Spot(row, column);
-      this.spots[row][column] = spot;
-      let piece;
-      switch(pieceCharacter) {
-        case 'm':
-          spot.setIsPotentialMove();
-          break;
-        case 'w':
-          piece = new Piece(PieceType.STANDARD, spot, PieceColor.WHITE);
-          break;
-        case 'W':
-          piece = new Piece(PieceType.POWER, spot, PieceColor.WHITE);
-          break;
-        case 'b':
-          piece = new Piece(PieceType.STANDARD, spot, PieceColor.BLACK);
-          break;
-        case 'B':
-          piece = new Piece(PieceType.POWER, spot, PieceColor.BLACK);
-          break;
-        default:
-          break;
-      }
+    this.whitePowerPiece = new Piece(PieceType.POWER, PieceColor.WHITE);
+    this.pieces.push(this.whitePowerPiece);
 
-      if (piece) {
-        this.pieces.push(piece);
-      }
-    });
+    for (let i = 0; i < Board.NUMBER_OF_STANDARD_PIECES_FOR_EACH_COLOR; i++) {
+      this.pieces.push(new Piece(PieceType.STANDARD, PieceColor.BLACK));
+    }
+
+    this.blackPowerPiece = new Piece(PieceType.POWER, PieceColor.BLACK);
+    this.pieces.push(this.blackPowerPiece);
+
+    this.whiteStandardPieces = this.pieces.filter((p) => p.isWhite() && p.isStandard());
+    this.blackStandardPieces = this.pieces.filter((p) => p.isBlack() && p.isStandard());
+
+    this.configure(INITIAL_BOARD_STATE);
   };
 
   // Private Methods
@@ -200,6 +197,40 @@ export class Board {
 
   getBlackPieces(): Piece[] {
     return this.pieces.filter((p) => p.isBlack());
+  }
+
+  configure(serializedBoard: string) {
+    this.clearMoves();
+    let whiteStandardPieceIndex = 0;
+    let blackStandardPieceIndex = 0;
+
+    serializedBoard.split('').forEach((pieceCharacter, index) => {
+      const row = Math.floor(index / Board.NUMBER_OF_COLUMNS);
+      const column = index % Board.NUMBER_OF_COLUMNS;
+      const spot = this.getSpot(row, column);
+
+      switch(pieceCharacter) {
+        case SerializedSpot.POTENTIAL_MOVE:
+          spot.setIsPotentialMove();
+          break;
+        case 'w':
+          this.whiteStandardPieces[whiteStandardPieceIndex].setSpot(spot);
+          whiteStandardPieceIndex++;
+          break;
+        case 'W':
+          this.whitePowerPiece.setSpot(spot);
+          break;
+        case 'b':
+          this.blackStandardPieces[blackStandardPieceIndex].setSpot(spot);
+          blackStandardPieceIndex++;
+          break;
+        case 'B':
+          this.blackPowerPiece.setSpot(spot);
+          break;
+        default:
+          break;
+      }
+    });
   }
 
   findMoves(row: number, column: number): void {

@@ -27,7 +27,8 @@ function isSelectingWrongPiece(isWhiteTurn: boolean, selectedPiece: Piece, userT
 }
 
 function firstSelect(state: StateFirstSelect, payload: SelectPiecePayload): State {
-  let board = new Board(state.board);
+  let board = new Board();
+  board.configure(state.board);
 
   const nowSelectedRow = payload.row;
   const nowSelectedColumn = payload.column;
@@ -49,7 +50,8 @@ function firstSelect(state: StateFirstSelect, payload: SelectPiecePayload): Stat
 };
 
 function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): State {
-  let board = new Board(state.board);
+  let board = new Board();
+  board.configure(state.board);
 
   const nowSelectedRow = payload.row;
   const nowSelectedColumn = payload.column;

@@ -12,9 +12,9 @@ export enum PieceColor {
 
 export class BasePiece {
   readonly type: PieceType;
-  readonly color: PieceColor | null;
+  readonly color: PieceColor;
 
-  constructor(type: PieceType, color: PieceColor | null = null) {
+  constructor(type: PieceType, color: PieceColor) {
     this.type = type;
     this.color = color;
   }
@@ -71,14 +71,15 @@ export class Piece extends BasePiece {
   player: Player | null;
   spot: Spot;
 
-  constructor(type: PieceType, spot: Spot, color: PieceColor | null = null) {
+  constructor(type: PieceType, color: PieceColor, spot: Spot = new Spot(-1, -1)) {
     super(type, color);
+    this.spot = spot;
     this.setSpot(spot);
     this.player = null;
   }
 
   setSpot(spot: Spot): void {
-    this.spot?.removePiece();
+    this.spot.removePiece();
     this.spot = spot;
     this.spot.setPiece(this);
   }
