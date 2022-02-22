@@ -24,8 +24,8 @@ function GameComponent() {
 
   const matchAccessKey = useMatchAccessKey();
 
-  const [isLoading, isReady] = useGameReady(matchAccessKey, WAIT_FOR_JOINER_POLL_SECONDS * 1000);
-  const gameData = usePollForGameData(matchAccessKey, pollForGameData, WAIT_FOR_JOINER_POLL_SECONDS * 1000);
+  const [isLoading, isReady] = useGameReady(matchAccessKey, WAIT_FOR_JOINER_POLL_SECONDS);
+  const gameData = usePollForGameData(matchAccessKey, pollForGameData, WAIT_FOR_JOINER_POLL_SECONDS);
 
   useEffect(() => {
     dispatch(updateGameMeta({

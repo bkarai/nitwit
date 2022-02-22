@@ -9,7 +9,7 @@ type GameData = Pick<State, 'userType' | 'ready' | 'winner' | 'isWhiteTurn' | 'b
 export function usePollForGameData(
   matchAccessKey: string,
   poll: boolean,
-  pollTimeInMilliseconds: number,
+  pollTimeInSeconds: number,
 ): GameData {
 
   const [gameData, setGameData] = useState<GameData>({});
@@ -26,7 +26,7 @@ export function usePollForGameData(
     });
   }, [matchAccessKey, setGameData]);
 
-  usePolling(pollForGameData, poll, pollTimeInMilliseconds);
+  usePolling(pollForGameData, poll, pollTimeInSeconds);
 
   return gameData;
 }

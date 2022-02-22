@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
-    "express": "^4.17.2",
+    "express": "^4.17.3",
     "express-winston": "^4.0.5",
     "is-valid-port": "^1.0.0",
     "mysql": "^2.18.1",
