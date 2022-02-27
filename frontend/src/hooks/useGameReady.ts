@@ -2,12 +2,12 @@ import { useState, useCallback } from 'react';
 import { usePolling } from 'hooks';
 import { getMatch } from 'api';
 
-// This is going to implement (possibly only part of) the main game loop.
-// It will control the polling for the game data
-// It will make the API call.
+// Determines if the game is ready.
+// Really this is just checking if both users have joined.
+// It will poll until the other user has joined.
 export function useGameReady(
   matchAccessKey: string,
-  pollTimeInMilliseconds: number,
+  pollTimeInSeconds: number,
 ) {
 
   const [isReady, setIsReady] = useState(false);
@@ -25,7 +25,6 @@ export function useGameReady(
     });
   }, [matchAccessKey, setIsLoading, setIsReady]);
 
-  usePolling(pollForGameReady, !isReady, pollTimeInMilliseconds);
-
+  usePolling(pollForGameReady, !isReady, pollTimeInSeconds);
   return [isLoading, isReady];
 }

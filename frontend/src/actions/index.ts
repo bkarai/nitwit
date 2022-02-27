@@ -5,13 +5,17 @@ import { State } from 'store';
 export type SelectPiecePayload = Coordinate;
 
 export function selectPiece(payload: SelectPiecePayload) {
-  return { type: Action.ACTION_SELECT_PIECE, payload };
+  return { type: Action.SELECT_PIECE, payload };
 }
 
 export function updateGameMeta(payload: Partial<State>) {
-  return { type: Action.ACTION_UPDATE_GAME_META, payload };
+  return { type: Action.UPDATE_GAME_META, payload };
 }
 
 export function finishTurn() {
-  return { type: Action.ACTION_FINISH_TURN, payload: {} };
+  return { type: Action.FINISH_TURN, payload: {} };
+}
+
+export function gameIsReady() {
+  return { type: Action.GAME_IS_READY, payload: {} };
 }

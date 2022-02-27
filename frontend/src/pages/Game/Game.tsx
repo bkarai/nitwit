@@ -9,6 +9,7 @@ import { LoadingScreen, Timeline, GameBoard, ContentWrapper, WaitingForPlayer } 
 import { getTimelinePosition, sendNotification, NotificationType } from './util';
 import { initialState, rootReducer } from 'reducers';
 import { PieceColor, Board } from 'model';
+import { useDispatchGameReady } from './useDispatchGameReady';
 
 export const LoadingWrapper = styled.div({
   marginTop: '20vh',
@@ -28,15 +29,8 @@ function GameComponent() {
 
   const matchAccessKey = useMatchAccessKey();
 
-  const [isLoading, isReady] = useGameReady(matchAccessKey, WAIT_FOR_JOINER_POLL_SECONDS);
+  const { isLoading } = useDispatchGameReady(dispatch, matchAccessKey);
   const gameData = usePollForGameData(matchAccessKey, pollForGameData, WAIT_FOR_JOINER_POLL_SECONDS);
-
-  useEffect(() => {
-    dispatch(updateGameMeta({
-      ready: isReady,
-    }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isReady]);
 
   useEffect(() => {
     if ((isWhiteTurn && userType === PieceColor.WHITE) || (!isWhiteTurn && userType === PieceColor.BLACK)) {
@@ -70,7 +64,7 @@ function GameComponent() {
         </LoadingWrapper>) :
         (
           <>
-            {isReady ?
+            {!isLoading ?
             (
               <ContentWrapper>
                 <GameBoard />
