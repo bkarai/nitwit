@@ -27,64 +27,69 @@ function isSelectingWrongPiece(isWhiteTurn: boolean, selectedPiece: Piece, userT
 }
 
 function firstSelect(state: StateFirstSelect, payload: SelectPiecePayload): State {
-  const board = state.match.getBoard();
+  const gameBoard = new Board();
+  gameBoard.configure(state.board);
 
   const nowSelectedRow = payload.row;
   const nowSelectedColumn = payload.column;
-  const nowSelectedPiece = board.getPiece(nowSelectedRow, nowSelectedColumn);
+  const nowSelectedPiece = gameBoard.getPiece(nowSelectedRow, nowSelectedColumn);
 
   if (nowSelectedPiece) {
     if (isSelectingWrongPiece(state.isWhiteTurn, nowSelectedPiece, state.userType!)) {
-      return state;
+      return {...state};
     } else {
-      board.findMoves(nowSelectedRow, nowSelectedColumn);
+      gameBoard.findMoves(nowSelectedRow, nowSelectedColumn);
       return Object.assign({}, state, {
         selectedPiece: { row: nowSelectedRow, column: nowSelectedColumn },
+        board: gameBoard.serialize(),
       });
     }
   } else {
-    return state;
+    return {...state};
   }
 };
 
 function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): State {
-  debugger;
-  const board = state.match.getBoard();
+  const gameBoard = new Board();
+  gameBoard.configure(state.board);
 
   const nowSelectedRow = payload.row;
   const nowSelectedColumn = payload.column;
-  const nowSelectedSpot = board.getSpot(nowSelectedRow, nowSelectedColumn);
+  const nowSelectedSpot = gameBoard.getSpot(nowSelectedRow, nowSelectedColumn);
   const nowSelectedPiece = nowSelectedSpot.getPiece();
 
   const previouslySelectedRow = state.selectedPiece.row;
   const previouslySelectedColumn = state.selectedPiece.column;
-  const previouslySelectedPiece = board.getPiece(previouslySelectedRow, previouslySelectedColumn)!;
+  const previouslySelectedPiece = gameBoard.getPiece(previouslySelectedRow, previouslySelectedColumn)!;
 
   const isDeselecting = (nowSelectedRow === previouslySelectedRow) && (nowSelectedColumn === previouslySelectedColumn);
   const isSelectingNewPiece = (state.isWhiteTurn && nowSelectedPiece?.isWhite()) || (!state.isWhiteTurn && nowSelectedPiece?.isBlack());
 
   if (isDeselecting) {
-    board.clearMoves();
+    gameBoard.clearMoves();
     return Object.assign({}, state, {
       selectedPiece: null,
+      board: gameBoard.serialize(),
     });
   } else if (nowSelectedSpot.isPotentialMove()) {
     if (isSelectingWrongPiece(state.isWhiteTurn, previouslySelectedPiece, state.userType as PieceColor)) {
       return state;
     } else {
-      board.clearMoves();
-      previouslySelectedPiece.setSpot(board.getSpot(nowSelectedRow, nowSelectedColumn));
+      gameBoard.clearMoves();
+      previouslySelectedPiece.setSpot(gameBoard.getSpot(nowSelectedRow, nowSelectedColumn));
       return Object.assign({}, state, {
         selectedPiece: null,
         isWhiteTurn: !state.isWhiteTurn,
         userMadeMove: true,
+        board: gameBoard.serialize(),
       });
     }
   } else if (isSelectingNewPiece) {
-    board.clearMoves();
-    board.findMoves(nowSelectedRow, nowSelectedColumn);
+    gameBoard.clearMoves();
+    gameBoard.findMoves(nowSelectedRow, nowSelectedColumn);
     return Object.assign({}, state, {
       selectedPiece: { row: nowSelectedRow, column: nowSelectedColumn },
+      board: gameBoard.serialize(),
     });
   } else {
     return state;

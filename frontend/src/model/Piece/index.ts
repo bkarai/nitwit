@@ -95,8 +95,4 @@ export class Piece extends BasePiece {
   getPlayer(): Player | null {
     return this.player;
   }
-
-  destroy(): void {
-    this.spot.removePiece();
-  }
 };

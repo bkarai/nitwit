@@ -8,7 +8,7 @@ import { useGameReady, usePollForGameData, useMatchAccessKey } from 'hooks';
 import { LoadingScreen, Timeline, GameBoard, ContentWrapper, WaitingForPlayer } from 'components';
 import { getTimelinePosition, sendNotification, NotificationType } from './util';
 import { initialState, rootReducer } from 'reducers';
-import { PieceColor } from 'model';
+import { PieceColor, Board } from 'model';
 
 export const LoadingWrapper = styled.div({
   marginTop: '20vh',
@@ -20,9 +20,10 @@ function GameComponent() {
   const { state, dispatch } = useContext(GameContext);
 
   const pollForGameData = (state.isWhiteTurn && state.userType === PieceColor.BLACK) || (!state.isWhiteTurn && state.userType === PieceColor.WHITE) || !state.userType;
-  const { match, userMadeMove, ready, userType, isWhiteTurn } = state;
+  const { board, userMadeMove, ready, userType, isWhiteTurn } = state;
 
-  const gameBoard = match.getBoard();
+  const gameBoard = new Board();
+  gameBoard.configure(board);
   const hasWinner = gameBoard.getWinner() !== null;
 
   const matchAccessKey = useMatchAccessKey();

@@ -90,6 +90,13 @@ export class Board {
   };
 
   // Private Methods
+  clearAllSpots() {
+    this.forEachSpot((spot) => {
+      spot.removePiece();
+      spot.clearIsPotentialMove();
+    });
+  };
+
   getSpot(row: number, column: number): Spot {
     return this.spots[row][column];
   };
@@ -200,7 +207,8 @@ export class Board {
   }
 
   configure(serializedBoard: string) {
-    this.clearMoves();
+    this.clearAllSpots();
+
     let whiteStandardPieceIndex = 0;
     let blackStandardPieceIndex = 0;
 
