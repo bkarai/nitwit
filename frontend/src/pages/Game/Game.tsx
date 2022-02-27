@@ -20,8 +20,10 @@ function GameComponent() {
   const { state, dispatch } = useContext(GameContext);
 
   const pollForGameData = (state.isWhiteTurn && state.userType === PieceColor.BLACK) || (!state.isWhiteTurn && state.userType === PieceColor.WHITE) || !state.userType;
-  const winner = !!state.winner;
-  const { board, userMadeMove, ready, userType, isWhiteTurn } = state;
+  const { match, userMadeMove, ready, userType, isWhiteTurn } = state;
+
+  const gameBoard = match.getBoard();
+  const hasWinner = gameBoard.getWinner() !== null;
 
   const matchAccessKey = useMatchAccessKey();
 
@@ -42,13 +44,14 @@ function GameComponent() {
   }, [isWhiteTurn]);
 
   useEffect(() => {
-    dispatch(updateGameMeta(gameData));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameData]);
+    if (gameData) {
+      dispatch(updateGameMeta(gameData));
+    }
+  }, [JSON.stringify(gameData)]);
 
   useEffect(() => {
     if (userMadeMove) {
-      movePiece(matchAccessKey, board).then(() => {
+      movePiece(matchAccessKey, gameBoard.serialize()).then(() => {
         dispatch(finishTurn());
         sendNotification('You made your move', NotificationType.SUCCESS);
         sendNotification(`It is now ${userType === PieceColor.WHITE ? 'Black' : 'White'}'s' turn`, NotificationType.INFO);
@@ -59,7 +62,7 @@ function GameComponent() {
 
   return (
     <>
-      <Timeline position={isLoading ? undefined : getTimelinePosition(winner, ready)}/>
+      <Timeline position={isLoading ? undefined : getTimelinePosition(hasWinner, ready)}/>
       {isLoading ?
         (<LoadingWrapper>
           <LoadingScreen />

@@ -27,21 +27,19 @@ function isSelectingWrongPiece(isWhiteTurn: boolean, selectedPiece: Piece, userT
 }
 
 function firstSelect(state: StateFirstSelect, payload: SelectPiecePayload): State {
-  let board = new Board();
-  board.configure(state.board);
+  const board = state.match.getBoard();
 
   const nowSelectedRow = payload.row;
   const nowSelectedColumn = payload.column;
   const nowSelectedPiece = board.getPiece(nowSelectedRow, nowSelectedColumn);
 
   if (nowSelectedPiece) {
-    if (isSelectingWrongPiece(state.isWhiteTurn, nowSelectedPiece, state.userType as PieceColor)) {
+    if (isSelectingWrongPiece(state.isWhiteTurn, nowSelectedPiece, state.userType!)) {
       return state;
     } else {
       board.findMoves(nowSelectedRow, nowSelectedColumn);
       return Object.assign({}, state, {
         selectedPiece: { row: nowSelectedRow, column: nowSelectedColumn },
-        board: board.serialize(),
       });
     }
   } else {
@@ -50,8 +48,8 @@ function firstSelect(state: StateFirstSelect, payload: SelectPiecePayload): Stat
 };
 
 function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): State {
-  let board = new Board();
-  board.configure(state.board);
+  debugger;
+  const board = state.match.getBoard();
 
   const nowSelectedRow = payload.row;
   const nowSelectedColumn = payload.column;
@@ -60,7 +58,7 @@ function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): St
 
   const previouslySelectedRow = state.selectedPiece.row;
   const previouslySelectedColumn = state.selectedPiece.column;
-  const previouslySelectedPiece = board.getPiece(previouslySelectedRow, previouslySelectedColumn) as Piece;
+  const previouslySelectedPiece = board.getPiece(previouslySelectedRow, previouslySelectedColumn)!;
 
   const isDeselecting = (nowSelectedRow === previouslySelectedRow) && (nowSelectedColumn === previouslySelectedColumn);
   const isSelectingNewPiece = (state.isWhiteTurn && nowSelectedPiece?.isWhite()) || (!state.isWhiteTurn && nowSelectedPiece?.isBlack());
@@ -68,7 +66,6 @@ function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): St
   if (isDeselecting) {
     board.clearMoves();
     return Object.assign({}, state, {
-      board: board.serialize(),
       selectedPiece: null,
     });
   } else if (nowSelectedSpot.isPotentialMove()) {
@@ -78,10 +75,8 @@ function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): St
       board.clearMoves();
       previouslySelectedPiece.setSpot(board.getSpot(nowSelectedRow, nowSelectedColumn));
       return Object.assign({}, state, {
-        board: board.serialize(),
         selectedPiece: null,
         isWhiteTurn: !state.isWhiteTurn,
-        winner: board.getWinner(),
         userMadeMove: true,
       });
     }
@@ -89,7 +84,6 @@ function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): St
     board.clearMoves();
     board.findMoves(nowSelectedRow, nowSelectedColumn);
     return Object.assign({}, state, {
-      board: board.serialize(),
       selectedPiece: { row: nowSelectedRow, column: nowSelectedColumn },
     });
   } else {

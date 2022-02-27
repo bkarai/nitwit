@@ -8,7 +8,7 @@ export function selectPiece(payload: SelectPiecePayload) {
   return { type: Action.ACTION_SELECT_PIECE, payload };
 }
 
-export function updateGameMeta(payload: Partial<State>) {
+export function updateGameMeta(payload: Partial<State> & { board?: string }) {
   return { type: Action.ACTION_UPDATE_GAME_META, payload };
 }
 
