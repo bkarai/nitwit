@@ -6,7 +6,9 @@ export function useDispatchGameReady(dispatch: any, matchAccessKey: string, poll
   const [isLoading, isReady] = useGameReady(matchAccessKey, pollSeconds);
 
   useEffect(() => {
-    dispatch(gameIsReady());
+    if (isReady) {
+      dispatch(gameIsReady());
+    }
   }, [isReady, dispatch]);
 
   return { isLoading };

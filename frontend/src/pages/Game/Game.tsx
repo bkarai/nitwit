@@ -4,12 +4,13 @@ import { useEffect, useReducer, useContext } from 'react';
 import { GameContext } from 'context';
 import { movePiece } from 'api';
 import { updateGameMeta, finishTurn } from 'actions';
-import { useGameReady, usePollForGameData, useMatchAccessKey } from 'hooks';
+import { usePollForGameData, useMatchAccessKey } from 'hooks';
 import { LoadingScreen, Timeline, GameBoard, ContentWrapper, WaitingForPlayer } from 'components';
 import { getTimelinePosition, sendNotification, NotificationType } from './util';
 import { initialState, rootReducer } from 'reducers';
 import { PieceColor, Board } from 'model';
 import { useDispatchGameReady } from './useDispatchGameReady';
+import { useTurnNotification } from './useTurnNotification';
 
 export const LoadingWrapper = styled.div({
   marginTop: '20vh',
@@ -20,11 +21,10 @@ const WAIT_FOR_JOINER_POLL_SECONDS = 5;
 function GameComponent() {
   const { state, dispatch } = useContext(GameContext);
 
-  const pollForGameData = (state.isWhiteTurn && state.userType === PieceColor.BLACK) || (!state.isWhiteTurn && state.userType === PieceColor.WHITE) || !state.userType;
   const { board, userMadeMove, ready, userType, isWhiteTurn } = state;
+  const pollForGameData = (isWhiteTurn && userType === PieceColor.BLACK) || (!isWhiteTurn && userType === PieceColor.WHITE) || !userType;
 
-  const gameBoard = new Board();
-  gameBoard.configure(board);
+  const gameBoard = new Board(board);
   const hasWinner = gameBoard.getWinner() !== null;
 
   const matchAccessKey = useMatchAccessKey();
@@ -32,11 +32,7 @@ function GameComponent() {
   const { isLoading } = useDispatchGameReady(dispatch, matchAccessKey);
   const gameData = usePollForGameData(matchAccessKey, pollForGameData, WAIT_FOR_JOINER_POLL_SECONDS);
 
-  useEffect(() => {
-    if ((isWhiteTurn && userType === PieceColor.WHITE) || (!isWhiteTurn && userType === PieceColor.BLACK)) {
-      sendNotification('It is your turn!', NotificationType.INFO);
-    }
-  }, [isWhiteTurn]);
+  useTurnNotification();
 
   useEffect(() => {
     if (gameData) {
@@ -49,7 +45,6 @@ function GameComponent() {
       movePiece(matchAccessKey, gameBoard.serialize()).then(() => {
         dispatch(finishTurn());
         sendNotification('You made your move', NotificationType.SUCCESS);
-        sendNotification(`It is now ${userType === PieceColor.WHITE ? 'Black' : 'White'}'s' turn`, NotificationType.INFO);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -64,7 +59,7 @@ function GameComponent() {
         </LoadingWrapper>) :
         (
           <>
-            {!isLoading ?
+            {ready ?
             (
               <ContentWrapper>
                 <GameBoard />

@@ -58,7 +58,7 @@ export class Board {
   static MAX_ROW_INDEX = Board.NUMBER_OF_ROWS - 1;
   static MAX_COLUMN_INDEX = Board.NUMBER_OF_COLUMNS - 1;
 
-  constructor() {
+  constructor(serializedBoard: string = INITIAL_BOARD_STATE) {
     this.pieces = new Array<Piece>();
 
     this.spots = new Array<Spot[]>(Board.NUMBER_OF_ROWS);
@@ -86,7 +86,7 @@ export class Board {
     this.whiteStandardPieces = this.pieces.filter((p) => p.isWhite() && p.isStandard());
     this.blackStandardPieces = this.pieces.filter((p) => p.isBlack() && p.isStandard());
 
-    this.configure(INITIAL_BOARD_STATE);
+    this.configure(serializedBoard);
   };
 
   // Private Methods
