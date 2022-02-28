@@ -11,7 +11,6 @@ export function usePollForGameData(
   poll: boolean,
   pollTimeInSeconds: number,
 ): StateFields | null {
-
   const [gameData, setGameData] = useState<StateFields | null>(null);
 
   const pollForGameData = useCallback(() => {

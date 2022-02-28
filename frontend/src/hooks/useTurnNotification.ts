@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { GameContext } from "context";
 import { PieceColor } from "model";
-import { sendNotification, NotificationType } from "./util";
+import { sendNotification, NotificationType } from "notifications";
 
 export function useTurnNotification() {
   const { state: { isWhiteTurn, userType, ready } } = useContext(GameContext);

@@ -5,12 +5,11 @@ import { GameContext } from 'context';
 import { movePiece } from 'api';
 import { finishTurn } from 'actions';
 import { LoadingScreen, Timeline, GameBoard, ContentWrapper, WaitingForPlayer } from 'components';
-import { getTimelinePosition, sendNotification, NotificationType } from './util';
+import { getTimelinePosition } from './util';
+import { sendNotification, NotificationType } from 'notifications';
 import { initialState, rootReducer } from 'reducers';
 import { Board } from 'model';
-import { useTurnNotification } from './useTurnNotification';
-import { useMatchAccessKey } from 'hooks';
-import { useSyncMatch } from './useSyncMatch';
+import { useMatchAccessKey, useTurnNotification, useSyncMatchToState } from 'hooks';
 
 export const LoadingWrapper = styled.div({
   marginTop: '20vh',
@@ -25,7 +24,7 @@ function GameComponent() {
   const hasWinner = gameBoard.getWinner() !== null;
 
   useTurnNotification();
-  useSyncMatch()
+  useSyncMatchToState();
 
   const isLoading = userType === null;
 
