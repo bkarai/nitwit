@@ -17,7 +17,6 @@ export enum Action {
   SELECT_PIECE,
   UPDATE_GAME_META,
   FINISH_TURN,
-  GAME_IS_READY,
 };
 
 export function rootReducer(state: State, action: { type: Action, payload: any }): State {
@@ -29,9 +28,6 @@ export function rootReducer(state: State, action: { type: Action, payload: any }
   }
   if (action.type === Action.FINISH_TURN) {
     return {...state, userMadeMove: false};
-  }
-  if (action.type === Action.GAME_IS_READY) {
-    return {...state, ready: true};
   }
   return {...state};
 };

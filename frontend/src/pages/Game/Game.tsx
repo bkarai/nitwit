@@ -3,42 +3,31 @@ import { useEffect, useReducer, useContext } from 'react';
 
 import { GameContext } from 'context';
 import { movePiece } from 'api';
-import { updateGameMeta, finishTurn } from 'actions';
-import { usePollForGameData, useMatchAccessKey } from 'hooks';
+import { finishTurn } from 'actions';
 import { LoadingScreen, Timeline, GameBoard, ContentWrapper, WaitingForPlayer } from 'components';
 import { getTimelinePosition, sendNotification, NotificationType } from './util';
 import { initialState, rootReducer } from 'reducers';
-import { PieceColor, Board } from 'model';
-import { useDispatchGameReady } from './useDispatchGameReady';
+import { Board } from 'model';
 import { useTurnNotification } from './useTurnNotification';
+import { useMatchAccessKey } from 'hooks';
+import { useSyncMatch } from './useSyncMatch';
 
 export const LoadingWrapper = styled.div({
   marginTop: '20vh',
 });
 
-const WAIT_FOR_JOINER_POLL_SECONDS = 5;
-
 function GameComponent() {
+  const matchAccessKey = useMatchAccessKey();
   const { state, dispatch } = useContext(GameContext);
-
-  const { board, userMadeMove, ready, userType, isWhiteTurn } = state;
-  const pollForGameData = (isWhiteTurn && userType === PieceColor.BLACK) || (!isWhiteTurn && userType === PieceColor.WHITE) || !userType;
+  const { board, userMadeMove, ready, userType } = state;
 
   const gameBoard = new Board(board);
   const hasWinner = gameBoard.getWinner() !== null;
 
-  const matchAccessKey = useMatchAccessKey();
-
-  const { isLoading } = useDispatchGameReady(dispatch, matchAccessKey);
-  const gameData = usePollForGameData(matchAccessKey, pollForGameData, WAIT_FOR_JOINER_POLL_SECONDS);
-
   useTurnNotification();
+  useSyncMatch()
 
-  useEffect(() => {
-    if (gameData) {
-      dispatch(updateGameMeta(gameData));
-    }
-  }, [JSON.stringify(gameData)]);
+  const isLoading = userType === null;
 
   useEffect(() => {
     if (userMadeMove) {
