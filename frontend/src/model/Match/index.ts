@@ -5,14 +5,14 @@ import {
 
 export class Match {
   localGame: boolean;
-  matchAccessKey: string;
+  gameAccessKey: string;
   board: Board;
   players: [Player, Player];
   currentTurn: Player;
 
-  constructor(localGame = true, matchAccessKey = 'local') {
+  constructor(localGame = true, gameAccessKey = 'local') {
     this.localGame = localGame;
-    this.matchAccessKey = matchAccessKey;
+    this.gameAccessKey = gameAccessKey;
     this.board = new Board();
     this.players = [new Player(), new Player()];
 

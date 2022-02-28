@@ -9,14 +9,14 @@ import { getTimelinePosition } from './util';
 import { sendNotification, NotificationType } from 'notifications';
 import { initialState, rootReducer } from 'reducers';
 import { Board } from 'model';
-import { useMatchAccessKey, useTurnNotification, useSyncMatchToState } from 'hooks';
+import { useGameAccessKey, useTurnNotification, useSyncMatchToState } from 'hooks';
 
 export const LoadingWrapper = styled.div({
   marginTop: '20vh',
 });
 
 function GameComponent() {
-  const matchAccessKey = useMatchAccessKey();
+  const gameAccessKey = useGameAccessKey();
   const { state, dispatch } = useContext(GameContext);
   const { board, userMadeMove, ready, userType } = state;
 
@@ -30,7 +30,7 @@ function GameComponent() {
 
   useEffect(() => {
     if (userMadeMove) {
-      movePiece(matchAccessKey, gameBoard.serialize()).then(() => {
+      movePiece(gameAccessKey, gameBoard.serialize()).then(() => {
         dispatch(finishTurn());
         sendNotification('You made your move', NotificationType.SUCCESS);
       });
@@ -53,7 +53,7 @@ function GameComponent() {
                 <GameBoard />
               </ContentWrapper>
             ) : (
-              <WaitingForPlayer matchAccessKey={matchAccessKey} />
+              <WaitingForPlayer/>
             )
             }
           </>

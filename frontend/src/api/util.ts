@@ -1,16 +1,16 @@
 const API_PREFIX = '/api';
 
-export function matchPath(matchAccessKey?: string) {
+export function matchPath(gameAccessKey?: string) {
   const basePath = `${API_PREFIX}/match`;
-  return matchAccessKey ? `${basePath}/${matchAccessKey}` : basePath;
+  return gameAccessKey ? `${basePath}/${gameAccessKey}` : basePath;
 }
 
-export function movePiecePath(matchAccessKey: string) {
-  return `${matchPath(matchAccessKey)}/move`;
+export function movePiecePath(gameAccessKey: string) {
+  return `${matchPath(gameAccessKey)}/move`;
 }
 
-export function joinMatchPath(matchAccessKey: string) {
-  return `${matchPath(matchAccessKey)}/join`;
+export function joinMatchPath(gameAccessKey: string) {
+  return `${matchPath(gameAccessKey)}/join`;
 }
 
 const API_RESPONSE_CONTENT_TYPE = 'application/json';

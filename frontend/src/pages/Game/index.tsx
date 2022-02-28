@@ -3,7 +3,7 @@ import { pageEnhancer } from '../pageEnhancer';
 
 const GamePage = {
   Component: pageEnhancer(Game),
-  path: '/game/:matchAccessKey',
+  path: '/game/:gameAccessKey',
   name: 'Game',
 };
 

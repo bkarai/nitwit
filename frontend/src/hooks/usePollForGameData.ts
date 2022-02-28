@@ -7,14 +7,14 @@ import { getMatch } from 'api';
 type StateFields = Pick<State, 'userType' | 'ready' | 'isWhiteTurn' | 'board'>;
 
 export function usePollForGameData(
-  matchAccessKey: string,
+  gameAccessKey: string,
   poll: boolean,
   pollTimeInSeconds: number,
 ): StateFields | null {
   const [gameData, setGameData] = useState<StateFields | null>(null);
 
   const pollForGameData = useCallback(() => {
-    getMatch(matchAccessKey).then((response) => {
+    getMatch(gameAccessKey).then((response) => {
       setGameData({
         userType: response.data.userType,
         ready: response.data.ready,
@@ -22,7 +22,7 @@ export function usePollForGameData(
         board: response.data.positions,
       });
     });
-  }, [matchAccessKey, setGameData]);
+  }, [gameAccessKey, setGameData]);
 
   usePolling(pollForGameData, poll, pollTimeInSeconds);
 

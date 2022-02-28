@@ -10,6 +10,6 @@ interface GetMatchResponse {
   winner: null | PieceColor;
 };
 
-export function getMatch(matchAccessKey: string) {
-  return axios.get<GetMatchResponse>(matchPath(matchAccessKey), AXIOS_CONFIG_GET);
+export function getMatch(gameAccessKey: string) {
+  return axios.get<GetMatchResponse>(matchPath(gameAccessKey), AXIOS_CONFIG_GET);
 }
