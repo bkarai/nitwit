@@ -13,9 +13,9 @@ export function updateGameMeta(payload: Partial<State>) {
 }
 
 export function finishTurn() {
-  return { type: Action.FINISH_TURN, payload: {} };
+  return { type: Action.FINISH_TURN };
 }
 
 export function gameIsReady() {
-  return { type: Action.GAME_IS_READY, payload: {} };
+  return { type: Action.GAME_IS_READY };
 }
