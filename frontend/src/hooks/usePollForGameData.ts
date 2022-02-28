@@ -4,7 +4,7 @@ import { usePolling } from 'hooks';
 import { State } from 'store';
 import { getMatch } from 'api';
 
-type StateFields = Pick<State, 'userType' | 'ready' | 'isWhiteTurn' | 'board'>;
+type StateFields = Pick<State, 'userType' | 'ready' | 'isWhiteTurn' | 'board' | 'winner'>;
 
 export function usePollForGameData(
   gameAccessKey: string,
@@ -20,6 +20,7 @@ export function usePollForGameData(
         ready: response.data.ready,
         isWhiteTurn: response.data.isWhiteTurn,
         board: response.data.positions,
+        winner: response.data.winner,
       });
     });
   }, [gameAccessKey, setGameData]);

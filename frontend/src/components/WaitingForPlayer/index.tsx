@@ -10,8 +10,8 @@ import {
   WhatsappShareButton,
   WhatsappIcon,
 } from 'react-share';
-import { useGameAccessKey } from 'hooks';
 
+import { useGameAccessKey } from 'hooks';
 import { ContentWrapper } from 'components';
 
 export const IconWrapper = styled.div({
@@ -21,7 +21,6 @@ export const IconWrapper = styled.div({
 });
 
 export function WaitingForPlayer() {
-
   const gameAccessKey = useGameAccessKey();
   const linkToJoinGame = `${window.location.origin}/game/${gameAccessKey}/join/`;
   const copyToClipboard = () => {

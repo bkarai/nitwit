@@ -7,4 +7,5 @@ export interface State {
   userType: null | PieceColor,
   ready: boolean,
   userMadeMove: boolean,
+  winner: null | PieceColor,
 };

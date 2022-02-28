@@ -10,13 +10,10 @@ export function Join() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Annoying that I need to cast it as string. It's an
-    // issue with react-router
     joinMatch(gameAccessKey as string).then(() => {
       navigate(`/game/${gameAccessKey}`, { replace: true });
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [gameAccessKey]);
 
   return (
     <ContentWrapper>

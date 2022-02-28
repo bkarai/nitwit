@@ -11,6 +11,7 @@ export const initialState: State = {
   ready: false,
   userMadeMove: false,
   board: '',
+  winner: null,
 }
 
 export enum Action {
