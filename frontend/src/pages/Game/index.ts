@@ -1,8 +1,7 @@
 import { Game } from './Game';
-import { pageEnhancer } from '../pageEnhancer';
 
 const GamePage = {
-  Component: pageEnhancer(Game),
+  Component: Game,
   path: '/game/:gameAccessKey',
   name: 'Game',
 };

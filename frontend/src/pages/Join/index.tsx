@@ -2,7 +2,7 @@ import { Join } from './Join';
 import { pageEnhancer } from '../pageEnhancer';
 
 const JoinPage = {
-  Component: pageEnhancer(Join),
+  Component: Join,
   path: '/game/:gameAccessKey/join',
   name: 'Join',
 };

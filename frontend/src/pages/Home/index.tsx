@@ -1,8 +1,7 @@
 import { Home } from './Home';
-import { pageEnhancer } from '../pageEnhancer';
 
 const HomePage = {
-  Component: pageEnhancer(Home),
+  Component: Home,
   path: '/',
   name: 'Home',
 };
