@@ -1,5 +1,4 @@
 import { Join } from './Join';
-import { pageEnhancer } from '../pageEnhancer';
 
 const JoinPage = {
   Component: Join,

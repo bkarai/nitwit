@@ -13,7 +13,7 @@ export function Join() {
     joinMatch(gameAccessKey as string).then(() => {
       navigate(`/game/${gameAccessKey}`, { replace: true });
     });
-  }, [gameAccessKey]);
+  }, [gameAccessKey, navigate]);
 
   return (
     <ContentWrapper>
