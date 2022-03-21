@@ -1,9 +1,6 @@
-import styled from '@emotion/styled';
+import Box from '@mui/material/Box';
 import Footer from './Footer';
 import Header from './Header';
-
-const LayoutWrapper = styled.div({ height: '100%' });
-const ContentWrapper = styled.div({ height: '100%', width: '100%' });
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -13,14 +10,14 @@ export function Layout({
   children
 }: LayoutProps) {
   return (
-    <LayoutWrapper>
+    <Box height='100%'>
       <Header/>
-        <ContentWrapper className="card-body">
-          <div className="card p-3" style={{ height: '100%' }}>
+        <Box height='100%' width='100%' className="card-body">
+          <Box className="card p-3" height='100%'>
             {children}
-          </div>
-        </ContentWrapper>
+          </Box>
+        </Box>
       <Footer/>
-    </LayoutWrapper>
+    </Box>
   );
 }
