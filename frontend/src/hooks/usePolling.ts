@@ -15,8 +15,7 @@ export function usePolling(
       clearInterval(timer.current as number);
       timer.current = null;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [poll]);
+  }, [poll, callback, pollTimeInSeconds]);
 
   useEffect(() => {
     return () => {

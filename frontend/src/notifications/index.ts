@@ -6,16 +6,18 @@ export enum NotificationType {
   SUCCESS,
 };
 
+const TOASTR_CONFIG = { newestOnTop: false };
+
 export function sendNotification(message: string, type: NotificationType = NotificationType.INFO, title = undefined,) {
   switch(type) {
     case NotificationType.ERROR:
-      toastr.error(message, title, { newestOnTop: false });
+      toastr.error(message, title, TOASTR_CONFIG);
       break;
     case NotificationType.INFO:
-      toastr.info(message, title, { newestOnTop: false });
+      toastr.info(message, title, TOASTR_CONFIG);
       break;
     case NotificationType.SUCCESS:
-      toastr.success(message, title, { newestOnTop: false });
+      toastr.success(message, title, TOASTR_CONFIG);
       break;
     default:
       console.log(message);
