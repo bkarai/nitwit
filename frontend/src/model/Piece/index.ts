@@ -10,6 +10,13 @@ export enum PieceColor {
   BLACK = 'black',
 };
 
+export enum SerializedPiece {
+  WHITE_STANDARD = 'w',
+  WHITE_POWER = 'W',
+  BLACK_STANDARD = 'b',
+  BLACK_POWER = 'B',
+};
+
 export class BasePiece {
   readonly type: PieceType;
   readonly color: PieceColor;
@@ -38,28 +45,28 @@ export class BasePiece {
   serialize(): string {
     if (this.isWhite()) {
       if (this.isStandard()) {
-        return 'w';
+        return SerializedPiece.WHITE_STANDARD;
       } else {
-        return 'W';
+        return SerializedPiece.WHITE_POWER;
       }
     } else {
       if (this.isStandard()) {
-        return 'b';
+        return SerializedPiece.BLACK_STANDARD;
       } else {
-        return 'B';
+        return SerializedPiece.BLACK_POWER;
       }
     }
   }
 
   static deserialize(data: string): BasePiece | null {
     switch(data) {
-      case 'w':
+      case SerializedPiece.WHITE_STANDARD:
         return new BasePiece(PieceType.STANDARD, PieceColor.WHITE);
-      case 'W':
+      case SerializedPiece.WHITE_POWER:
         return new BasePiece(PieceType.POWER, PieceColor.WHITE);
-      case 'b':
+      case SerializedPiece.BLACK_STANDARD:
         return new BasePiece(PieceType.STANDARD, PieceColor.BLACK);
-      case 'B':
+      case SerializedPiece.BLACK_POWER:
         return new BasePiece(PieceType.POWER, PieceColor.BLACK);
       default:
         return null;

@@ -6,6 +6,7 @@ import {
   PieceType,
   Spot,
   SerializedSpot,
+  SerializedPiece,
 } from '..';
 
 enum Direction {
@@ -216,27 +217,26 @@ export class Board {
       const row = Math.floor(index / Board.NUMBER_OF_COLUMNS);
       const column = index % Board.NUMBER_OF_COLUMNS;
       const spot = this.getSpot(row, column);
+      const pieceOrSpotObject = Board.deserializeCharacter(pieceCharacter);
 
-      switch(pieceCharacter) {
-        case SerializedSpot.POTENTIAL_MOVE:
-          spot.setIsPotentialMove();
-          break;
-        case 'w':
-          this.whiteStandardPieces[whiteStandardPieceIndex].setSpot(spot);
-          whiteStandardPieceIndex++;
-          break;
-        case 'W':
-          this.whitePowerPiece.setSpot(spot);
-          break;
-        case 'b':
-          this.blackStandardPieces[blackStandardPieceIndex].setSpot(spot);
-          blackStandardPieceIndex++;
-          break;
-        case 'B':
-          this.blackPowerPiece.setSpot(spot);
-          break;
-        default:
-          break;
+      if (pieceOrSpotObject instanceof BaseSpot && pieceOrSpotObject.isPotentialMove()) {
+        spot.setIsPotentialMove();
+      } else if (pieceOrSpotObject instanceof BasePiece) {
+        if (pieceOrSpotObject.isStandard()) {
+          if (pieceOrSpotObject.isWhite()) {
+            this.whiteStandardPieces[whiteStandardPieceIndex].setSpot(spot);
+            whiteStandardPieceIndex++;
+          } else {
+            this.blackStandardPieces[blackStandardPieceIndex].setSpot(spot);
+            blackStandardPieceIndex++;
+          }
+        } else {
+          if (pieceOrSpotObject.isWhite()) {
+            this.whitePowerPiece.setSpot(spot);
+          } else {
+            this.blackPowerPiece.setSpot(spot);
+          }
+        }
       }
     });
   }
