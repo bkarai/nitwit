@@ -1,35 +1,76 @@
 import {
   Board,
-  Player
+  Player,
+  PieceColor,
+  Coordinate
 } from 'model';
 
+const LOCAL_GAME = 'local';
+
 export class Match {
-  localGame: boolean;
-  gameAccessKey: string;
+  local: boolean;
+  matchAccessKey: string;
   board: Board;
-  players: [Player, Player];
-  currentTurn: Player;
+  firstPlayer: Player | null;
+  secondPlayer: Player | null;
+  currentTurn: PieceColor;
 
-  constructor(localGame = true, gameAccessKey = 'local') {
-    this.localGame = localGame;
-    this.gameAccessKey = gameAccessKey;
+  constructor(local = true, matchAccessKey = LOCAL_GAME) {
+    this.local = local;
+    this.matchAccessKey = matchAccessKey;
     this.board = new Board();
-    this.players = [new Player(), new Player()];
-
-    this.players[0].setPieces(this.board.getWhitePieces());
-    this.players[1].setPieces(this.board.getBlackPieces());
-    this.currentTurn = this.players[0];
+    this.firstPlayer = null;
+    this.secondPlayer = null;
+    this.currentTurn = PieceColor.WHITE;
   }
 
-  getBoard() {
-    return this.board;
+  isLocalMatch(): boolean {
+    return this.local;
   }
 
-  pull() {
-
+  isNetworkGame(): boolean {
+    return !this.isLocalMatch();
   }
 
-  push() {
+  addPlayer(isControllingWhite: boolean, isLocalPlayer: boolean) {
+    const player = new Player(isLocalPlayer);
+    if (!this.firstPlayer) {
+      this.firstPlayer = player;
+    } else if (!this.secondPlayer) {
+      this.secondPlayer = player;
 
+      if (isControllingWhite === this.firstPlayer.isWhite()) {
+        console.error('Attempting to play a game with two players of the same color');
+      }
+    } else {
+      console.error('Attempting to add more than one player to the game');
+    }
+
+    player.setPieces(isControllingWhite ? this.board.getWhitePieces() : this.board.getBlackPieces());
+  }
+
+  isWhiteTurn(): boolean {
+    return this.currentTurn === PieceColor.WHITE;
+  }
+
+  isBlackTurn(): boolean {
+    return !this.isWhiteTurn();
+  }
+
+  configureBoard(positions: string): void {
+    this.board.configure(positions);
+  }
+
+  selectPieceAt(coordinate: Coordinate): void {
+    // TODO
+  }
+
+  serialize() {
+    return {
+      isLocalMatch: this.isLocalMatch,
+      matchAccessKey: this.matchAccessKey,
+      board: this.board.serialize(),
+      isWhiteTurn: this.currentTurn === PieceColor.WHITE,
+    }
   }
 };

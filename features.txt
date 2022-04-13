@@ -1,0 +1,8 @@
+1. create state model to abstract game management
+1.1 add fallback page.
+2. add in local game
+2.1 add in "recently played games"
+3. improve styling on desktop
+4. add mobile styling
+4.1 mobile shortcut
+5. drag and drop ?

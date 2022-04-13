@@ -5,8 +5,6 @@ import {
   PieceColor,
   PieceType,
   Spot,
-  SerializedSpot,
-  SerializedPiece,
 } from '..';
 
 enum Direction {

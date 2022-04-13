@@ -1,9 +1,11 @@
 import { Piece } from 'model';
 
 export class Player {
+  local: boolean;
   pieces: Piece[] | null;
 
-  constructor() {
+  constructor(isLocalPlayer: boolean) {
+    this.local = isLocalPlayer;
     this.pieces = null;
   }
 
@@ -32,5 +34,13 @@ export class Player {
 
   isBlack(): boolean {
     return !!this.getFirstPiece()?.isBlack();
+  }
+
+  isLocalPlayer(): boolean {
+    return this.local;
+  }
+
+  isNetworwPlayer(): boolean {
+    return !this.isLocalPlayer();
   }
 }

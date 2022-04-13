@@ -16,13 +16,17 @@ interface StateSecondSelect extends State {
   selectedPiece: Coordinate,
 };
 
+function toggleTurn(currentTurn: PieceColor): PieceColor {
+  return currentTurn === PieceColor.WHITE ? PieceColor.BLACK : PieceColor.WHITE;
+}
+
 // We can break up a select into two cases
 // 1. The user is making an initial selection
 // 2, The user is making a follow up selection (i.e. a move)
 
-function isSelectingWrongPiece(isWhiteTurn: boolean, selectedPiece: Piece, userType: PieceColor): boolean {
-  const whiteTurnAndMovingBlack = isWhiteTurn && (!selectedPiece.isWhite() || (userType === PieceColor.BLACK));
-  const blackTurnAndMovingWhite = !isWhiteTurn && (!selectedPiece.isBlack() || (userType === PieceColor.WHITE));
+function isSelectingWrongPiece(currentTurn: PieceColor, selectedPiece: Piece, userType: PieceColor): boolean {
+  const whiteTurnAndMovingBlack = (currentTurn === PieceColor.WHITE) && (!selectedPiece.isWhite() || (userType === PieceColor.BLACK));
+  const blackTurnAndMovingWhite = (currentTurn === PieceColor.BLACK) && (!selectedPiece.isBlack() || (userType === PieceColor.WHITE));
   return whiteTurnAndMovingBlack || blackTurnAndMovingWhite;
 }
 
@@ -34,7 +38,7 @@ function firstSelect(state: StateFirstSelect, payload: SelectPiecePayload): Stat
   const nowSelectedPiece = gameBoard.getPiece(nowSelectedRow, nowSelectedColumn);
 
   if (nowSelectedPiece) {
-    if (isSelectingWrongPiece(state.isWhiteTurn, nowSelectedPiece, state.userType!)) {
+    if (isSelectingWrongPiece(state.currentTurn, nowSelectedPiece, state.userType!)) {
       return {...state};
     } else {
       gameBoard.findMoves(nowSelectedRow, nowSelectedColumn);
@@ -61,7 +65,7 @@ function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): St
   const previouslySelectedPiece = gameBoard.getPiece(previouslySelectedRow, previouslySelectedColumn)!;
 
   const isDeselecting = (nowSelectedRow === previouslySelectedRow) && (nowSelectedColumn === previouslySelectedColumn);
-  const isSelectingNewPiece = (state.isWhiteTurn && nowSelectedPiece?.isWhite()) || (!state.isWhiteTurn && nowSelectedPiece?.isBlack());
+  const isSelectingNewPiece = ((state.currentTurn === PieceColor.WHITE) && nowSelectedPiece?.isWhite()) || ((state.currentTurn === PieceColor.BLACK) && nowSelectedPiece?.isBlack());
 
   if (isDeselecting) {
     gameBoard.clearMoves();
@@ -70,14 +74,14 @@ function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): St
       board: gameBoard.serialize(),
     });
   } else if (nowSelectedSpot.isPotentialMove()) {
-    if (isSelectingWrongPiece(state.isWhiteTurn, previouslySelectedPiece, state.userType as PieceColor)) {
+    if (isSelectingWrongPiece(state.currentTurn, previouslySelectedPiece, state.userType as PieceColor)) {
       return state;
     } else {
       gameBoard.clearMoves();
       previouslySelectedPiece.setSpot(gameBoard.getSpot(nowSelectedRow, nowSelectedColumn));
       return Object.assign({}, state, {
         selectedPiece: null,
-        isWhiteTurn: !state.isWhiteTurn,
+        currentTurn: toggleTurn(state.currentTurn),
         userMadeMove: true,
         board: gameBoard.serialize(),
       });

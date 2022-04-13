@@ -2,7 +2,7 @@ import axios from 'axios';
 import { matchPath, AXIOS_CONFIG_GET } from './util';
 import { PieceColor } from 'model';
 
-interface GetMatchResponse {
+export interface GetMatchResponse {
   isWhiteTurn: boolean;
   positions: string;
   ready: boolean;

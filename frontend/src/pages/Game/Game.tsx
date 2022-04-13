@@ -3,7 +3,7 @@ import { useEffect, useReducer, useContext } from 'react';
 
 import { GameContext } from 'context';
 import { movePiece } from 'api';
-import { finishTurn } from 'actions';
+import { finishTurn, setMatchAccessKey } from 'actions';
 import { LoadingScreen, GameBoard, ContentWrapper, WaitingForPlayer } from 'components';
 import { sendNotification, NotificationType } from 'notifications';
 import { initialState, rootReducer } from 'reducers';
@@ -15,9 +15,13 @@ export const LoadingWrapper = styled.div({
 });
 
 function GameComponent() {
-  const gameAccessKey = useGameAccessKey();
   const { state, dispatch } = useContext(GameContext);
   const { board, userMadeMove, ready, userType } = state;
+
+  const gameAccessKey = useGameAccessKey();
+  useEffect(() => {
+    dispatch(setMatchAccessKey(gameAccessKey));
+  }, [gameAccessKey, dispatch]);
 
   useTurnNotification();
   useSyncMatchToState(gameAccessKey);
@@ -59,7 +63,7 @@ function GameComponent() {
   );
 }
 
-function MapStateToPropsMock() {
+export function Game() {
   const [state, dispatch] = useReducer(rootReducer, initialState);
 
   return (
@@ -68,5 +72,3 @@ function MapStateToPropsMock() {
     </GameContext.Provider>
   );
 }
-
-export const Game = MapStateToPropsMock;
