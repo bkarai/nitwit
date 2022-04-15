@@ -29,15 +29,6 @@ function GameComponent() {
 
   const isLoading = userType === null;
 
-  useEffect(() => {
-    if (moveCount > 0) {
-      movePiece(gameAccessKey, board).then(() => {
-        sendNotification('You made your move', NotificationType.SUCCESS);
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [moveCount]);
-
   return (
     <>
       <EnhancedTimeline />
