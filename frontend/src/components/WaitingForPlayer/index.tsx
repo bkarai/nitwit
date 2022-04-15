@@ -27,7 +27,7 @@ export function WaitingForPlayer() {
     navigator.clipboard.writeText(linkToJoinGame);
     Swal.fire({
       title: 'Success',
-      text: 'Link has been copied to the clipboard',
+      text: 'Your game link has been copied to the clipboard',
       icon: 'success',
     });
   };

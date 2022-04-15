@@ -6,7 +6,7 @@ export interface State {
   selectedPiece: Coordinate | null,
   userType: null | PieceColor,
   ready: boolean,
-  userMadeMove: boolean,
   winner: null | PieceColor,
   matchAccessKey: string | null,
+  moveCount: number,
 };

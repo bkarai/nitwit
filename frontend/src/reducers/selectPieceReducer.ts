@@ -82,8 +82,8 @@ function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): St
       return Object.assign({}, state, {
         selectedPiece: null,
         currentTurn: toggleTurn(state.currentTurn),
-        userMadeMove: true,
         board: gameBoard.serialize(),
+        moveCount: state.moveCount + 1,
       });
     }
   } else if (isSelectingNewPiece) {

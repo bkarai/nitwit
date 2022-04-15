@@ -3,11 +3,11 @@ import { useEffect, useReducer, useContext } from 'react';
 
 import { GameContext } from 'context';
 import { movePiece } from 'api';
-import { finishTurn, setMatchAccessKey } from 'actions';
+import { setMatchAccessKey } from 'actions';
 import { LoadingScreen, GameBoard, ContentWrapper, WaitingForPlayer } from 'components';
 import { sendNotification, NotificationType } from 'notifications';
 import { initialState, rootReducer } from 'reducers';
-import { useGameAccessKey, useTurnNotification, useSyncMatchToState } from 'hooks';
+import { useGameAccessKey, useTurnNotification, useSyncMatchToState, usePushMove } from 'hooks';
 import { EnhancedTimeline } from './EnhancedTimeline';
 
 export const LoadingWrapper = styled.div({
@@ -16,7 +16,7 @@ export const LoadingWrapper = styled.div({
 
 function GameComponent() {
   const { state, dispatch } = useContext(GameContext);
-  const { board, userMadeMove, ready, userType } = state;
+  const { board, ready, userType, moveCount } = state;
 
   const gameAccessKey = useGameAccessKey();
   useEffect(() => {
@@ -25,18 +25,18 @@ function GameComponent() {
 
   useTurnNotification();
   useSyncMatchToState(gameAccessKey);
+  usePushMove(gameAccessKey, board, moveCount);
 
   const isLoading = userType === null;
 
   useEffect(() => {
-    if (userMadeMove) {
+    if (moveCount > 0) {
       movePiece(gameAccessKey, board).then(() => {
-        dispatch(finishTurn());
         sendNotification('You made your move', NotificationType.SUCCESS);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userMadeMove]);
+  }, [moveCount]);
 
   return (
     <>

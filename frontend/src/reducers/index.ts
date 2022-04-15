@@ -10,16 +10,15 @@ export const initialState: State = {
   selectedPiece: null,
   userType: null,
   ready: false,
-  userMadeMove: false,
   board: '',
   winner: null,
   matchAccessKey: null,
+  moveCount: 0,
 }
 
 export enum Action {
   SELECT_PIECE,
   UPDATE_GAME_META,
-  FINISH_TURN,
   SET_MATCH_ACCESS_KEY,
 };
 
@@ -29,9 +28,6 @@ export function rootReducer(state: State, action: { type: Action, payload: any }
   }
   if (action.type === Action.UPDATE_GAME_META) {
     return updateGameMetaReducer(state, action.payload)
-  }
-  if (action.type === Action.FINISH_TURN) {
-    return {...state, userMadeMove: false};
   }
   if (action.type === Action.SET_MATCH_ACCESS_KEY) {
     return {...state, matchAccessKey: action.payload};
