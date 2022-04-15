@@ -16,10 +16,6 @@ interface StateSecondSelect extends State {
   selectedPiece: Coordinate,
 };
 
-function toggleTurn(currentTurn: PieceColor): PieceColor {
-  return currentTurn === PieceColor.WHITE ? PieceColor.BLACK : PieceColor.WHITE;
-}
-
 // We can break up a select into two cases
 // 1. The user is making an initial selection
 // 2, The user is making a follow up selection (i.e. a move)
@@ -81,7 +77,6 @@ function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): St
       previouslySelectedPiece.setSpot(gameBoard.getSpot(nowSelectedRow, nowSelectedColumn));
       return Object.assign({}, state, {
         selectedPiece: null,
-        currentTurn: toggleTurn(state.currentTurn),
         board: gameBoard.serialize(),
         moveCount: state.moveCount + 1,
       });

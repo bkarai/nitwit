@@ -6,7 +6,17 @@ export enum NotificationType {
   SUCCESS,
 };
 
-const TOASTR_CONFIG = { newestOnTop: false };
+const TOASTR_CONFIG = {
+  newestOnTop: false,
+  showDuration: 300,
+  hideDuration: 1000,
+  timeOut: 3000,
+  extendedTimeOut: 1000,
+  showEasing: "swing",
+  hideEasing: "linear",
+  showMethod: "slideDown",
+  hideMethod: "fadeOut"
+};
 
 export function sendNotification(message: string, type: NotificationType = NotificationType.INFO, title = undefined,) {
   switch(type) {

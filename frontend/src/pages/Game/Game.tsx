@@ -1,11 +1,9 @@
 import styled from '@emotion/styled';
-import { useEffect, useReducer, useContext } from 'react';
+import { useEffect, useReducer, useContext, useCallback } from 'react';
 
 import { GameContext } from 'context';
-import { movePiece } from 'api';
-import { setMatchAccessKey } from 'actions';
+import { setMatchAccessKey, finishTurn } from 'actions';
 import { LoadingScreen, GameBoard, ContentWrapper, WaitingForPlayer } from 'components';
-import { sendNotification, NotificationType } from 'notifications';
 import { initialState, rootReducer } from 'reducers';
 import { useGameAccessKey, useTurnNotification, useSyncMatchToState, usePushMove } from 'hooks';
 import { EnhancedTimeline } from './EnhancedTimeline';
@@ -23,9 +21,15 @@ function GameComponent() {
     dispatch(setMatchAccessKey(gameAccessKey));
   }, [gameAccessKey, dispatch]);
 
+  const afterPush = useCallback(() => {
+    if (moveCount > 0) {
+      dispatch(finishTurn());
+    }
+  }, [dispatch, moveCount])
+
   useTurnNotification();
   useSyncMatchToState(gameAccessKey);
-  usePushMove(gameAccessKey, board, moveCount);
+  usePushMove(gameAccessKey, board, moveCount, afterPush);
 
   const isLoading = userType === null;
 

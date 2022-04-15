@@ -15,3 +15,7 @@ export function updateGameMeta(payload: GetMatchResponse) {
 export function setMatchAccessKey(matchAccessKey: string) {
   return { type: Action.SET_MATCH_ACCESS_KEY, payload: matchAccessKey };
 }
+
+export function finishTurn() {
+  return { type: Action.FINISH_TURN, payload: null };
+}
