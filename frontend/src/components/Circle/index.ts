@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export interface CircleProps {
+interface CircleProps {
   background: string;
   opacity?: string;
   radius?: string;
