@@ -1,14 +1,19 @@
+import { useCallback, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { createMatch } from 'api';
 
-function onClickNewGameButton() {
-  createMatch().then((response) => {
-    window.location.href = `/game/${response.data.matchAccessKey}`
-  });
-}
-
 export function NewGameButton() {
+  const [disabled, setDisabled] = useState(false);
+  const handleClick = useCallback(() => {
+    setDisabled(true);
+    createMatch().then((response) => {
+      window.location.href = `/game/${response.data.matchAccessKey}`
+    }).finally(() => {
+      setDisabled(false);
+    });
+  }, [setDisabled]);
+
   return (
-    <Button onClick={onClickNewGameButton}>New Game</Button>
+    <Button disabled={disabled} onClick={handleClick}>New Game</Button>
   );
 }
