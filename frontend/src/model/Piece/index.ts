@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { Player, Spot } from 'model';
 
 export enum PieceType {
@@ -77,12 +78,14 @@ export class BasePiece {
 export class Piece extends BasePiece {
   player: Player | null;
   spot: Spot;
+  readonly id: string;
 
   constructor(type: PieceType, color: PieceColor, spot: Spot = new Spot(-1, -1)) {
     super(type, color);
     this.spot = spot;
     this.setSpot(spot);
     this.player = null;
+    this.id = uuidv4();
   }
 
   setSpot(spot: Spot): void {
@@ -101,5 +104,9 @@ export class Piece extends BasePiece {
 
   getPlayer(): Player | null {
     return this.player;
+  }
+
+  getId(): string {
+    return this.id;
   }
 };

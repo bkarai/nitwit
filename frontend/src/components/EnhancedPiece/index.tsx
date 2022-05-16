@@ -1,6 +1,7 @@
 // This code is terrible, it should be refactored
 
 import { useCallback, useContext } from 'react';
+import { useDrag } from 'react-dnd';
 
 import { GameContext } from 'context';
 import { selectPiece } from 'actions';
@@ -48,6 +49,7 @@ function ChipWrapper({
   const { state: { board, selectedPiece }, dispatch } = gameContext;
   const gameBoard = new Board(board);
   const pieceCharacter = gameBoard.getSpot(rowIndex, columnIndex).serialize();
+  const pieceObject = gameBoard.getPiece(rowIndex, columnIndex);
 
   let selectedPieceObject = null;
   if ((selectedPiece?.row !== undefined) && (selectedPiece?.column !== undefined)) {
@@ -58,8 +60,16 @@ function ChipWrapper({
   const onClick = useCallback(() => dispatch(selectPiece({ row: rowIndex, column: columnIndex })),
   [dispatch, rowIndex, columnIndex]);
 
+  const [{ isDragging }, drag] = useDrag({
+    type: 'piece',
+    item: pieceObject,
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    })
+  }, [pieceObject]);
+
   return (
-    <div onClick={onClick} style={{ width: '100%', height: '100%' }}>
+    <div ref={drag} onClick={onClick} style={{ width: '100%', height: '100%' }}>
       <ImportChip pieceCharacter={pieceCharacter} isSelected={isSelected} selectedPiece={selectedPieceObject}/>
     </div>
   );

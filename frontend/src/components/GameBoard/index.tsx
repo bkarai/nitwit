@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+import { DndProvider, useDrop } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Board, Spot } from 'model';
 import { EnhancedPiece, BrownTile, OrangeTile, YellowTile } from 'components';
 
@@ -43,22 +45,42 @@ function GameBoardSpot({
   }
 };
 
+function DropableGameBoardSpot(props: GameBoardSpotProps) {
+  const { spot } = props;
+  const [{ canDrop, isOver }, drop] = useDrop({
+    accept: 'piece',
+    drop: () => spot,
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: spot.isPotentialMove(),
+    })
+  }, [spot, spot.isPotentialMove()]);
+
+  return (
+    <div ref={drop} style={{ border: isOver ? '5px solid' : 'none' }}>
+      <GameBoardSpot {...props}/>
+    </div>
+  );
+}
+
 export function GameBoard() {
   return (
-    <GameBoardWrapper>
-      <table cellPadding="0" cellSpacing="0">
-        <tbody>
-          {game.getSpots().map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {row.map((spot, columnIndex) => (
-                <td key={columnIndex}>
-                  <GameBoardSpot spot={spot}/>
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </GameBoardWrapper>
+    <DndProvider backend={HTML5Backend}>
+      <GameBoardWrapper>
+        <table cellPadding="0" cellSpacing="0">
+          <tbody>
+            {game.getSpots().map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {row.map((spot, columnIndex) => (
+                  <td key={columnIndex}>
+                    <DropableGameBoardSpot spot={spot}/>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </GameBoardWrapper>
+    </DndProvider>
   );
 }
