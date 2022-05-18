@@ -1,7 +1,8 @@
 version: "3.8"
 services:
   database:
-    image: "${DB_IMAGE}"
+    # Use mariadb:10.7.3 for mac
+    image: mysql:8.0.29
     command: --default-authentication-plugin=mysql_native_password
     volumes:
       - db_data:/var/lib/mysql
@@ -12,11 +13,13 @@ services:
     # To open the client, run 'mysql -u root -p'
 
   backend:
+    command: yarn start:dev
     build: ./backend
     depends_on:
       - database
     environment:
-      NODE_ENV: "${ENV}"
+      ENV: development
+      NODE_ENV: development
       SERVER_PORT: 3000
       DB_HOST: database
       DB_PORT: 3306
@@ -27,6 +30,7 @@ services:
       - "./backend:/app"
 
   frontend:
+    command: yarn start:dev
     build: ./frontend
     stdin_open: true
     depends_on:
@@ -34,11 +38,12 @@ services:
     ports:
       - "3000:3000"
     environment:
-      NODE_ENV: "${ENV}"
+      ENV: development
+      NODE_ENV: development
     volumes:
       - "./frontend:/app"
 
-  reverse-proxy:
+  proxy:
     build: "./proxy"
     depends_on:
       - backend
@@ -46,8 +51,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    environment:
+      ENV: development
 
 volumes:
   db_data: {}
-
-# ENV is either "production" or "development". Remember to set it when running docker-compose.

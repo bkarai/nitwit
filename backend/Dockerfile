@@ -4,9 +4,8 @@ WORKDIR /app
 COPY ./package.json yarn.lock ./
 RUN yarn install --production
 
-COPY ./start.sh ./
 COPY ./src ./src
 
-CMD ["./start.sh"]
+CMD ["/bin/sh", "-c", "yarn start:prod"]
 
 EXPOSE 3000

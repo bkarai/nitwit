@@ -20,7 +20,8 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
-    "start": "yarn install && react-scripts start",
+    "start:dev": "yarn install && react-scripts start",
+    "start:prod": "serve -s build -l 3000",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

@@ -5,8 +5,8 @@
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {
-    "dev": "yarn install && nodemon src/server.js --exec 'yarn run lint && node'",
-    "start": "node src/server.js",
+    "start:dev": "yarn install && nodemon src/server.js --exec 'yarn run lint && node'",
+    "start:prod": "node src/server.js",
     "lint": "eslint ./src",
     "clean": "rm -rf node_modules"
   },
