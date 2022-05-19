@@ -1,7 +1,6 @@
 version: "3.8"
 services:
   database:
-    # Use mariadb:10.7.3 for mac
     image: mysql:8.0.29
     command: --default-authentication-plugin=mysql_native_password
     volumes:
@@ -13,45 +12,40 @@ services:
     # To open the client, run 'mysql -u root -p'
 
   backend:
-    command: yarn start:dev
-    build: ./backend
+    image: 591937736746.dkr.ecr.us-east-1.amazonaws.com/outwit-backend:9c2e49233eeb2432289aa9d5437c4a8f56759701
     depends_on:
       - database
+    restart: always
     environment:
-      ENV: development
-      NODE_ENV: development
+      ENV: production
+      NODE_ENV: production
       SERVER_PORT: 3000
       DB_HOST: database
       DB_PORT: 3306
       DB_USER: root
       DB_PASSWORD: 123456
       DB_DATABASE: operational
-    volumes:
-      - "./backend:/app"
 
   frontend:
-    command: yarn start:dev
-    build: ./frontend
-    depends_on:
-      - backend
+    image: 591937736746.dkr.ecr.us-east-1.amazonaws.com/outwit-frontend:f69fd5cdd40eb30a102379810bc0c75dc811d155
+    restart: always
     ports:
       - "3000:3000"
     environment:
-      ENV: development
-      NODE_ENV: development
-    volumes:
-      - "./frontend:/app"
+      ENV: production
+      NODE_ENV: production
 
-  proxy:
-    build: "./proxy"
+  reverse-proxy:
+    image: 591937736746.dkr.ecr.us-east-1.amazonaws.com/outwit-proxy:9c2e49233eeb2432289aa9d5437c4a8f56759701
     depends_on:
       - backend
       - frontend
+    restart: always
     ports:
       - "80:80"
       - "443:443"
     environment:
-      ENV: development
+      ENV: production
 
 volumes:
   db_data: {}
