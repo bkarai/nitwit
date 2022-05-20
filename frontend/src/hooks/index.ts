@@ -6,3 +6,4 @@ export * from './useTurnNotification';
 export * from './usePushMove';
 export * from './useDraggablePiece';
 export * from './useClickablePiece';
+export * from './useDroppableSpot';

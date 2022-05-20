@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
-import { DndProvider, useDrop } from 'react-dnd';
+import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Board, Spot } from 'model';
 import { GamePiece, BrownTile, OrangeTile, YellowTile } from 'components';
+import { useDroppableSpot } from 'hooks';
 
 const GameBoardWrapper = styled.div({
   display: 'flex',
@@ -46,18 +47,10 @@ function GameBoardSpot({
 };
 
 function DropableGameBoardSpot(props: GameBoardSpotProps) {
-  const { spot } = props;
-  const [{ canDrop, isOver }, drop] = useDrop({
-    accept: 'piece',
-    drop: () => spot,
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: spot.isPotentialMove(),
-    })
-  }, [spot, spot.isPotentialMove()]);
+  const { dropRef, isOver } = useDroppableSpot(props.spot.getLocation());
 
   return (
-    <div ref={drop} style={{ border: isOver ? '5px solid' : 'none' }}>
+    <div ref={dropRef} style={{ border: isOver ? '2px solid' : 'none' }}>
       <GameBoardSpot {...props}/>
     </div>
   );
