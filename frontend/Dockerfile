@@ -1,12 +1,14 @@
-FROM node:18.1-alpine3.15
+FROM node:18.2-alpine3.15 as build
 
 WORKDIR /app
-COPY ./package.json yarn.lock ./
-RUN yarn install --production
+COPY ./ ./
+RUN yarn install && yarn build
 
-COPY ./public ./public
-COPY ./src ./src
-
-CMD ["/bin/sh", "-c", "yarn start"]
+FROM node:18.2-alpine3.15 as runtime
+WORKDIR /app
+RUN yarn global add serve@13.0.2 --exact
+COPY --from=build /app/build ./build/
+COPY --from=build /app/package.json ./
+CMD ["/bin/sh", "-c", "yarn start:prod"]
 
 EXPOSE 3000
