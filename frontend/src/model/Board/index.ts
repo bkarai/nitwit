@@ -1,6 +1,7 @@
 import {
   BasePiece,
   BaseSpot,
+  Coordinate,
   Piece,
   PieceColor,
   PieceType,
@@ -96,12 +97,12 @@ export class Board {
     });
   };
 
-  getSpot(row: number, column: number): Spot {
+  getSpot({ row, column }: Coordinate): Spot {
     return this.spots[row][column];
   };
 
-  isPowerPiece(row: number, column: number): boolean {
-    return !!this.getSpot(row, column).getPiece()?.isPower();
+  isPowerPiece(coordinate: Coordinate): boolean {
+    return !!this.getSpot(coordinate).getPiece()?.isPower();
   }
 
   canMoveToSpot(piece: Piece, spot: Spot): boolean {
@@ -116,10 +117,12 @@ export class Board {
     return row >= 0 && row <= Board.MAX_ROW_INDEX && column >= 0 && column <= Board.MAX_COLUMN_INDEX;
   }
 
-  findMove(row: number, column: number, direction: Direction): void {
+  findMove(coordinate: Coordinate, direction: Direction): void {
     let moveRow = null;
     let moveColumn = null;
-    const pieceMovingFrom = this.getPiece(row, column);
+    const pieceMovingFrom = this.getPiece(coordinate);
+
+    const { row, column } = coordinate;
 
     if (!pieceMovingFrom) {
       return;
@@ -136,7 +139,7 @@ export class Board {
     let potentialColumn = column + columnVector;
 
     while (this.isValidIndex(potentialRow, potentialColumn)) {
-      const spotMovingTo = this.getSpot(potentialRow, potentialColumn);
+      const spotMovingTo = this.getSpot({ row: potentialRow, column: potentialColumn });
       const pieceMovingToNotInGoal = !spotMovingTo.isPartOfGoal();
       const movingOutOfGoal = pieceMovingFromInGoal && pieceMovingToNotInGoal;
 
@@ -154,14 +157,14 @@ export class Board {
     }
 
     if ((moveRow !== null) && (moveColumn !== null) && !pieceMovingFrom.isPower()) {
-      this.getSpot(moveRow, moveColumn).setIsPotentialMove();
+      this.getSpot({ row: moveRow, column: moveColumn }).setIsPotentialMove();
     }
   }
 
   didWhiteWin(): boolean {
     for (let row = Spot.WHITE_GOAL_LOWEST_ROW; row <= Board.MAX_ROW_INDEX; row++) {
       for (let column = Spot.WHITE_GOAL_LOWEST_COLUMN; column <= Board.MAX_COLUMN_INDEX; column++) {
-        const piece = this.getPiece(row, column);
+        const piece = this.getPiece({row, column});
         if (!piece?.isWhite()) {
           return false;
         }
@@ -174,7 +177,7 @@ export class Board {
   didBlackWin(): boolean {
     for (let row = 0; row <= Spot.BLACK_GOAL_HIGHEST_ROW; row++) {
       for (let column = 0; column <= Spot.BLACK_GOAL_HIGHEST_COLUMN; column++) {
-        const piece = this.getPiece(row, column);
+        const piece = this.getPiece({row, column});
         if (!piece?.isBlack()) {
           return false;
         }
@@ -193,8 +196,8 @@ export class Board {
   }
 
   // Public Methods
-  getPiece(row: number, column: number): Piece | null {
-    return this.getSpot(row, column).getPiece();
+  getPiece(coordinate: Coordinate): Piece | null {
+    return this.getSpot(coordinate).getPiece();
   }
 
   getWhitePieces(): Piece[] {
@@ -214,7 +217,7 @@ export class Board {
     serializedBoard.split('').forEach((pieceCharacter, index) => {
       const row = Math.floor(index / Board.NUMBER_OF_COLUMNS);
       const column = index % Board.NUMBER_OF_COLUMNS;
-      const spot = this.getSpot(row, column);
+      const spot = this.getSpot({row, column});
       const pieceOrSpotObject = Board.deserializeCharacter(pieceCharacter);
 
       if (pieceOrSpotObject instanceof BaseSpot && pieceOrSpotObject.isPotentialMove()) {
@@ -239,10 +242,10 @@ export class Board {
     });
   }
 
-  findMoves(row: number, column: number): void {
-    NON_DIAGONAL_DIRECTIONS.forEach((direction) => this.findMove(row, column, direction));
-    if (this.isPowerPiece(row, column)) {
-      DIAGONAL_DIRECTIONS.forEach((direction) => this.findMove(row, column, direction));
+  findMoves(coordinate: Coordinate): void {
+    NON_DIAGONAL_DIRECTIONS.forEach((direction) => this.findMove(coordinate, direction));
+    if (this.isPowerPiece(coordinate)) {
+      DIAGONAL_DIRECTIONS.forEach((direction) => this.findMove(coordinate, direction));
     }
   }
 
