@@ -1,4 +1,4 @@
-export * from './EnhancedPiece';
+export * from './GamePiece';
 export * from './GameBoard';
 export * from './Layout';
 export * from './NewGameButton';

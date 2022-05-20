@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { DndProvider, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Board, Spot } from 'model';
-import { EnhancedPiece, BrownTile, OrangeTile, YellowTile } from 'components';
+import { GamePiece, BrownTile, OrangeTile, YellowTile } from 'components';
 
 const GameBoardWrapper = styled.div({
   display: 'flex',
@@ -27,19 +27,19 @@ function GameBoardSpot({
   if (spot.isPartOfBlackGoal()) {
     return (
       <BrownTile>
-        <EnhancedPiece rowIndex={row} columnIndex={column}/>
+        <GamePiece rowIndex={row} columnIndex={column}/>
       </BrownTile>
     );
   } else if (spot.isPartOfWhiteGoal()) {
     return (
       <YellowTile>
-        <EnhancedPiece rowIndex={row} columnIndex={column}/>
+        <GamePiece rowIndex={row} columnIndex={column}/>
       </YellowTile>
     );
   } else {
     return (
       <OrangeTile>
-        <EnhancedPiece rowIndex={row} columnIndex={column}/>
+        <GamePiece rowIndex={row} columnIndex={column}/>
       </OrangeTile>
     );
   }

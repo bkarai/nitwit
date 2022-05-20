@@ -13,7 +13,7 @@ import {
 interface ImportChipProps {
   pieceCharacter: string,
   isSelected: boolean,
-  selectedPiece: null | string,
+  selectedPiece?: string,
 };
 
 function ImportChip({
@@ -40,22 +40,19 @@ interface ChipWrapperProps {
   columnIndex: number,
 };
 
-function ChipWrapper({
+export function GamePiece({
   rowIndex,
   columnIndex,
 }: ChipWrapperProps) {
   const gameContext = useContext(GameContext);
   const { state: { board, selectedPiece, currentTurn, userType }, dispatch } = gameContext;
   const gameBoard = new Board(board);
-  const spot = gameBoard.getSpot(rowIndex, columnIndex);
+  const spot = gameBoard.getSpot({row: rowIndex, column: columnIndex});
   const pieceCharacter = spot.serialize();
-  const pieceObject = gameBoard.getPiece(rowIndex, columnIndex);
+  const pieceObject = gameBoard.getPiece({row: rowIndex, column: columnIndex});
 
-  let selectedPieceObject = null;
-  if ((selectedPiece?.row !== undefined) && (selectedPiece?.column !== undefined)) {
-    selectedPieceObject = gameBoard.getSpot(selectedPiece.row, selectedPiece.column).serialize();
-  }
-  const isSelected = selectedPiece?.row === rowIndex && selectedPiece?.column === columnIndex;
+  const selectedPieceObject = selectedPiece && gameBoard.getSpot({row: selectedPiece.row, column: selectedPiece.column});
+  const isThisPieceSelected = selectedPiece?.row === rowIndex && selectedPiece?.column === columnIndex;
 
   const onClick = useCallback(() => dispatch(selectPiece({ row: rowIndex, column: columnIndex })),
   [dispatch, rowIndex, columnIndex]);
@@ -73,9 +70,7 @@ function ChipWrapper({
 
   return (
     <div ref={drag} onClick={onClick} style={{ width: '100%', height: '100%' }}>
-      <ImportChip pieceCharacter={pieceCharacter} isSelected={isSelected} selectedPiece={selectedPieceObject}/>
+      <ImportChip pieceCharacter={pieceCharacter} isSelected={isThisPieceSelected} selectedPiece={selectedPieceObject?.serialize()}/>
     </div>
   );
 }
-
-export const EnhancedPiece = ChipWrapper;
