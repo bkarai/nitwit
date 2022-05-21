@@ -19,7 +19,7 @@ export default React.memo(function() {
     <StyledFooter className="bg-secondary">
       <div className="text-center p-4">
         © {new Date().getFullYear()} Copyright &nbsp;
-        <Link className="text-reset fw-bold" to="/">outwit.com</Link>
+        <Link className="text-reset fw-bold" to="/">play-outwit.com</Link>
       </div>
     </StyledFooter>
   );

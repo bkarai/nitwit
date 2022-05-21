@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Board, Spot } from 'model';
+import { Spot } from 'model';
 import { GamePiece, BrownTile, OrangeTile, YellowTile } from 'components';
 import { useDroppableSpot } from 'hooks';
+import { useContext } from 'react';
+import { GameContext } from 'context';
 
 const GameBoardWrapper = styled.div({
   display: 'flex',
@@ -15,21 +17,22 @@ const GameBoardWrapper = styled.div({
 });
 
 interface GameBoardSpotProps {
-  spot: Spot;
+  row: number;
+  column: number;
 };
 
 function GameBoardSpot({
-  spot
+  row, column
 }: GameBoardSpotProps) {
-  const { row, column } = spot.getLocation();
+  const tempSpot = new Spot(row, column);
   
-  if (spot.isPartOfBlackGoal()) {
+  if (tempSpot.isPartOfBlackGoal()) {
     return (
       <BrownTile>
         <GamePiece rowIndex={row} columnIndex={column}/>
       </BrownTile>
     );
-  } else if (spot.isPartOfWhiteGoal()) {
+  } else if (tempSpot.isPartOfWhiteGoal()) {
     return (
       <YellowTile>
         <GamePiece rowIndex={row} columnIndex={column}/>
@@ -45,7 +48,8 @@ function GameBoardSpot({
 };
 
 function DropableGameBoardSpot(props: GameBoardSpotProps) {
-  const { dropRef, isOver } = useDroppableSpot(props.spot.getLocation());
+  const { row, column } = props;
+  const { dropRef, isOver } = useDroppableSpot(row, column);
 
   return (
     <div ref={dropRef} style={{ border: isOver ? '2px solid' : 'none' }}>
@@ -54,19 +58,19 @@ function DropableGameBoardSpot(props: GameBoardSpotProps) {
   );
 }
 
-const game = new Board();
-
 export function GameBoard() {
+  const { board } = useContext(GameContext);
+
   return (
     <DndProvider backend={HTML5Backend}>
       <GameBoardWrapper>
         <table cellPadding="0" cellSpacing="0">
           <tbody>
-            {game.getSpots().map((row, rowIndex) => (
+            {board.getSpots().map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {row.map((spot, columnIndex) => (
                   <td key={columnIndex}>
-                    <DropableGameBoardSpot spot={spot}/>
+                    <DropableGameBoardSpot row={spot.getLocation().row} column={spot.getLocation().column}/>
                   </td>
                 ))}
               </tr>

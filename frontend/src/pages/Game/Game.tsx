@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useReducer, useContext, useCallback, useState, useMemo } from 'react';
+import { useEffect, useReducer, useContext, useCallback, useMemo } from 'react';
 
 import { GameContext } from 'context';
 import { setMatchAccessKey, finishTurn } from 'actions';

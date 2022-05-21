@@ -1,11 +1,10 @@
 import { useDrop } from "react-dnd";
-import { Board, Coordinate } from "model";
 import { useContext } from "react";
 import { GameContext } from "context";
 
-export function useDroppableSpot(coordinate: Coordinate) {
+export function useDroppableSpot(row: number, column: number) {
   const { board } = useContext(GameContext);
-  const spot = board.getSpot(coordinate);
+  const spot = board.getSpot({ row, column });
 
   const [{ canDrop, isOver }, dropRef] = useDrop({
     accept: 'piece',

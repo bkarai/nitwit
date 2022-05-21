@@ -1,12 +1,12 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useDrag } from "react-dnd";
-import { Board, Coordinate } from "model";
 import { GameContext } from "context";
+import { selectPiece } from "actions";
 
-export function useDraggablePiece(pieceCoordinate: Coordinate) {
-  const { state: { currentTurn, userType }, board: gameBoard } = useContext(GameContext);
+export function useDraggablePiece(row: number, column: number) {
+  const { state: { currentTurn, userType }, board, dispatch } = useContext(GameContext);
 
-  const thisPiece = gameBoard.getPiece(pieceCoordinate);
+  const thisPiece = board.getPiece({ row, column });
   const canDragThisPiece = currentTurn === userType && thisPiece?.color === userType;
 
   const [{ isDragging }, dragRef] = useDrag({
@@ -17,6 +17,12 @@ export function useDraggablePiece(pieceCoordinate: Coordinate) {
     }),
     canDrag: (monitor) => canDragThisPiece,
   }, [thisPiece, canDragThisPiece]);
+
+  useEffect(() => {
+    if (isDragging) {
+      dispatch(selectPiece({ row, column }));
+    }
+  }, [isDragging, dispatch, row, column]);
 
   return {
     isDragging,

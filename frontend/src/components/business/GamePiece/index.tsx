@@ -23,8 +23,8 @@ export function GamePiece({
   const selectedPieceObject = selectedPiece && board.getPiece({row: selectedPiece.row, column: selectedPiece.column})!;
   const isThisPieceSelected = selectedPiece?.row === rowIndex && selectedPiece?.column === columnIndex;
 
-  const onClick = useClickablePiece({ row: rowIndex, column: columnIndex });
-  const { isDragging, dragRef } = useDraggablePiece({ row: rowIndex, column: columnIndex });
+  const onClick = useClickablePiece(rowIndex, columnIndex);
+  const { dragRef } = useDraggablePiece(rowIndex, columnIndex);
 
   return thisSpot.isPotentialMove() || thisPiece ? (
     <div ref={dragRef} onClick={onClick} style={{ width: '100%', height: '100%' }}>
