@@ -67,7 +67,7 @@ function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): St
       board: gameBoard.serialize(),
     });
   } else if (nowSelectedSpot.isPotentialMove()) {
-    if (isSelectingWrongPiece(state.currentTurn, previouslySelectedPiece, state.userType as PieceColor)) {
+    if (isSelectingWrongPiece(state.currentTurn, previouslySelectedPiece, state.userType!)) {
       return state;
     } else {
       gameBoard.clearMoves();

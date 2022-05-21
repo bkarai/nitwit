@@ -3,4 +3,3 @@ export * from './Board';
 export * from './Piece';
 export * from './Player';
 export * from './Spot';
-export * from './Match';

@@ -4,10 +4,9 @@ import { Board, Coordinate } from "model";
 import { GameContext } from "context";
 
 export function useDraggablePiece(pieceCoordinate: Coordinate) {
-  const gameContext = useContext(GameContext);
-  const { state: { board, currentTurn, userType } } = gameContext;
+  const { state: { currentTurn, userType }, board: gameBoard } = useContext(GameContext);
 
-  const thisPiece = new Board(board).getPiece(pieceCoordinate);
+  const thisPiece = gameBoard.getPiece(pieceCoordinate);
   const canDragThisPiece = currentTurn === userType && thisPiece?.color === userType;
 
   const [{ isDragging }, dragRef] = useDrag({

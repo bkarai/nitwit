@@ -4,8 +4,7 @@ import { GameContext } from "context";
 import { selectPiece } from "actions";
 
 export function useClickablePiece(coordinate: Coordinate) {
-  const gameContext = useContext(GameContext);
-  const { dispatch } = gameContext;
+  const { dispatch } = useContext(GameContext);
   return useCallback(() => dispatch(selectPiece(coordinate)),
   [dispatch, coordinate.row, coordinate.column]);
 }

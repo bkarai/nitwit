@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
-import { useEffect, useReducer, useContext, useCallback } from 'react';
+import { useEffect, useReducer, useContext, useCallback, useState, useMemo } from 'react';
 
 import { GameContext } from 'context';
 import { setMatchAccessKey, finishTurn } from 'actions';
 import { LoadingScreen, GameBoard, ContentWrapper, WaitingForPlayer } from 'components';
 import { initialState, rootReducer } from 'reducers';
 import { useGameAccessKey, useTurnNotification, useSyncMatchToState, usePushMove } from 'hooks';
+import { Board } from 'model';
 import { EnhancedTimeline } from './EnhancedTimeline';
 
 export const LoadingWrapper = styled.div({
@@ -60,9 +61,10 @@ function GameComponent() {
 
 export function Game() {
   const [state, dispatch] = useReducer(rootReducer, initialState);
+  const board = useMemo(() => new Board(state.board), [state.board]);
 
   return (
-    <GameContext.Provider value={{ state, dispatch }}>
+    <GameContext.Provider value={{ state, dispatch, board }}>
       <GameComponent />
     </GameContext.Provider>
   );

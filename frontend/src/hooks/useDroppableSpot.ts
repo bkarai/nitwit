@@ -4,9 +4,8 @@ import { useContext } from "react";
 import { GameContext } from "context";
 
 export function useDroppableSpot(coordinate: Coordinate) {
-  const { state: { board } } = useContext(GameContext);
-  const gameBoard = new Board(board);
-  const spot = gameBoard.getSpot(coordinate);
+  const { board } = useContext(GameContext);
+  const spot = board.getSpot(coordinate);
 
   const [{ canDrop, isOver }, dropRef] = useDrop({
     accept: 'piece',

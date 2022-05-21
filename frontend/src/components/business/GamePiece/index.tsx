@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 
 import { GameContext } from 'context';
-import { Board } from 'model';
 import {
   SimplePiece,
 } from 'components';
@@ -16,14 +15,12 @@ export function GamePiece({
   rowIndex,
   columnIndex,
 }: GamePieceProps) {
-  const gameContext = useContext(GameContext);
-  const { state: { board, selectedPiece }, dispatch } = gameContext;
+  const { state: { selectedPiece }, board } = useContext(GameContext);
 
-  const gameBoard = new Board(board);
-  const thisSpot = gameBoard.getSpot({row: rowIndex, column: columnIndex});
-  const thisPiece = gameBoard.getPiece({row: rowIndex, column: columnIndex});
+  const thisSpot = board.getSpot({row: rowIndex, column: columnIndex});
+  const thisPiece = board.getPiece({row: rowIndex, column: columnIndex});
 
-  const selectedPieceObject = selectedPiece && gameBoard.getPiece({row: selectedPiece.row, column: selectedPiece.column})!;
+  const selectedPieceObject = selectedPiece && board.getPiece({row: selectedPiece.row, column: selectedPiece.column})!;
   const isThisPieceSelected = selectedPiece?.row === rowIndex && selectedPiece?.column === columnIndex;
 
   const onClick = useClickablePiece({ row: rowIndex, column: columnIndex });

@@ -14,8 +14,6 @@ const GameBoardWrapper = styled.div({
   },
 });
 
-const game = new Board();
-
 interface GameBoardSpotProps {
   spot: Spot;
 };
@@ -55,6 +53,8 @@ function DropableGameBoardSpot(props: GameBoardSpotProps) {
     </div>
   );
 }
+
+const game = new Board();
 
 export function GameBoard() {
   return (
