@@ -3,7 +3,7 @@ import { updateGameMetaReducer } from './updateGameMetaReducer';
 import { PieceColor } from 'model';
 import { 
   State
-} from 'store';
+} from 'context/game';
 
 export const initialState: State = {
   currentTurn: PieceColor.WHITE,

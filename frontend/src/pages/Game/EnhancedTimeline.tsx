@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { GameContext } from 'context';
+import { GameContext } from 'context/game';
 import { Timeline, TimelinePosition } from "components";
 
 function getTimelinePosition(hasWinner: boolean, ready: boolean): TimelinePosition {

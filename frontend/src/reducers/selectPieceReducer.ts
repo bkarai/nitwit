@@ -2,7 +2,7 @@ import { Coordinate, Board, Piece, PieceColor } from 'model';
 
 import {
   State,
-} from 'store';
+} from 'context/game';
 
 import {
   SelectPiecePayload

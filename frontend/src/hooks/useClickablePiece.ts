@@ -1,5 +1,5 @@
 import { useCallback, useContext } from "react";
-import { GameContext } from "context";
+import { GameContext } from "context/game";
 import { selectPiece } from "actions";
 
 export function useClickablePiece(row: number, column: number) {

@@ -1,5 +1,5 @@
 import { GetMatchResponse } from "api";
-import { State } from "store";
+import { State } from "context/game";
 import { PieceColor } from "model";
 
 export function updateGameMetaReducer(state: State, match: GetMatchResponse) {

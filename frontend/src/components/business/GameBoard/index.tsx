@@ -5,7 +5,7 @@ import { Spot } from 'model';
 import { GamePiece, BrownTile, OrangeTile, YellowTile } from 'components';
 import { useDroppableSpot } from 'hooks';
 import { useContext } from 'react';
-import { GameContext } from 'context';
+import { GameContext } from 'context/game';
 
 const GameBoardWrapper = styled.div({
   display: 'flex',
@@ -49,10 +49,10 @@ function GameBoardSpot({
 
 function DropableGameBoardSpot(props: GameBoardSpotProps) {
   const { row, column } = props;
-  const { dropRef, isOver } = useDroppableSpot(row, column);
+  const { dropRef, isOver, canDrop } = useDroppableSpot(row, column);
 
   return (
-    <div ref={dropRef} style={{ border: isOver ? '2px solid' : 'none' }}>
+    <div ref={dropRef} style={{ border: (isOver && canDrop) ? '2px solid' : 'none' }}>
       <GameBoardSpot {...props}/>
     </div>
   );

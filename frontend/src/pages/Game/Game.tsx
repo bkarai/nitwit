@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useEffect, useReducer, useContext, useCallback, useMemo } from 'react';
 
-import { GameContext } from 'context';
+import { GameContext } from 'context/game';
 import { setMatchAccessKey, finishTurn } from 'actions';
 import { LoadingScreen, GameBoard, ContentWrapper, WaitingForPlayer } from 'components';
 import { initialState, rootReducer } from 'reducers';

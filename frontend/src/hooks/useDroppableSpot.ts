@@ -1,6 +1,6 @@
 import { useDrop } from "react-dnd";
 import { useContext } from "react";
-import { GameContext } from "context";
+import { GameContext } from "context/game";
 
 export function useDroppableSpot(row: number, column: number) {
   const { board } = useContext(GameContext);

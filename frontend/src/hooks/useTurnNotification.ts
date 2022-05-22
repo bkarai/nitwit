@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { GameContext } from "context";
+import { GameContext } from "context/game";
 import { PieceColor } from "model";
 import { sendNotification, NotificationType } from "notifications";
 

@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react";
-import { GameContext } from "context";
+import { GameContext } from "context/game";
 import { usePollForGameData } from "hooks";
 import { updateGameMeta } from "actions";
 
