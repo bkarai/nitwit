@@ -2,6 +2,7 @@ import { selectPieceReducer } from './selectPieceReducer';
 import { updateGameMetaReducer } from './updateGameMetaReducer';
 import { PieceColor } from 'model';
 import { 
+  Action,
   State
 } from 'context/game';
 
@@ -15,13 +16,6 @@ export const initialState: State = {
   matchAccessKey: null,
   moveCount: 0,
 }
-
-export enum Action {
-  SELECT_PIECE,
-  UPDATE_GAME_META,
-  SET_MATCH_ACCESS_KEY,
-  FINISH_TURN,
-};
 
 export function rootReducer(state: State, action: { type: Action, payload: any }): State {
   if (action.type === Action.SELECT_PIECE) {

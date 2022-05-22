@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useDrag } from "react-dnd";
 import { GameContext } from "context/game";
-import { selectPiece } from "actions";
+import { selectPiece } from "context/game";
 
 export function useDraggablePiece(row: number, column: number) {
   const { state: { currentTurn, userType, selectedPiece }, board, dispatch } = useContext(GameContext);

@@ -1,7 +1,7 @@
 import { useEffect, useContext } from "react";
 import { GameContext } from "context/game";
 import { usePollForGameData } from "hooks";
-import { updateGameMeta } from "actions";
+import { updateGameMeta } from "context/game";
 
 export function useSyncMatchToState(gameAccessKey: string, pollTimeInSeconds: number = 5) {
   const { state: { currentTurn, userType, ready }, dispatch } = useContext(GameContext);

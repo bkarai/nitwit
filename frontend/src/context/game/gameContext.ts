@@ -1,5 +1,5 @@
 import React from 'react';
-import { initialState } from 'reducers';
+import { initialState } from 'context/game/reducers';
 import { Board, Coordinate, PieceColor } from 'model';
 
 export interface State {

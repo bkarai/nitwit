@@ -1,6 +1,12 @@
-import { Action } from 'reducers';
 import { Coordinate } from "model";
 import { GetMatchResponse } from 'api';
+
+export enum Action {
+  SELECT_PIECE,
+  UPDATE_GAME_META,
+  SET_MATCH_ACCESS_KEY,
+  FINISH_TURN,
+};
 
 export type SelectPiecePayload = Coordinate;
 

@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import { useEffect, useReducer, useContext, useCallback, useMemo } from 'react';
 
 import { GameContext } from 'context/game';
-import { setMatchAccessKey, finishTurn } from 'actions';
+import { setMatchAccessKey, finishTurn } from 'context/game';
 import { LoadingScreen, GameBoard, ContentWrapper, WaitingForPlayer } from 'components';
-import { initialState, rootReducer } from 'reducers';
+import { initialState, rootReducer } from 'context/game/reducers';
 import { useGameAccessKey, useTurnNotification, useSyncMatchToState, usePushMove } from 'hooks';
 import { Board } from 'model';
 import { EnhancedTimeline } from './EnhancedTimeline';

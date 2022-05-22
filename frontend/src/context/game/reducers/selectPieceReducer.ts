@@ -6,7 +6,7 @@ import {
 
 import {
   SelectPiecePayload
-} from 'actions';
+} from 'context/game';
 
 interface StateFirstSelect extends State {
   selectedPiece: null,
