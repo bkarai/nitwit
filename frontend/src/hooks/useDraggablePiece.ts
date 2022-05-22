@@ -1,29 +1,28 @@
 import { useContext, useEffect } from "react";
 import { useDrag } from "react-dnd";
-import { GameContext } from "context/game";
-import { selectPiece } from "context/game";
+import { GameContext, selectPiece } from "context/game";
+import { Piece } from 'model';
 
-export function useDraggablePiece(row: number, column: number) {
+export function useDraggablePiece(piece: Piece | null) {
   const { state: { currentTurn, userType, selectedPiece }, board, dispatch } = useContext(GameContext);
 
-  const thisPiece = board.getPiece({ row, column });
-  const isThisPieceSelected = !!(selectedPiece && board.getPiece(selectedPiece) === thisPiece);
-  const canDragThisPiece = currentTurn === userType && thisPiece?.color === userType && (!selectedPiece || isThisPieceSelected);
+  const isThisPieceSelected = !!(selectedPiece && board.getPiece(selectedPiece) === piece);
+  const canDragThisPiece = currentTurn === userType && piece?.color === userType && (!selectedPiece || isThisPieceSelected);
 
   const [{ isDragging }, dragRef] = useDrag({
     type: 'piece',
-    item: thisPiece,
+    item: piece,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
     canDrag: (monitor) => canDragThisPiece,
-  }, [thisPiece, canDragThisPiece]);
+  }, [piece, canDragThisPiece]);
 
   useEffect(() => {
     if (isDragging && !selectedPiece) {
-      dispatch(selectPiece({ row, column }));
+      dispatch(selectPiece(piece!.getSpot().getLocation()));
     }
-  }, [isDragging, dispatch, selectedPiece, row, column]);
+  }, [isDragging, dispatch, selectedPiece, piece?.getSpot().getLocation()]);
 
   return {
     isDragging,

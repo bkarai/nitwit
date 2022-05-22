@@ -17,39 +17,37 @@ const GameBoardWrapper = styled.div({
 });
 
 interface GameBoardSpotProps {
-  row: number;
-  column: number;
+  spot: Spot;
 };
 
 function GameBoardSpot({
-  row, column
+  spot
 }: GameBoardSpotProps) {
-  const tempSpot = new Spot(row, column);
-  
-  if (tempSpot.isPartOfBlackGoal()) {
+  const piece = <GamePiece spot={spot} />
+
+  if (spot.isPartOfBlackGoal()) {
     return (
       <BrownTile>
-        <GamePiece rowIndex={row} columnIndex={column}/>
+        {piece}
       </BrownTile>
     );
-  } else if (tempSpot.isPartOfWhiteGoal()) {
+  } else if (spot.isPartOfWhiteGoal()) {
     return (
       <YellowTile>
-        <GamePiece rowIndex={row} columnIndex={column}/>
+        {piece}
       </YellowTile>
     );
   } else {
     return (
       <OrangeTile>
-        <GamePiece rowIndex={row} columnIndex={column}/>
+        {piece}
       </OrangeTile>
     );
   }
 };
 
 function DropableGameBoardSpot(props: GameBoardSpotProps) {
-  const { row, column } = props;
-  const { dropRef, isOver, canDrop } = useDroppableSpot(row, column);
+  const { dropRef, isOver, canDrop } = useDroppableSpot(props.spot);
 
   return (
     <div ref={dropRef} style={{ border: (isOver && canDrop) ? '2px solid' : 'none' }}>
@@ -70,7 +68,7 @@ export function GameBoard() {
               <tr key={rowIndex}>
                 {row.map((spot, columnIndex) => (
                   <td key={columnIndex}>
-                    <DropableGameBoardSpot row={spot.getLocation().row} column={spot.getLocation().column}/>
+                    <DropableGameBoardSpot spot={spot}/>
                   </td>
                 ))}
               </tr>

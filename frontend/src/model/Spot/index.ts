@@ -61,7 +61,7 @@ export class Spot extends BaseSpot {
   }
 
   getLocation(): Coordinate {
-    return {...this.location};
+    return this.location;
   }
 
   isOccupied() {

@@ -4,31 +4,28 @@ import { GameContext } from 'context/game';
 import {
   SimplePiece,
 } from 'components';
-import { useClickablePiece, useDraggablePiece } from 'hooks';
+import { Spot } from 'model';
+import { useClickableSpot, useDraggablePiece } from 'hooks';
 
 interface GamePieceProps {
-  rowIndex: number,
-  columnIndex: number,
+  spot: Spot;
 };
 
 export function GamePiece({
-  rowIndex,
-  columnIndex,
+  spot
 }: GamePieceProps) {
   const { state: { selectedPiece }, board } = useContext(GameContext);
 
-  const thisSpot = board.getSpot({row: rowIndex, column: columnIndex});
-  const thisPiece = board.getPiece({row: rowIndex, column: columnIndex});
+  const thisPiece = spot.getPiece();
+  const selectedPieceObject = selectedPiece && board.getPiece(selectedPiece)!;
+  const isThisPieceSelected = thisPiece === selectedPieceObject;
 
-  const selectedPieceObject = selectedPiece && board.getPiece({row: selectedPiece.row, column: selectedPiece.column})!;
-  const isThisPieceSelected = selectedPiece?.row === rowIndex && selectedPiece?.column === columnIndex;
+  const onClick = useClickableSpot(spot);
+  const { dragRef } = useDraggablePiece(thisPiece);
 
-  const onClick = useClickablePiece(rowIndex, columnIndex);
-  const { dragRef } = useDraggablePiece(rowIndex, columnIndex);
-
-  return thisSpot.isPotentialMove() || thisPiece ? (
+  return spot.isPotentialMove() || thisPiece ? (
     <div ref={dragRef} onClick={onClick} style={{ width: '100%', height: '100%' }}>
-      {thisSpot.isPotentialMove() ?
+      {spot.isPotentialMove() ?
         <SimplePiece isSelected={false} isPower={selectedPieceObject!.isPower()} isMove isWhite={selectedPieceObject!.isWhite()}/> :
         <SimplePiece isSelected={isThisPieceSelected} isPower={thisPiece!.isPower()} isMove={false} isWhite={thisPiece!.isWhite()}/>
       }
