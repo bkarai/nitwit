@@ -3,11 +3,11 @@ import { useDrag } from "react-dnd";
 import { GameContext, selectPiece } from "context/game";
 import { Piece } from 'model';
 
-export function useDraggablePiece(piece: Piece | null) {
+export function useDraggablePiece(piece: Piece) {
   const { state: { currentTurn, userType, selectedPiece }, board, dispatch } = useContext(GameContext);
 
   const isThisPieceSelected = !!(selectedPiece && board.getPiece(selectedPiece) === piece);
-  const canDragThisPiece = currentTurn === userType && piece?.color === userType && (!selectedPiece || isThisPieceSelected);
+  const canDragThisPiece = currentTurn === userType && piece.color === userType && (!selectedPiece || isThisPieceSelected);
 
   const [{ isDragging }, dragRef] = useDrag({
     type: 'piece',
@@ -20,9 +20,9 @@ export function useDraggablePiece(piece: Piece | null) {
 
   useEffect(() => {
     if (isDragging && !selectedPiece) {
-      dispatch(selectPiece(piece!.getSpot().getLocation()));
+      dispatch(selectPiece(piece.getSpot().getLocation()));
     }
-  }, [isDragging, dispatch, selectedPiece, piece?.getSpot().getLocation()]);
+  }, [isDragging, dispatch, selectedPiece, piece.getSpot().getLocation()]);
 
   return {
     isDragging,

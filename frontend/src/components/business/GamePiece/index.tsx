@@ -4,8 +4,48 @@ import { GameContext } from 'context/game';
 import {
   SimplePiece,
 } from 'components';
-import { Spot } from 'model';
+import { Piece, Spot } from 'model';
 import { useClickableSpot, useDraggablePiece } from 'hooks';
+
+interface DraggablePieceProps {
+  piece: Piece;
+};
+
+function DraggablePiece({
+  piece
+}: DraggablePieceProps) {
+  const { state: { selectedPiece }, board } = useContext(GameContext);
+  const selectedPieceObject = selectedPiece && board.getPiece(selectedPiece)!;
+  const isThisPieceSelected = piece === selectedPieceObject;
+
+  const onClick = useClickableSpot(piece.getSpot());
+  const { dragRef } = useDraggablePiece(piece);
+
+  return (
+    <div ref={dragRef} onClick={onClick} style={{ width: '100%', height: '100%' }}>
+      <SimplePiece isSelected={isThisPieceSelected} isPower={piece.isPower()} isMove={false} isWhite={piece.isWhite()}/>
+    </div>
+  );
+}
+
+interface MovePieceProps {
+  spot: Spot;
+}
+
+function MovePiece({
+  spot
+}: MovePieceProps) {
+  // Not a real piece! It just looks like one.
+  const { state: { selectedPiece }, board } = useContext(GameContext);
+  const selectedPieceObject = board.getPiece(selectedPiece!)!;
+  const onClick = useClickableSpot(spot);
+
+  return (
+    <div onClick={onClick} style={{ width: '100%', height: '100%' }}>
+      <SimplePiece isSelected={false} isPower={selectedPieceObject!.isPower()} isMove isWhite={selectedPieceObject!.isWhite()}/>
+    </div>
+  );
+}
 
 interface GamePieceProps {
   spot: Spot;
@@ -14,21 +54,13 @@ interface GamePieceProps {
 export function GamePiece({
   spot
 }: GamePieceProps) {
-  const { state: { selectedPiece }, board } = useContext(GameContext);
+  const piece = spot.getPiece();
 
-  const thisPiece = spot.getPiece();
-  const selectedPieceObject = selectedPiece && board.getPiece(selectedPiece)!;
-  const isThisPieceSelected = thisPiece === selectedPieceObject;
-
-  const onClick = useClickableSpot(spot);
-  const { dragRef } = useDraggablePiece(thisPiece);
-
-  return spot.isPotentialMove() || thisPiece ? (
-    <div ref={dragRef} onClick={onClick} style={{ width: '100%', height: '100%' }}>
-      {spot.isPotentialMove() ?
-        <SimplePiece isSelected={false} isPower={selectedPieceObject!.isPower()} isMove isWhite={selectedPieceObject!.isWhite()}/> :
-        <SimplePiece isSelected={isThisPieceSelected} isPower={thisPiece!.isPower()} isMove={false} isWhite={thisPiece!.isWhite()}/>
-      }
-    </div>
-  ): null;
+  if (piece) {
+    return <DraggablePiece piece={piece}/>;
+  } else if (spot.isPotentialMove()) {
+    return <MovePiece spot={spot}/>;
+  } else {
+    return null;
+  }
 }
