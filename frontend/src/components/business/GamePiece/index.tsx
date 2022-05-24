@@ -14,9 +14,8 @@ interface DraggablePieceProps {
 function DraggablePiece({
   piece
 }: DraggablePieceProps) {
-  const { state: { selectedPiece }, board } = useContext(GameContext);
-  const selectedPieceObject = selectedPiece && board.getPiece(selectedPiece)!;
-  const isThisPieceSelected = piece === selectedPieceObject;
+  const { selectedPiece } = useContext(GameContext);
+  const isThisPieceSelected = piece === selectedPiece;
 
   const onClick = useClickableSpot(piece.getSpot());
   const { dragRef } = useDraggablePiece(piece);
@@ -36,13 +35,12 @@ function MovePiece({
   spot
 }: MovePieceProps) {
   // Not a real piece! It just looks like one.
-  const { state: { selectedPiece }, board } = useContext(GameContext);
-  const selectedPieceObject = board.getPiece(selectedPiece!)!;
+  const { selectedPiece } = useContext(GameContext);
   const onClick = useClickableSpot(spot);
 
   return (
     <div onClick={onClick} style={{ width: '100%', height: '100%' }}>
-      <SimplePiece isSelected={false} isPower={selectedPieceObject!.isPower()} isMove isWhite={selectedPieceObject!.isWhite()}/>
+      <SimplePiece isSelected={false} isPower={selectedPiece!.isPower()} isMove isWhite={selectedPiece!.isWhite()}/>
     </div>
   );
 }

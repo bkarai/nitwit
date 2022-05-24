@@ -62,9 +62,10 @@ function GameComponent() {
 export function Game() {
   const [state, dispatch] = useReducer(rootReducer, initialState);
   const board = useMemo(() => new Board(state.board), [state.board]);
+  const selectedPiece = useMemo(() => state.selectedPiece && board.getPiece(state.selectedPiece), [state.selectedPiece]);
 
   return (
-    <GameContext.Provider value={{ state, dispatch, board }}>
+    <GameContext.Provider value={{ state, dispatch, board, selectedPiece }}>
       <GameComponent />
     </GameContext.Provider>
   );

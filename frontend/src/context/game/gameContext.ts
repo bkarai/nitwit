@@ -1,6 +1,6 @@
 import React from 'react';
 import { initialState } from 'context/game/reducers';
-import { Board, Coordinate, PieceColor } from 'model';
+import { Board, Coordinate, Piece, PieceColor } from 'model';
 
 export interface State {
   board: string;
@@ -16,7 +16,8 @@ export interface State {
 interface GameContextObject {
   dispatch: (a: any) => void;
   state: State;
-  board: Board
+  board: Board;
+  selectedPiece: Piece | null;
 }
 
-export const GameContext = React.createContext<GameContextObject>({ dispatch: () => {}, state: initialState, board: new Board(initialState.board) });
+export const GameContext = React.createContext<GameContextObject>({ dispatch: () => {}, state: initialState, board: new Board(initialState.board), selectedPiece: null });
