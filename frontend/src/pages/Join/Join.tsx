@@ -18,7 +18,7 @@ export function Join() {
   return (
     <ContentWrapper>
       <h1 className="display-2">
-        Joining game...
+        Joining the game...
       </h1>
       <LoadingScreen />
     </ContentWrapper>

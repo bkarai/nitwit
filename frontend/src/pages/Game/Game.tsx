@@ -9,9 +9,16 @@ import { useGameAccessKey, useTurnNotification, useSyncMatchToState, usePushMove
 import { Board } from 'model';
 import { EnhancedTimeline } from './EnhancedTimeline';
 
-export const LoadingWrapper = styled.div({
-  marginTop: '20vh',
-});
+function Loading() {
+  return (
+    <ContentWrapper>
+      <h1 className="display-2">
+        Getting the game ready...
+      </h1>
+      <LoadingScreen />
+    </ContentWrapper>
+  );
+}
 
 function GameComponent() {
   const { state, dispatch } = useContext(GameContext);
@@ -38,9 +45,7 @@ function GameComponent() {
     <>
       <EnhancedTimeline />
       {isLoading ?
-        (<LoadingWrapper>
-          <LoadingScreen />
-        </LoadingWrapper>) :
+        <Loading /> :
         (
           <>
             {ready ?
