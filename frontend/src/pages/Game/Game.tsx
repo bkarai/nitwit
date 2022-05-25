@@ -1,11 +1,10 @@
-import styled from '@emotion/styled';
 import { useEffect, useReducer, useContext, useCallback, useMemo } from 'react';
 
 import { GameContext } from 'context/game';
 import { setMatchAccessKey, finishTurn } from 'context/game';
 import { LoadingScreen, GameBoard, ContentWrapper, WaitingForPlayer } from 'components';
 import { initialState, rootReducer } from 'context/game/reducers';
-import { useGameAccessKey, useTurnNotification, useSyncMatchToState, usePushMove } from 'hooks';
+import { useGameAccessKey, useTurnNotification, useSyncMatchToState, usePushMove, useSoundEffects } from 'hooks';
 import { Board } from 'model';
 import { EnhancedTimeline } from './EnhancedTimeline';
 
@@ -22,7 +21,7 @@ function Loading() {
 
 function GameComponent() {
   const { state, dispatch } = useContext(GameContext);
-  const { board, ready, userType, moveCount } = state;
+  const { ready, userType, moveCount } = state;
 
   const gameAccessKey = useGameAccessKey();
   useEffect(() => {
@@ -33,11 +32,12 @@ function GameComponent() {
     if (moveCount > 0) {
       dispatch(finishTurn());
     }
-  }, [dispatch, moveCount])
+  }, [dispatch, moveCount]);
 
+  useSoundEffects()
   useTurnNotification();
   useSyncMatchToState(gameAccessKey);
-  usePushMove(gameAccessKey, board, moveCount, afterPush);
+  usePushMove(afterPush);
 
   const isLoading = userType === null;
 
@@ -67,7 +67,7 @@ function GameComponent() {
 export function Game() {
   const [state, dispatch] = useReducer(rootReducer, initialState);
   const board = useMemo(() => new Board(state.board), [state.board]);
-  const selectedPiece = useMemo(() => state.selectedPiece && board.getPiece(state.selectedPiece), [state.selectedPiece]);
+  const selectedPiece = useMemo(() => state.selectedPiece && board.getPiece(state.selectedPiece), [state.selectedPiece, board]);
 
   return (
     <GameContext.Provider value={{ state, dispatch, board, selectedPiece }}>

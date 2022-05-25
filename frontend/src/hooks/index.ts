@@ -7,3 +7,5 @@ export * from './usePushMove';
 export * from './useDraggablePiece';
 export * from './useClickableSpot';
 export * from './useDroppableSpot';
+export * from './useClickEffect';
+export * from './useSoundEffects';
