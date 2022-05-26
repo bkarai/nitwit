@@ -11,7 +11,7 @@ enum PieceColor {
 const INNER_CIRCLE_COLOR = '#FAE607';
 const MOVE_COLOR = '#EBEBEE';
 
-interface PieceProps {
+interface SimplePieceProps {
   isWhite: boolean;
   isSelected: boolean;
   isMove: boolean;
@@ -23,7 +23,7 @@ export function SimplePiece({
   isSelected,
   isMove,
   isPower,
-}: PieceProps) {
+}: SimplePieceProps) {
   const color = isWhite ? PieceColor.WHITE : PieceColor.BLACK;
 
   return (

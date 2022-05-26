@@ -76,6 +76,7 @@ function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): St
         selectedPiece: null,
         board: gameBoard.serialize(),
         moveCount: state.moveCount + 1,
+        winner: gameBoard.getWinner(),
       });
     }
   } else if (isSelectingNewPiece) {
@@ -91,6 +92,10 @@ function secondSelect(state: StateSecondSelect, payload: SelectPiecePayload): St
 }
 
 export function selectPieceReducer(state: State, payload: SelectPiecePayload): State {
+  if (state.winner) {
+    return state;
+  }
+
   const previouslySelectedRow = state.selectedPiece?.row;
   const previouslySelectedColumn = state.selectedPiece?.column;
 

@@ -1,5 +1,6 @@
-export * from './GamePiece';
 export * from './GameBoard';
+export * from './GamePiece';
+export * from './GameStatus';
 export * from './Layout';
 export * from './NewGameButton';
 export * from './Timeline';
