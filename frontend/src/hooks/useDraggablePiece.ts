@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useDrag } from "react-dnd";
 import { GameContext, selectPiece } from "context/game";
-import { Piece } from 'model';
+import { Piece, Coordinate } from 'model';
 
 export function useDraggablePiece(piece: Piece) {
   const { state: { currentTurn, userType }, selectedPiece, dispatch } = useContext(GameContext);
@@ -16,7 +16,13 @@ export function useDraggablePiece(piece: Piece) {
       isDragging: monitor.isDragging(),
     }),
     canDrag: (monitor) => canDragThisPiece,
-  }, [piece, canDragThisPiece]);
+    end: (item: Piece, monitor) => {
+      if (monitor.didDrop()) {
+        const droppedLocation = monitor.getDropResult() as Coordinate;
+        dispatch(selectPiece(droppedLocation));
+      }
+    }
+  }, [piece, canDragThisPiece, dispatch]);
 
   useEffect(() => {
     if (isDragging && !selectedPiece) {

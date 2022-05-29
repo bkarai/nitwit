@@ -1,14 +1,15 @@
 import { useDrop } from "react-dnd";
-import { Spot } from 'model';
+import { Spot, Piece } from 'model';
 
 export function useDroppableSpot(spot: Spot) {
   const [{ canDrop, isOver }, dropRef] = useDrop({
     accept: 'piece',
-    drop: () => spot,
+    drop: (item: Piece, monitor) => spot.getLocation(),
+    canDrop: (item: Piece, monitor) => spot.isPotentialMove(),
     collect: (monitor) => ({
       isOver: monitor.isOver(),
-      canDrop: spot.isPotentialMove(),
-    })
+      canDrop: monitor.canDrop(),
+    }),
   }, [spot, spot.isPotentialMove()]);
 
   return {
