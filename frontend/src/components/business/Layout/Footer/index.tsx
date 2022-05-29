@@ -9,12 +9,7 @@ export const StyledFooter = styled.footer({
   right: 0,
 });
 
-export const FooterContainer = styled.div({
-  margin: 'auto',
-  textAlign: 'center',
-});
-
-export default React.memo(function() {
+export const Footer = React.memo(function() {
   return (
     <StyledFooter className="bg-secondary">
       <div className="text-center p-4">

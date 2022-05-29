@@ -3,4 +3,5 @@ import { pageEnhancer } from './pageEnhancer';
 import { Home } from './Home';
 import { Join } from './Join';
 import { Game } from './Game';
-export const pages = [Home, Join, Game].map(({ Component, ...other }) => ({ Component: pageEnhancer(Component), ...other }));
+import { Instructions } from './Instructions';
+export const pages = [Home, Join, Game, Instructions].map(({ Component, ...other }) => ({ Component: pageEnhancer(Component), ...other }));
