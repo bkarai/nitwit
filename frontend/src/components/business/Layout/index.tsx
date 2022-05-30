@@ -11,13 +11,17 @@ export function Layout({
 }: LayoutProps) {
   return (
     <Box height='100%'>
-      <Header/>
-        <Box height='100%' width='100%' className="card-body">
+      <Box height='10%'>
+        <Header/>
+      </Box>
+        <Box height='80%' width='100%' className="card-body">
           <Box className="card p-3" height='100%'>
             {children}
           </Box>
         </Box>
-      <Footer/>
+      <Box height='10%'>
+        <Footer/>
+      </Box>
     </Box>
   );
 }
