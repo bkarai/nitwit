@@ -5,3 +5,4 @@ export * from './Layout';
 export * from './NewGameButton';
 export * from './Timeline';
 export * from './WaitingForPlayer';
+export * from './LoadingScreen';

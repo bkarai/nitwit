@@ -12,7 +12,6 @@ import {
 } from 'react-share';
 
 import { useGameAccessKey } from 'hooks';
-import { ContentWrapper } from 'components';
 
 export const IconWrapper = styled.div({
   svg: {
@@ -34,7 +33,7 @@ export function WaitingForPlayer() {
   };
 
   return (
-    <ContentWrapper>
+    <div>
       <h1 className="display-2">
         Waiting for an opponent to join.
       </h1>
@@ -63,6 +62,6 @@ export function WaitingForPlayer() {
           <WhatsappIcon />
         </WhatsappShareButton>
       </IconWrapper>
-    </ContentWrapper>
+    </div>
   );
 };

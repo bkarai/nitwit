@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { joinMatch } from 'api';
-import { LoadingScreen, ContentWrapper } from 'components';
+import { ContentWrapper, LoadingScreen } from 'components';
 import { useGameAccessKey } from 'hooks';
 
 export function Join() {
@@ -17,10 +17,7 @@ export function Join() {
 
   return (
     <ContentWrapper>
-      <h1 className="display-2">
-        Joining the game...
-      </h1>
-      <LoadingScreen />
+      <LoadingScreen message="Joining the game..."/>
     </ContentWrapper>
   );
 }

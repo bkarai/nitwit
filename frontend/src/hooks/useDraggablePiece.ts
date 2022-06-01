@@ -8,6 +8,7 @@ export function useDraggablePiece(piece: Piece) {
 
   const isThisPieceSelected = selectedPiece === piece;
   const canDragThisPiece = currentTurn === userType && piece.color === userType && (!selectedPiece || isThisPieceSelected);
+  const pieceLocation = piece.getSpot().getLocation();
 
   const [{ isDragging }, dragRef] = useDrag({
     type: 'piece',
@@ -26,9 +27,9 @@ export function useDraggablePiece(piece: Piece) {
 
   useEffect(() => {
     if (isDragging && !selectedPiece) {
-      dispatch(selectPiece(piece.getSpot().getLocation()));
+      dispatch(selectPiece(pieceLocation));
     }
-  }, [isDragging, dispatch, selectedPiece, piece.getSpot().getLocation()]);
+  }, [isDragging, dispatch, selectedPiece, pieceLocation]);
 
   return {
     isDragging,

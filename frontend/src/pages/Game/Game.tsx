@@ -8,17 +8,6 @@ import { useGameAccessKey, useTurnNotification, useSyncMatchToState, usePushMove
 import { Board } from 'model';
 import { EnhancedTimeline } from './EnhancedTimeline';
 
-function Loading() {
-  return (
-    <ContentWrapper>
-      <h1 className="display-2">
-        Getting the game ready...
-      </h1>
-      <LoadingScreen />
-    </ContentWrapper>
-  );
-}
-
 function GameComponent() {
   const { state, dispatch } = useContext(GameContext);
   const { ready, userType, moveCount } = state;
@@ -44,23 +33,25 @@ function GameComponent() {
   return (
     <>
       <EnhancedTimeline />
-      {isLoading ?
-        <Loading /> :
-        (
-          <>
-            {ready ?
-            (
-              <ContentWrapper>
-                <GameStatus />
-                <GameBoard />
-              </ContentWrapper>
-            ) : (
-              <WaitingForPlayer/>
-            )
-            }
-          </>
-        )
-      }
+      <ContentWrapper boxProps={{ height: '100%' }}>
+        {isLoading ?
+          <LoadingScreen message="Getting your game ready..."/> :
+          (
+            <>
+              {ready ?
+              (
+                <>
+                  <GameStatus />
+                  <GameBoard />
+                </>
+              ) : (
+                <WaitingForPlayer/>
+              )
+              }
+            </>
+          )
+        }
+        </ContentWrapper>
   </>
   );
 }

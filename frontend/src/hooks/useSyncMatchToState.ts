@@ -7,10 +7,12 @@ export function useSyncMatchToState(gameAccessKey: string, pollTimeInSeconds: nu
   const { state: { currentTurn, userType, ready }, dispatch } = useContext(GameContext);
   const pollForGameData = (currentTurn !== userType) || !userType || !ready;
   const gameData = usePollForGameData(gameAccessKey, pollForGameData, pollTimeInSeconds);
+  const serializedGameData = JSON.stringify(gameData);
 
   useEffect(() => {
     if (gameData) {
       dispatch(updateGameMeta(gameData));
     }
-  }, [JSON.stringify(gameData), dispatch]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [serializedGameData, dispatch]);
 }

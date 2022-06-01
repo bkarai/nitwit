@@ -3,12 +3,12 @@ import Box from '@mui/material/Box';
 
 interface ContentWrapperProps {
   children: React.ReactNode;
-  enableScroll?: boolean;
+  boxProps?: Partial<React.ComponentProps<typeof Box>>;
 };
 
-export function ContentWrapper({ children }: ContentWrapperProps) {
+export function ContentWrapper({ children, boxProps = {} }: ContentWrapperProps) {
   return (
-    <Box textAlign='center' className="p-5 mt-4">
+    <Box textAlign='center' className="p-5" display="flex" flexDirection='column' justifyContent='center' {...boxProps}>
       {children}
     </Box>
   );
