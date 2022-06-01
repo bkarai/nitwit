@@ -1,3 +1,4 @@
+export * from './material';
 export * from './CenterAlignChild';
 export * from './Circle';
 export * from './ContentWrapper';

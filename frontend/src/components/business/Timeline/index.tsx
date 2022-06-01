@@ -1,7 +1,4 @@
-import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
+import { Box, Step, Stepper, StepLabel } from 'components';
 
 export enum TimelinePosition {
   GAME_CREATED,

@@ -1,9 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import Box from '@mui/material/Box';
-import InfoIcon from '@mui/icons-material/Info';
-import Dialog from '@mui/material/Dialog';
-import Button from 'react-bootstrap/Button';
-import Tooltip from '@mui/material/Tooltip';
+import { Box, Button, Dialog, InfoIcon, Tooltip } from 'components'
 import { Link } from 'react-router-dom';
 import { NewGameButton } from 'components';
 import { Instructions } from 'pages/Instructions/Instructions';

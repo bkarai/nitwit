@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
-import Button from 'react-bootstrap/Button';
-import { ContentWrapper } from "components";
+import { ContentWrapper, Button } from "components";
 import initialSetupImage from 'assets/instructions/initial-setup.png';
 import standardPieceMoves from 'assets/instructions/standard-piece-moves.png';
 import powerPieceMoves from 'assets/instructions/power-piece-moves.png';
@@ -62,7 +61,7 @@ export function Instructions({
           <InstructionImage alt="game over - black wins" src={gameOver}/>
         </div>
       </div>
-      {onClose && <Button className='mt-4' onClick={onClose}>Close</Button>}
+      {onClose && <Button style={{ width: '35%', maxWidth: '300px', alignSelf: 'center' }} className='mt-4' onClick={onClose}>Close</Button>}
     </ContentWrapper>
   );
 }

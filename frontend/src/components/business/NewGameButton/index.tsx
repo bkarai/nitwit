@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import { Button } from 'components';
 import { createMatch } from 'api';
 
 export function NewGameButton() {

@@ -35,7 +35,7 @@ export function WaitingForPlayer() {
   return (
     <div>
       <h1 className="display-2">
-        Waiting for an opponent to join.
+        Waiting for opponent to join
       </h1>
       <h2 className="mt-4">
         Copy the link below to invite a player to your game

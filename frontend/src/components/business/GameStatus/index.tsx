@@ -1,7 +1,6 @@
 import { useContext } from 'react';
-import Box from '@mui/material/Box';
 import { GameContext } from 'context/game';
-import { SimplePiece } from 'components';
+import { Box, SimplePiece } from 'components';
 import { PieceColor } from 'model';
 
 interface GameStatusNetworkGameProps {

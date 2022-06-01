@@ -1,5 +1,4 @@
-import { Loading } from 'components';
-import Box from '@mui/material/Box';
+import { Loading, Box } from 'components';
 
 interface LoadingScreenProps {
   message: string;
