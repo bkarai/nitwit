@@ -24,7 +24,7 @@ export const Header = React.memo(function() {
         onClose={handleCloseModal}
         maxWidth='md'
       >
-        <Instructions />
+        <Instructions onClose={handleCloseModal}/>
       </Dialog>
       <Box component='nav' height="100%" width="100%" className="navbar navbar-light bg-light ps-3 pe-3" display="flex">
         <Tooltip title="Home" arrow enterDelay={500} enterNextDelay={2000}>
