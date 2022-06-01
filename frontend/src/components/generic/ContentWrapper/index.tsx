@@ -6,9 +6,9 @@ interface ContentWrapperProps {
   enableScroll?: boolean;
 };
 
-export function ContentWrapper({ children, enableScroll }: ContentWrapperProps) {
+export function ContentWrapper({ children }: ContentWrapperProps) {
   return (
-    <Box textAlign='center' className="p-5 mt-4" overflow={enableScroll ? 'scroll' : 'default'}>
+    <Box textAlign='center' className="p-5 mt-4">
       {children}
     </Box>
   );

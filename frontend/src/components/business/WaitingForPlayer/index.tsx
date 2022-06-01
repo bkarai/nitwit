@@ -29,6 +29,7 @@ export function WaitingForPlayer() {
       title: 'Success',
       text: 'Your game link has been copied to the clipboard',
       icon: 'success',
+      heightAuto: false,
     });
   };
 

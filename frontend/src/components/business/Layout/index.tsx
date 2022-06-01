@@ -10,16 +10,16 @@ export function Layout({
   children
 }: LayoutProps) {
   return (
-    <Box height='100%'>
-      <Box height='10%'>
+    <Box height="100%" width="100%" display="flex" flexDirection="column">
+      <Box height="10vh" maxHeight="75px">
         <Header/>
       </Box>
-        <Box height='80%' width='100%' className="card-body">
-          <Box className="card p-3" height='100%'>
-            {children}
-          </Box>
+      <Box className="card-body" overflow='auto'>
+        <Box className="card p-3" height='100%'>
+          {children}
         </Box>
-      <Box height='10%'>
+      </Box>
+      <Box height="10vh" maxHeight="75px">
         <Footer/>
       </Box>
     </Box>

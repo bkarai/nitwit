@@ -10,7 +10,7 @@ import gameOver from 'assets/instructions/game-over.png';
 export function Instructions() {
 
   return (
-    <ContentWrapper enableScroll>
+    <ContentWrapper>
       <h1>How to Play Outwit</h1>
       <div>
         <div className="mt-4">
