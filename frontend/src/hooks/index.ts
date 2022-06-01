@@ -10,3 +10,4 @@ export * from './useDroppableSpot';
 export * from './useClickEffect';
 export * from './useSoundEffects';
 export * from './useMoveEffect';
+export * from './useIsMobile';
