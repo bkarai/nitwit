@@ -12,6 +12,7 @@ import {
 } from 'react-share';
 
 import { useGameAccessKey } from 'hooks';
+import { Button } from 'components';
 
 export const IconWrapper = styled.div({
   svg: {
@@ -37,16 +38,14 @@ export function WaitingForPlayer() {
       <h1 className="display-2">
         Waiting for opponent to join
       </h1>
-      <h2 className="mt-4">
+      <h2 className="mt-5">
         Copy the link below to invite a player to your game
       </h2>
-      <div className="input-group mb-3 mt-3">
+      <div className="input-group mb-5 mt-5" style={{ height: 'auto' }}>
         <output className="form-control">
           {linkToJoinGame}
         </output>
-        <div className="input-group-append">
-          <button className="btn btn-outline-secondary" type="button" onClick={copyToClipboard}>Copy</button>
-        </div>
+        <Button className="input-group-append" style={{ width: '25%' }} onClick={copyToClipboard}>Copy</Button>
       </div>
       <IconWrapper>
         <EmailShareButton className="me-2" openShareDialogOnClick url={linkToJoinGame} subject="Join a game of Outwit!" body="Hello, you've been invited to a game of Outwit. Copy and paste the following link in your browser address bar to join the game: ">

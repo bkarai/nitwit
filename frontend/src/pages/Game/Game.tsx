@@ -4,7 +4,7 @@ import { GameContext } from 'context/game';
 import { setMatchAccessKey, finishTurn } from 'context/game';
 import { LoadingScreen, GameBoard, ContentWrapper, WaitingForPlayer, GameStatus } from 'components';
 import { initialState, rootReducer } from 'context/game/reducers';
-import { useGameAccessKey, useTurnNotification, useSyncMatchToState, usePushMove, useSoundEffects } from 'hooks';
+import { useGameAccessKey, useTurnNotification, useSyncMatchToState, usePushMove, useSoundEffects, useIsMobile } from 'hooks';
 import { Board } from 'model';
 import { EnhancedTimeline } from './EnhancedTimeline';
 
@@ -27,12 +27,13 @@ function GameComponent() {
   useTurnNotification();
   useSyncMatchToState(gameAccessKey);
   usePushMove(afterPush);
+  const isMobile = useIsMobile();
 
   const isLoading = userType === null;
 
   return (
     <>
-      <EnhancedTimeline />
+      {!isMobile && <EnhancedTimeline />}
       <ContentWrapper boxProps={{ height: '100%' }}>
         {isLoading ?
           <LoadingScreen message="Getting your game ready..."/> :
