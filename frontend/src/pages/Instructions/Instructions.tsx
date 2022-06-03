@@ -21,7 +21,6 @@ interface InstructionsProps {
 export function Instructions({
   onClose,
 }: InstructionsProps) {
-
   return (
     <ContentWrapper>
       <h1>How to Play Outwit</h1>

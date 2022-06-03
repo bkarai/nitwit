@@ -2,7 +2,7 @@ import { Instructions } from './Instructions';
 
 const InstructionsPage = {
   Component: Instructions,
-  path: 'instructions',
+  path: '/instructions',
   name: 'Instructions',
 };
 
