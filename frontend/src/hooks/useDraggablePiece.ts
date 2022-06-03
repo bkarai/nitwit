@@ -10,11 +10,12 @@ export function useDraggablePiece(piece: Piece) {
   const canDragThisPiece = currentTurn === userType && piece.color === userType && (!selectedPiece || isThisPieceSelected);
   const pieceLocation = piece.getSpot().getLocation();
 
-  const [{ isDragging }, dragRef] = useDrag({
+  const [{ isDragging, canDrag }, dragRef] = useDrag({
     type: 'piece',
     item: piece,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
+      canDrag: canDragThisPiece,
     }),
     canDrag: (monitor) => canDragThisPiece,
     end: (item: Piece, monitor) => {
@@ -34,5 +35,6 @@ export function useDraggablePiece(piece: Piece) {
   return {
     isDragging,
     dragRef,
+    canDrag,
   };
 }

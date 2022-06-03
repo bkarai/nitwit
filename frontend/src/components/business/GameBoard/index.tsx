@@ -12,7 +12,8 @@ const GameBoardWrapper = styled.div({
   justifyContent: 'center',
   width: '100%',
   td: {
-    padding: '1px',
+    border: '2px solid',
+    display: 'border-box',
   },
 });
 
