@@ -32,7 +32,7 @@ export const Header = React.memo(function() {
 
   const handleCloseModal = useCallback(() => {
     navigate('./');
-  }, [setInstructionsOpen]);
+  }, [navigate]);
 
   return (
     <>

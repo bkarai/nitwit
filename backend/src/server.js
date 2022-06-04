@@ -120,7 +120,7 @@ app.use(expressWinston.logger({
 }));
 
 app.post(`${apiPrefix}/match`, (req, res) => {
-  dbConnection.query('INSERT INTO boards (positions, is_white_turn) VALUES (?, TRUE)', [DEFAULT_POSTIIONS], (insertBoardError, insertBoardResults) => {
+  dbConnection.query('INSERT INTO boards (positions, is_white_turn) VALUES (?, ?)', [DEFAULT_POSTIIONS, !!Math.round(Math.random())], (insertBoardError, insertBoardResults) => {
     if (insertBoardError) {
       res.status(500);
       res.json({ error: 'There was a problem processing your request. Sorry for the inconvenience' });
