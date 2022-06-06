@@ -9,16 +9,6 @@ import { useDroppableSpot } from 'hooks';
 import { isTouchDevice } from 'utilities';
 import { GameContext } from 'context/game';
 
-const GameBoardWrapper = styled.div({
-  display: 'flex',
-  justifyContent: 'center',
-  width: '100%',
-  td: {
-    border: '2px solid',
-    display: 'border-box',
-  },
-});
-
 interface GameBoardSpotProps {
   spot: Spot;
 };
@@ -64,21 +54,17 @@ export function GameBoard() {
 
   return (
     <DndProvider backend={isTouchDevice() ? TouchBackend : HTML5Backend}>
-      <GameBoardWrapper>
-        <table cellPadding="0" cellSpacing="0">
-          <tbody>
-            {board.getSpots().map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {row.map((spot, columnIndex) => (
-                  <td key={columnIndex}>
-                    <DropableGameBoardSpot spot={spot}/>
-                  </td>
-                ))}
-              </tr>
+      <Box display='flex' justifyContent='center' width='100%'>
+        {board.getSpots().map((row, rowIndex) => (
+          <Box key={rowIndex}>
+            {row.map((spot, columnIndex) => (
+              <Box border='2px solid' key={columnIndex}>
+                <DropableGameBoardSpot spot={spot}/>
+              </Box>
             ))}
-          </tbody>
-        </table>
-      </GameBoardWrapper>
+          </Box>
+        ))}
+      </Box>
     </DndProvider>
   );
 }
