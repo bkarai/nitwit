@@ -43,7 +43,7 @@ function DropableGameBoardSpot(props: GameBoardSpotProps) {
   const { dropRef, isOver, canDrop } = useDroppableSpot(props.spot);
 
   return (
-    <Box width='60px' style={{ aspectRatio: '1/1' }} ref={dropRef} border={(isOver && canDrop) ? '2px solid' : 'none'}>
+    <Box width='100%' height='100%' ref={dropRef} border={(isOver && canDrop) ? '2px solid' : 'none'}>
       <GameBoardSpot {...props}/>
     </Box>
   );
@@ -58,7 +58,7 @@ export function GameBoard() {
         {board.getSpots().map((row, rowIndex) => (
           <Box key={rowIndex}>
             {row.map((spot, columnIndex) => (
-              <Box border='2px solid' key={columnIndex}>
+              <Box width='60px' style={{ aspectRatio: '1/1' }} border='2px solid' key={columnIndex}>
                 <DropableGameBoardSpot spot={spot}/>
               </Box>
             ))}

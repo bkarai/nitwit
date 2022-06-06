@@ -27,7 +27,7 @@ type YellowTileProps = ColorTileProps;
 export function BrownTile({
   children
 }: BrownTileProps) {
-  return <GameTile color="#543014" children={children}/>
+  return <GameTile color="#543014" children={children}/>;
 };
 
 export function OrangeTile({
