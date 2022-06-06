@@ -53,7 +53,7 @@ function DropableGameBoardSpot(props: GameBoardSpotProps) {
   const { dropRef, isOver, canDrop } = useDroppableSpot(props.spot);
 
   return (
-    <Box ref={dropRef} border={(isOver && canDrop) ? '2px solid' : 'none'}>
+    <Box width='50px' height={'50px'} ref={dropRef} border={(isOver && canDrop) ? '2px solid' : 'none'}>
       <GameBoardSpot {...props}/>
     </Box>
   );

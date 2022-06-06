@@ -10,7 +10,7 @@ function GameTile({
   children
 }: GameTileProps) {
   return (
-    <Box width='50px' height='50px' style={{ backgroundColor: color }}>
+    <Box width='100%' height='100%' style={{ backgroundColor: color }}>
       {children}
     </Box>
   );
