@@ -2,7 +2,7 @@ import { useEffect, useReducer, useContext, useCallback, useMemo } from 'react';
 
 import { GameContext } from 'context/game';
 import { setMatchAccessKey, finishTurn } from 'context/game';
-import { LoadingScreen, GameBoard, ContentWrapper, WaitingForPlayer, GameStatus } from 'components';
+import { LoadingScreen, GameBoard, ContentWrapper, WaitingForPlayer, GameStatus, Box } from 'components';
 import { initialState, rootReducer } from 'context/game/reducers';
 import { useGameAccessKey, useTurnNotification, useSyncMatchToState, usePushMove, useSoundEffects, useIsMobile } from 'hooks';
 import { Board } from 'model';
@@ -41,10 +41,10 @@ function GameComponent() {
             <>
               {ready ?
               (
-                <>
+                <Box>
                   <GameStatus />
                   <GameBoard />
-                </>
+                </Box>
               ) : (
                 <WaitingForPlayer/>
               )
