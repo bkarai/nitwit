@@ -1,10 +1,12 @@
+import { useContext } from 'react';
 import styled from '@emotion/styled';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { TouchBackend } from 'react-dnd-touch-backend';
 import { Spot } from 'model';
 import { GamePiece, BrownTile, OrangeTile, YellowTile } from 'components';
 import { useDroppableSpot } from 'hooks';
-import { useContext } from 'react';
+import { isTouchDevice } from 'utilities';
 import { GameContext } from 'context/game';
 
 const GameBoardWrapper = styled.div({
@@ -61,7 +63,7 @@ export function GameBoard() {
   const { board } = useContext(GameContext);
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DndProvider backend={isTouchDevice() ? TouchBackend : HTML5Backend}>
       <GameBoardWrapper>
         <table cellPadding="0" cellSpacing="0">
           <tbody>
