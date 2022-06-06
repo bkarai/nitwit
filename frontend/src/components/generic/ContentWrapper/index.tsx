@@ -5,14 +5,15 @@ import { useIsMobile } from 'hooks';
 interface ContentWrapperProps {
   children: React.ReactNode;
   boxProps?: Partial<React.ComponentProps<typeof Box>>;
+  disablePadding?: boolean;
 };
 
-export function ContentWrapper({ children, boxProps = {} }: ContentWrapperProps) {
+export function ContentWrapper({ disablePadding, children, boxProps = {} }: ContentWrapperProps) {
   const isMobile = useIsMobile();
-  const paddingClass = isMobile ? 'p-2': 'p-5'
+  const paddingClass = isMobile ? 'p-2': 'p-5';
 
   return (
-    <Box textAlign='center' className={paddingClass} display="flex" flexDirection='column' justifyContent='center' {...boxProps}>
+    <Box textAlign='center' className={disablePadding ? undefined : paddingClass} display="flex" flexDirection='column' justifyContent='center' {...boxProps}>
       {children}
     </Box>
   );

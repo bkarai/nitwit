@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { GameContext } from 'context/game';
 import { Box, SimplePiece } from 'components';
 import { PieceColor } from 'model';
+import { useIsMobile } from 'hooks';
 
 interface GameStatusNetworkGameProps {
   userType: PieceColor;
@@ -12,6 +13,7 @@ function GameStatusNetworkGame({
   userType,
   isMyTurn
 }: GameStatusNetworkGameProps) {
+  const isMobile = useIsMobile();
   return (
     <Box display="flex" justifyContent="center" height='100%'>
       <Box width="50%" border="4px solid" display='flex' justifyContent="center" alignItems="center">
@@ -31,7 +33,7 @@ function GameStatusNetworkGame({
             <Box display='inline-block' height="40px" width="40px">
               <SimplePiece isWhite={userType !== PieceColor.WHITE} isSelected={false} isMove={false} isPower={false}/>
             </Box>
-            <span>&nbsp; to make their move</span>
+            {!isMobile && <span>&nbsp; to make their move</span>}
           </>
         )}
       </Box>
@@ -67,12 +69,14 @@ function GameStatusContent() {
 };
 
 export function GameStatus() {
+  const isMobile = useIsMobile();
+
   return (
     <Box sx={{
-      px: '10vw',
+      px: isMobile ? '0' : '10vw',
     }}>
       <Box className='bg-primary' sx={{
-        height: '50px',
+        height: '10vh',
       }}>
         <GameStatusContent />
       </Box>

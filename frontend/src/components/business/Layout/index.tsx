@@ -18,7 +18,7 @@ export function Layout({
       <Box height="10vh" maxHeight="75px">
         <Header/>
       </Box>
-      <Box className="card-body" overflow='auto' p={isMobile ? 1 : undefined} height="100%">
+      <Box className={isMobile ? undefined : "card-body"} overflow='auto' height="100%">
         <Box className={boxClassnames} height='100%'>
           {children}
         </Box>

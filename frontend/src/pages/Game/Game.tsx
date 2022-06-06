@@ -34,7 +34,7 @@ function GameComponent() {
   return (
     <>
       {!isMobile && <EnhancedTimeline />}
-      <ContentWrapper boxProps={{ height: '100%' }}>
+      <ContentWrapper boxProps={{ height: '100%' }} disablePadding={isMobile}>
         {isLoading ?
           <LoadingScreen message="Getting your game ready..."/> :
           (
