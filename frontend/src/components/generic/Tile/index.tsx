@@ -1,4 +1,4 @@
-import { Square } from 'components';
+import { Box } from 'components';
 
 interface GameTileProps {
   color: string,
@@ -10,9 +10,9 @@ function GameTile({
   children
 }: GameTileProps) {
   return (
-    <Square $size={50} $color={color}>
+    <Box width='50px' height='50px' style={{ backgroundColor: color }}>
       {children}
-    </Square>
+    </Box>
   );
 }
 

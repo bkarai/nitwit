@@ -4,7 +4,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { Spot } from 'model';
-import { GamePiece, BrownTile, OrangeTile, YellowTile } from 'components';
+import { GamePiece, BrownTile, OrangeTile, YellowTile, Box } from 'components';
 import { useDroppableSpot } from 'hooks';
 import { isTouchDevice } from 'utilities';
 import { GameContext } from 'context/game';
@@ -53,9 +53,9 @@ function DropableGameBoardSpot(props: GameBoardSpotProps) {
   const { dropRef, isOver, canDrop } = useDroppableSpot(props.spot);
 
   return (
-    <div ref={dropRef} style={{ border: (isOver && canDrop) ? '2px solid' : 'none' }}>
+    <Box ref={dropRef} border={(isOver && canDrop) ? '2px solid' : 'none'}>
       <GameBoardSpot {...props}/>
-    </div>
+    </Box>
   );
 }
 
