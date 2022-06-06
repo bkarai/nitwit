@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box } from 'components';
-import { useIsMobile } from 'hooks';
 
 interface ContentWrapperProps {
   children: React.ReactNode;
@@ -9,11 +8,8 @@ interface ContentWrapperProps {
 };
 
 export function ContentWrapper({ disablePadding, children, boxProps = {} }: ContentWrapperProps) {
-  const isMobile = useIsMobile();
-  const paddingClass = isMobile ? 'p-2': 'p-5';
-
   return (
-    <Box textAlign='center' className={disablePadding ? undefined : paddingClass} display="flex" flexDirection='column' justifyContent='center' {...boxProps}>
+    <Box textAlign='center' className={disablePadding ? undefined : 'p-2'} display="flex" flexDirection='column' justifyContent='center' {...boxProps}>
       {children}
     </Box>
   );

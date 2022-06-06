@@ -76,7 +76,8 @@ export function GameStatus() {
       px: isMobile ? '0' : '10vw',
     }}>
       <Box className='bg-primary' sx={{
-        height: '10vh',
+        height: '7vh',
+        maxHeight: '64px',
       }}>
         <GameStatusContent />
       </Box>

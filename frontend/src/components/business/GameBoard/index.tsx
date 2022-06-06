@@ -54,11 +54,11 @@ export function GameBoard() {
 
   return (
     <DndProvider backend={isTouchDevice() ? TouchBackend : HTML5Backend}>
-      <Box display='flex' justifyContent='center' width='100%'>
+      <Box display='flex' justifyContent='center' width='100%' height='100%'>
         {board.getSpots().map((row, rowIndex) => (
-          <Box key={rowIndex}>
+          <Box height='100%' key={rowIndex}>
             {row.map((spot, columnIndex) => (
-              <Box width='60px' style={{ aspectRatio: '1/1' }} border='2px solid' key={columnIndex}>
+              <Box width='50px' height='50px' style={{ aspectRatio: '1/1' }} border='2px solid' key={columnIndex}>
                 <DropableGameBoardSpot spot={spot}/>
               </Box>
             ))}

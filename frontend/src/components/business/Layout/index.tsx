@@ -11,19 +11,18 @@ export function Layout({
   children
 }: LayoutProps) {
   const isMobile = useIsMobile();
-  const boxClassnames = `card ${isMobile ? '' : 'p-3'}`
 
   return (
     <Box height="100%" width="100%" display="flex" flexDirection="column">
-      <Box height="10vh" maxHeight="75px">
+      <Box height="8vh" maxHeight="64px">
         <Header/>
       </Box>
       <Box className={isMobile ? undefined : "card-body"} overflow='auto' height="100%">
-        <Box className={boxClassnames} height='100%'>
+        <Box className={isMobile ? '' : 'p-2'} height='100%'>
           {children}
         </Box>
       </Box>
-      <Box height="10vh" maxHeight="75px">
+      <Box height="8vh" maxHeight="64px">
         <Footer/>
       </Box>
     </Box>

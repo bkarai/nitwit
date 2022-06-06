@@ -28,7 +28,6 @@ function GameComponent() {
   useSyncMatchToState(gameAccessKey);
   usePushMove(afterPush);
   const isMobile = useIsMobile();
-
   const isLoading = userType === null;
 
   return (
