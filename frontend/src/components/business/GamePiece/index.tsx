@@ -21,9 +21,7 @@ function DraggablePiece({
   const { dragRef, canDrag } = useDraggablePiece(piece);
 
   return (
-    <div ref={dragRef} onClick={onClick} style={{ width: '100%', height: '100%', cursor: canDrag ? 'grab' : 'not-allowed' }}>
-      <SimplePiece isSelected={isThisPieceSelected} isPower={piece.isPower()} isMove={false} isWhite={piece.isWhite()}/>
-    </div>
+    <SimplePiece isSelected={isThisPieceSelected} isPower={piece.isPower()} isMove={false} isWhite={piece.isWhite()} circleProps={{ ref: dragRef, onClick, cursor: canDrag ? 'grab' : 'not-allowed' }}/>
   );
 }
 
@@ -39,9 +37,7 @@ function MovePiece({
   const onClick = useClickableSpot(spot);
 
   return (
-    <div onClick={onClick} style={{ width: '100%', height: '100%', cursor: 'pointer' }}>
-      <SimplePiece isSelected={false} isPower={selectedPiece!.isPower()} isMove isWhite={selectedPiece!.isWhite()}/>
-    </div>
+    <SimplePiece isSelected={false} isPower={selectedPiece!.isPower()} isMove isWhite={selectedPiece!.isWhite()} circleProps={{ onClick, cursor: 'pointer' }}/>
   );
 }
 

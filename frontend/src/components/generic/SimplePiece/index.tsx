@@ -16,6 +16,7 @@ interface SimplePieceProps {
   isSelected: boolean;
   isMove: boolean;
   isPower: boolean;
+  circleProps?: Partial<React.ComponentProps<typeof Circle>>;
 };
 
 export function SimplePiece({
@@ -23,11 +24,12 @@ export function SimplePiece({
   isSelected,
   isMove,
   isPower,
+  circleProps = {},
 }: SimplePieceProps) {
   const color = isWhite ? PieceColor.WHITE : PieceColor.BLACK;
 
   return (
-    <Circle background={isMove ? MOVE_COLOR : color} opacity={isSelected ? '0.5' : undefined}>
+    <Circle background={isMove ? MOVE_COLOR : color} opacity={isSelected ? '0.5' : undefined} {...circleProps}>
       {isPower && (
         <CenterAlignChild>
           <Circle background={INNER_CIRCLE_COLOR} radius='25%'/>
