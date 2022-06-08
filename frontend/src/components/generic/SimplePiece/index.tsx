@@ -5,7 +5,7 @@ import {
 
 enum PieceColor {
   WHITE = '#FFFDD0',
-  BLACK = '#654321',
+  BLACK = '#8C541C',
 };
 
 const INNER_CIRCLE_COLOR = '#FAE607';
