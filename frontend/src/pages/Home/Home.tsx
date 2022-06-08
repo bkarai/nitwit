@@ -1,10 +1,15 @@
-import { Box, Button, ContentWrapper, NewGameButton } from "components";
+import { useCallback } from "react";
+import { Box, Button, ContentWrapper } from "components";
 import { useIsMobile } from "hooks";
 import { Instructions } from "pages/Instructions";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function Home() {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
+  const handleClickNewGame = useCallback(() => {
+    navigate('./#new-game');
+  }, [navigate]);
   
   return (
     <ContentWrapper boxProps={{ height: '100%' }}>
@@ -16,7 +21,7 @@ export function Home() {
               Learn how to play Outwit
           </Button>
         </Link>
-        <NewGameButton buttonProps={{style: { width: isMobile ? '75%' : '35%', maxWidth: '300px' }}}/>
+        <Button onClick={handleClickNewGame} style={{ width: isMobile ? '75%' : '35%', maxWidth: '300px' }}>New Game</Button>
       </Box>
     </ContentWrapper>
   );
