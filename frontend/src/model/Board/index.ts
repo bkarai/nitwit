@@ -117,6 +117,52 @@ export class Board {
     return row >= 0 && row <= Board.MAX_ROW_INDEX && column >= 0 && column <= Board.MAX_COLUMN_INDEX;
   }
 
+  findNitwitSpecialMoves(coordinate: Coordinate): void {
+    const pieceMovingFrom = this.getPiece(coordinate);
+
+    if (!pieceMovingFrom) {
+      return;
+    }
+
+    const goalCount = pieceMovingFrom.color === PieceColor.WHITE ? this.getWhiteGoalCount() : this.getBlackGoalCount();
+    if (goalCount === 8) {
+
+      const { row, column } = coordinate;
+      let coordinatesToCheck = [
+        { check: { row: row + 1, column }, next: { row: row + 2, column } },
+        { check: { row: row - 1, column }, next: { row: row - 2, column } },
+        { check: { row, column: column + 1 }, next: { row, column: column + 2 } },
+        { check: { row, column: column - 1 }, next: { row, column: column - 2 } },
+      ]
+
+      if (pieceMovingFrom.isPower()) {
+        coordinatesToCheck = [
+          ...coordinatesToCheck,
+          { check: { row: row + 1, column: column + 1 }, next: { row: row + 2, column: column + 2 } },
+          { check: { row: row + 1, column: column - 1 }, next: { row: row + 2, column: column - 2 } },
+          { check: { row: row - 1, column: column + 1 }, next: { row: row - 2, column: column + 2 } },
+          { check: { row: row - 1, column: column - 1 }, next: { row: row - 2, column: column - 2 } },
+        ];
+      }
+
+      // Filter out any negative indices.
+      coordinatesToCheck = coordinatesToCheck.filter(({ check, next }) => this.isValidIndex(check.row, check.column) && this.isValidIndex(next.row, next.column));
+      coordinatesToCheck = coordinatesToCheck.filter(({ check }) => {
+        const trialPiece = this.getPiece(check);
+        if (trialPiece && (trialPiece.color !== pieceMovingFrom.color)) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+      const newMoves = coordinatesToCheck.filter(({ next }) => this.canMoveToSpot(pieceMovingFrom, this.getSpot(next)));
+      newMoves.forEach(({ next }) => {
+        this.getSpot(next).setIsPotentialMove();
+      });
+    }
+  }
+
   findMove(coordinate: Coordinate, direction: Direction): void {
     let moveRow = null;
     let moveColumn = null;
@@ -161,30 +207,40 @@ export class Board {
     }
   }
 
-  didWhiteWin(): boolean {
+  getWhiteGoalCount(): number {
+    let count = 0;
     for (let row = Spot.WHITE_GOAL_LOWEST_ROW; row <= Board.MAX_ROW_INDEX; row++) {
       for (let column = Spot.WHITE_GOAL_LOWEST_COLUMN; column <= Board.MAX_COLUMN_INDEX; column++) {
         const piece = this.getPiece({row, column});
-        if (!piece?.isWhite()) {
-          return false;
+        if (piece?.isWhite()) {
+          count++;
         }
       }
     }
 
-    return true;
+    return count;
   }
 
-  didBlackWin(): boolean {
+  didWhiteWin(): boolean {
+    return this.getWhiteGoalCount() === 9;
+  }
+
+  getBlackGoalCount(): number {
+    let count = 0;
     for (let row = 0; row <= Spot.BLACK_GOAL_HIGHEST_ROW; row++) {
       for (let column = 0; column <= Spot.BLACK_GOAL_HIGHEST_COLUMN; column++) {
         const piece = this.getPiece({row, column});
-        if (!piece?.isBlack()) {
-          return false;
+        if (piece?.isBlack()) {
+          count++;
         }
       }
     }
 
-    return true;
+    return count;
+  }
+
+  didBlackWin(): boolean {
+    return this.getBlackGoalCount() === 9;
   }
 
   getSpots() {
@@ -247,6 +303,7 @@ export class Board {
     if (this.isPowerPiece(coordinate)) {
       DIAGONAL_DIRECTIONS.forEach((direction) => this.findMove(coordinate, direction));
     }
+    this.findNitwitSpecialMoves(coordinate);
   }
 
   clearMoves(): void {
