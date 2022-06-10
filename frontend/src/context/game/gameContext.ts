@@ -1,5 +1,5 @@
 import React from 'react';
-import { initialState } from 'context/game/reducers';
+import { initialStateLocal } from 'context/game/reducers';
 import { Board, Coordinate, Piece, PieceColor } from 'model';
 
 export interface State {
@@ -11,6 +11,7 @@ export interface State {
   winner: null | PieceColor,
   matchAccessKey: string | null,
   moveCount: number,
+  isLocalGame: boolean,
 };
 
 interface GameContextObject {
@@ -20,4 +21,5 @@ interface GameContextObject {
   selectedPiece: Piece | null;
 }
 
-export const GameContext = React.createContext<GameContextObject>({ dispatch: () => {}, state: initialState, board: new Board(initialState.board), selectedPiece: null });
+// The initial state here doesn't really matter
+export const GameContext = React.createContext<GameContextObject>({ dispatch: () => {}, state: initialStateLocal, board: new Board(initialStateLocal.board), selectedPiece: null });

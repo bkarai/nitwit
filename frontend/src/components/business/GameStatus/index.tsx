@@ -4,6 +4,29 @@ import { Box, SimplePiece } from 'components';
 import { PieceColor } from 'model';
 import { useIsMobile } from 'hooks';
 
+interface GameStatusLocalGameProps {
+  currentTurn: PieceColor
+}
+
+function GameStatusLocalGame({
+  currentTurn
+}: GameStatusLocalGameProps) {
+  const isMobile = useIsMobile();
+  return (
+    <Box border="4px solid" display='flex' justifyContent="center" alignItems="center" height="100%">
+        <span>
+          It is &nbsp; 
+        </span>
+        <Box display='inline-block' height="40px" width="40px">
+          <SimplePiece isWhite={currentTurn === PieceColor.WHITE} isSelected={false} isMove={false} isPower={false}/>
+        </Box>
+        <span>
+          &nbsp; turn
+        </span>
+    </Box>
+  )
+}
+
 interface GameStatusNetworkGameProps {
   userType: PieceColor;
   isMyTurn: boolean;
@@ -58,13 +81,40 @@ function GameOverNetworkGame({
   );
 }
 
-function GameStatusContent() {
-  const { state: { winner, currentTurn, userType } } = useContext(GameContext);
+interface GameOverLocalGameProps {
+  winner: PieceColor;
+}
 
-  if (winner) {
-    return <GameOverNetworkGame thisUserWon={userType === winner}/>
+function GameOverLocalGame({
+  winner
+}: GameOverLocalGameProps) {
+  return (
+    <Box border="4px solid" display='flex' justifyContent="center" alignItems="center" height="100%">
+      <Box display='inline-block' height="40px" width="40px">
+        <SimplePiece isWhite={winner === PieceColor.WHITE} isSelected={false} isMove={false} isPower={false}/>
+      </Box>
+      <span>
+        &nbsp; wins!
+      </span>
+    </Box>
+  );
+}
+
+function GameStatusContent() {
+  const { state: { winner, currentTurn, userType, isLocalGame } } = useContext(GameContext);
+
+  if (isLocalGame) {
+    if (winner) {
+      return <GameOverLocalGame winner={winner} />
+    } else {
+      return <GameStatusLocalGame currentTurn={currentTurn}/>
+    }
   } else {
-    return <GameStatusNetworkGame userType={userType!} isMyTurn={userType === currentTurn}/>
+    if (winner) {
+      return <GameOverNetworkGame thisUserWon={userType === winner}/>
+    } else {
+      return <GameStatusNetworkGame userType={userType!} isMyTurn={userType === currentTurn}/>
+    }
   }
 };
 

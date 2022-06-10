@@ -1,20 +1,33 @@
 import { selectPieceReducer } from './selectPieceReducer';
 import { updateGameMetaReducer } from './updateGameMetaReducer';
-import { PieceColor } from 'model';
+import { PieceColor, INITIAL_BOARD_STATE } from 'model';
 import { 
   Action,
   State
 } from 'context/game';
 
-export const initialState: State = {
+export const initialStateNetwork: State = {
   currentTurn: PieceColor.WHITE,
   selectedPiece: null,
   userType: null,
   ready: false,
-  board: '',
+  board: INITIAL_BOARD_STATE,
   winner: null,
   matchAccessKey: null,
   moveCount: 0,
+  isLocalGame: false,
+}
+
+export const initialStateLocal: State = {
+  currentTurn: PieceColor.WHITE,
+  selectedPiece: null,
+  userType: null,
+  ready: true,
+  board: INITIAL_BOARD_STATE,
+  winner: null,
+  matchAccessKey: null,
+  moveCount: 0,
+  isLocalGame: true,
 }
 
 export function rootReducer(state: State, action: { type: Action, payload: any }): State {
@@ -28,7 +41,7 @@ export function rootReducer(state: State, action: { type: Action, payload: any }
     return {...state, matchAccessKey: action.payload};
   }
   if (action.type === Action.FINISH_TURN) {
-    return {...state, currentTurn: state.currentTurn === PieceColor.WHITE ? PieceColor.BLACK : PieceColor.WHITE};
+    return {...state, currentTurn: state.currentTurn === PieceColor.WHITE ? PieceColor.BLACK : PieceColor.WHITE, moveCount: 0};
   }
   return {...state};
 };

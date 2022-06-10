@@ -3,8 +3,8 @@ import { useEffect, useReducer, useContext, useCallback, useMemo } from 'react';
 import { GameContext } from 'context/game';
 import { setMatchAccessKey, finishTurn } from 'context/game';
 import { LoadingScreen, GameBoard, ContentWrapper, WaitingForPlayer, GameStatus, Box } from 'components';
-import { initialState, rootReducer } from 'context/game/reducers';
-import { useGameAccessKey, useTurnNotification, useSyncMatchToState, usePushMove, useSoundEffects, useIsMobile } from 'hooks';
+import { initialStateNetwork, rootReducer } from 'context/game/reducers';
+import { useGameAccessKey, useNetworkTurnNotification, useSyncMatchToState, usePushMove, useSoundEffects, useIsMobile } from 'hooks';
 import { Board } from 'model';
 import { EnhancedTimeline } from './EnhancedTimeline';
 
@@ -24,7 +24,7 @@ function GameComponent() {
   }, [dispatch, moveCount]);
 
   useSoundEffects()
-  useTurnNotification();
+  useNetworkTurnNotification();
   useSyncMatchToState(gameAccessKey);
   usePushMove(afterPush);
   const isMobile = useIsMobile();
@@ -57,7 +57,7 @@ function GameComponent() {
 }
 
 export function Game() {
-  const [state, dispatch] = useReducer(rootReducer, initialState);
+  const [state, dispatch] = useReducer(rootReducer, initialStateNetwork);
   const board = useMemo(() => new Board(state.board), [state.board]);
   const selectedPiece = useMemo(() => state.selectedPiece && board.getPiece(state.selectedPiece), [state.selectedPiece, board]);
 

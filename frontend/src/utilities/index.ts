@@ -7,3 +7,5 @@ export function isTouchDevice() {
      (navigator.maxTouchPoints > 0) ||
      ((navigator as NavigatorIe10AndBelow).msMaxTouchPoints > 0));
 }
+
+export const LOCAL_STORAGE_KEY = 'local-game';

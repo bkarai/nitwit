@@ -1,10 +1,10 @@
-FROM node:18.3-alpine3.15 as build
+FROM node:18.3-alpine3.16 as build
 
 WORKDIR /app
 COPY ./ ./
 RUN yarn install && yarn build
 
-FROM node:18.2-alpine3.15 as runtime
+FROM node:18.3-alpine3.16 as runtime
 WORKDIR /app
 RUN yarn global add serve@13.0.2 --exact
 COPY --from=build /app/build ./build/

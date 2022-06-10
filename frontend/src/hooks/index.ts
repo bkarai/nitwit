@@ -2,7 +2,7 @@ export * from './usePollForGameData';
 export * from './usePolling';
 export * from './useGameAccessKey';
 export * from './useSyncMatchToState'
-export * from './useTurnNotification';
+export * from './useNetworkTurnNotification';
 export * from './usePushMove';
 export * from './useDraggablePiece';
 export * from './useClickableSpot';
@@ -11,3 +11,5 @@ export * from './useClickEffect';
 export * from './useSoundEffects';
 export * from './useMoveEffect';
 export * from './useIsMobile';
+export * from './useLocalTurnNotification';
+export * from './useSaveGameToLocalStorage';

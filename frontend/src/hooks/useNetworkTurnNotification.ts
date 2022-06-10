@@ -3,7 +3,7 @@ import { GameContext } from "context/game";
 import { PieceColor } from "model";
 import { sendNotification, NotificationType } from "notifications";
 
-export function useTurnNotification() {
+export function useNetworkTurnNotification() {
   const { state: { currentTurn, userType, ready, winner } } = useContext(GameContext);
 
   useEffect(() => {
