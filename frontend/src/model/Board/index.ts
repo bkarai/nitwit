@@ -259,6 +259,10 @@ export class Board {
     }, '');
   }
 
+  apiSafeSerialize(): string {
+    return this.serialize().replaceAll('m', 'x');
+  }
+
   getWinner(): PieceColor | null {
     if (this.didWhiteWin()) {
       return PieceColor.WHITE;
