@@ -11,7 +11,6 @@ interface GameStatusLocalGameProps {
 function GameStatusLocalGame({
   currentTurn
 }: GameStatusLocalGameProps) {
-  const isMobile = useIsMobile();
   return (
     <Box border="4px solid" display='flex' justifyContent="center" alignItems="center" height="100%">
         <span>

@@ -16,7 +16,7 @@ function LocalGameComponent() {
 
   useEffect(() => {
     navigate('./?continue=true', { replace: true });
-  }, []);
+  }, [navigate]);
 
   const handleFinishTurn = useCallback(() => {
     dispatch(finishTurn());
