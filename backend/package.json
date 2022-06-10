@@ -1,7 +1,7 @@
 {
-  "name": "outwit-backend",
+  "name": "nitwit-backend",
   "version": "1.0.0",
-  "description": "Backend (API) for Outwit",
+  "description": "Backend (API) for Nitwit",
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {

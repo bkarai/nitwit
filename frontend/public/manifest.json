@@ -1,7 +1,7 @@
 {
   "background_color": "#ffffff",
   "categories": ["games", "entertainment"],
-  "description": "Play Outwit online, the obscure but fun board game from the 70's",
+  "description": "Play Nitwit online. A game inspired by Outit (1975)",
   "direction": "ltr",
   "display": "standalone",
   "icons": [
@@ -17,7 +17,7 @@
     }
   ],
   "lang": "en-US",
-  "name": "Outwit",
-  "short_name": "Outwit",
+  "name": "Nitwit",
+  "short_name": "Nitwit",
   "theme_color": "#ffffff"
 }

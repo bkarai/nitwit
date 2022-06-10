@@ -48,7 +48,7 @@ export function WaitingForPlayer() {
         <Button className="input-group-append" style={{ width: '25%' }} onClick={copyToClipboard}>Copy</Button>
       </Box>
       <IconWrapper>
-        <EmailShareButton className="me-2" openShareDialogOnClick url={linkToJoinGame} subject="Join a game of Outwit!" body="Hello, you've been invited to a game of Outwit. Copy and paste the following link in your browser address bar to join the game: ">
+        <EmailShareButton className="me-2" openShareDialogOnClick url={linkToJoinGame} subject="Join a game of Nitwit!" body="Hello, you've been invited to a game of Nitwit. Copy and paste the following link in your browser address bar to join the game: ">
           <EmailIcon />
         </EmailShareButton>
         <FacebookShareButton className="me-2" url={linkToJoinGame}>

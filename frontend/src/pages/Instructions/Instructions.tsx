@@ -23,13 +23,13 @@ export function Instructions({
 }: InstructionsProps) {
   return (
     <ContentWrapper>
-      <h1>How to Play Outwit</h1>
+      <h1>How to Play Nitwit</h1>
       <Box>
         <Box className="mt-4">
           <h2 className="mt-4">
             Starting Out
           </h2>
-          <p className="lead">Outwit is a game of strategy that is played with two players. Each player has nine pieces which they can control. A player is designated as white or black and may only move the corresponding pieces. The objective is to be the first player to move all of their pieces into the goal, which are the nine squares at the top left corner for black, and the nine squares at the bottom right for white.</p>
+          <p className="lead">Nitwit is a game of strategy that is played with two players. Each player has nine pieces which they can control. A player is designated as white or black and may only move the corresponding pieces. The objective is to be the first player to move all of their pieces into the goal, which are the nine squares at the top left corner for black, and the nine squares at the bottom right for white.</p>
           <InstructionImage alt="Initial game board setup" className="mt-2" src={initialSetupImage} />
         </Box>
         <Box className="mt-4">
@@ -56,7 +56,7 @@ export function Instructions({
         </Box>
         <Box className="mt-4">
           <h2>Winning The Game</h2>
-          <p className="lead">Be the first to move all nine pieces into the goal. Can you Outwit your opponent?</p>
+          <p className="lead">Be the first player to move all nine pieces into the goal</p>
           <InstructionImage alt="game over - black wins" src={gameOver}/>
         </Box>
       </Box>
