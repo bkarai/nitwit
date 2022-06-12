@@ -12,7 +12,7 @@ services:
     # To open the client, run 'mysql -u root -p'
 
   backend:
-    image: 591937736746.dkr.ecr.us-east-1.amazonaws.com/nitwit-backend:9c2e49233eeb2432289aa9d5437c4a8f56759701
+    image: 591937736746.dkr.ecr.us-east-1.amazonaws.com/nitwit-backend:504d49bc0192576071382f2eb6d6d5fe9de78ae1
     depends_on:
       - database
     restart: always
@@ -27,7 +27,7 @@ services:
       DB_DATABASE: operational
 
   frontend:
-    image: 591937736746.dkr.ecr.us-east-1.amazonaws.com/nitwit-frontend:f69fd5cdd40eb30a102379810bc0c75dc811d155
+    image: 591937736746.dkr.ecr.us-east-1.amazonaws.com/nitwit-frontend:504d49bc0192576071382f2eb6d6d5fe9de78ae1
     restart: always
     ports:
       - "3000:3000"
@@ -36,7 +36,7 @@ services:
       NODE_ENV: production
 
   reverse-proxy:
-    image: 591937736746.dkr.ecr.us-east-1.amazonaws.com/nitwit-proxy:9c2e49233eeb2432289aa9d5437c4a8f56759701
+    image: 591937736746.dkr.ecr.us-east-1.amazonaws.com/nitwit-proxy:504d49bc0192576071382f2eb6d6d5fe9de78ae1
     depends_on:
       - backend
       - frontend
