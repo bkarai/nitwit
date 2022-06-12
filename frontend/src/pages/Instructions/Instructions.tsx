@@ -7,6 +7,7 @@ import turn from 'assets/instructions/turn.png';
 import objective from 'assets/instructions/objective.png';
 import moveInGoal from 'assets/instructions/move-in-goal.png';
 import gameOver from 'assets/instructions/game-over.png';
+import nitwitSpecial from 'assets/instructions/nitwit-special.png';
 
 const InstructionImage = styled.img({
   maxWidth: '100%',
@@ -24,12 +25,12 @@ export function Instructions({
   return (
     <ContentWrapper>
       <h1>How to Play Nitwit</h1>
-      <Box>
+      <Box mb={3}>
         <Box className="mt-4">
           <h2 className="mt-4">
             Starting Out
           </h2>
-          <p className="lead">Nitwit is a game of strategy that is played with two players. Each player has nine pieces which they can control. A player is designated as white or black and may only move the corresponding pieces. The objective is to be the first player to move all of their pieces into the goal, which are the nine squares at the top left corner for black, and the nine squares at the bottom right for white.</p>
+          <p className="lead">Nitwit is a two player strategy game. Each player has nine pieces that they control. A player is designated as white or black and may only move the corresponding pieces. The objective is to be the first player to move all of their pieces into the goal, which are the nine squares at the top left corner for black, and the nine squares at the bottom right for white.</p>
           <InstructionImage alt="Initial game board setup" className="mt-2" src={initialSetupImage} />
         </Box>
         <Box className="mt-4">
@@ -42,7 +43,7 @@ export function Instructions({
         </Box>
         <Box className="mt-4">
           <h2>Types Of Pieces</h2>
-          <p className="lead">Each player has eight standard pieces and one power piece. standard pieces may only move along horizontal and vertical axis (no diagonal moves). It also must travel as far it can move until it becomes obstructed by another piece or reaches the opponent's goal.</p>
+          <p className="lead">Each player has eight standard pieces and one power piece. Standard pieces may only move along the horizontal and vertical axis (no diagonal moves). It also must travel as far it can move until it becomes obstructed by another piece or reaches the opponent's goal.</p>
           <InstructionImage alt="demonstration of piece movement rules for standard pieces" className="mt-2" src={turn}/>
           <p className="mt-2 lead">The power piece can be identified by the small inner circle in the piece. It can move along the horizontal and vertical axis, as well as diagonally. It also has the unique ability to be able to move any number of spots between it's boundary, whereas the standard piece must continue to travel until it meets it's boundary.</p>
           <InstructionImage alt="demonstration of piece movement rules for power pieces" className="mt-2" src={powerPieceMoves} />
@@ -58,6 +59,11 @@ export function Instructions({
           <h2>Winning The Game</h2>
           <p className="lead">Be the first player to move all nine pieces into the goal</p>
           <InstructionImage alt="game over - black wins" src={gameOver}/>
+        </Box>
+        <Box className="mt-4">
+          <h2>Nitwit Special Rule</h2>
+          <p className="lead">If you have 8/9 of the pieces in the goal area, and an opponents piece is blocking your piece, you may jump over that piece.</p>
+          <InstructionImage alt="demonstration of special rule where a piece can jump over another piece" src={nitwitSpecial}/>
         </Box>
       </Box>
       {onClose && <Button style={{ width: '35%', maxWidth: '300px', alignSelf: 'center' }} className='mt-4' onClick={onClose}>Close</Button>}
