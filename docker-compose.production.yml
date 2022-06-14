@@ -44,5 +44,12 @@ services:
     environment:
       ENV: production
 
+  redirect:
+    image: 591937736746.dkr.ecr.us-east-1.amazonaws.com/nitwit-redirect:c6a352833b2675c59015f1aca884e90677e52f2c
+    ports:
+      - "8080:80"
+    environment:
+      ENV: production
+
 volumes:
   db_data: {}
