@@ -29,8 +29,6 @@ services:
   frontend:
     image: 591937736746.dkr.ecr.us-east-1.amazonaws.com/nitwit-frontend:504d49bc0192576071382f2eb6d6d5fe9de78ae1
     restart: always
-    ports:
-      - "3000:3000"
     environment:
       ENV: production
       NODE_ENV: production
@@ -43,7 +41,6 @@ services:
     restart: always
     ports:
       - "80:80"
-      - "443:443"
     environment:
       ENV: production
 
