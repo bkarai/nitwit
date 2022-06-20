@@ -45,7 +45,7 @@ services:
   proxy:
     build:
       context: "./proxy"
-      target: production
+      target: development
     depends_on:
       - backend
       - frontend
