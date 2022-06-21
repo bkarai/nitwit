@@ -105,7 +105,7 @@ app.use(cookieParser());
 
 const apiPrefix = '/api';
 
-app.use(expressWinston.logger({
+const expressLogger = expressWinston.logger({
   transports: [
     new winston.transports.Console(),
   ],
@@ -117,7 +117,9 @@ app.use(expressWinston.logger({
   msg: 'HTTP {{req.method}} {{req.url}}',
   expressFormat: true,
   colorize: false,
-}));
+});
+
+app.use(expressLogger);
 
 app.post(`${apiPrefix}/match`, (req, res) => {
   dbConnection.query('INSERT INTO boards (positions, is_white_turn) VALUES (?, ?)', [DEFAULT_POSTIIONS, !!Math.round(Math.random())], (insertBoardError, insertBoardResults) => {
@@ -314,3 +316,22 @@ app.listen(serverPort, () => {
 });
 
 // *** END Application ***
+
+// *** START Redirect ***
+
+const redirectPort = parseInt(process.env.REDIRECT_PORT, 10);
+
+const redirect = express();
+redirect.use(expressLogger);
+
+redirect.get('*', (req, res) => {
+  res.redirect(301, `https://play-nitwit.com${req.originalUrl}`);
+});
+
+redirect.listen(redirectPort, () => {
+  logger.info({
+    message: `Listening for connections on port ${redirectPort}`,
+  });
+});
+
+// *** END Redirect ***

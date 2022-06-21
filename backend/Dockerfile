@@ -9,3 +9,4 @@ COPY ./src ./src
 CMD ["/bin/sh", "-c", "yarn start:prod"]
 
 EXPOSE 3000
+EXPOSE 8080
