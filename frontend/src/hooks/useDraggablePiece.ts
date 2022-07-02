@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { useDrag } from "react-dnd";
-import { GameContext, selectPiece } from "context/game";
+import { GameContext, selectPiece, clearSelectedPiece } from "context/game";
 import { Piece, Coordinate } from 'model';
 
 export function useDraggablePiece(piece: Piece) {
@@ -26,6 +26,8 @@ export function useDraggablePiece(piece: Piece) {
       if (monitor.didDrop()) {
         const droppedLocation = monitor.getDropResult() as Coordinate;
         dispatch(selectPiece(droppedLocation));
+      } else {
+        dispatch(clearSelectedPiece());
       }
     }
   }, [piece, canDragThisPiece, dispatch]);

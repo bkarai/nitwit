@@ -43,5 +43,10 @@ export function rootReducer(state: State, action: { type: Action, payload: any }
   if (action.type === Action.FINISH_TURN) {
     return {...state, currentTurn: state.currentTurn === PieceColor.WHITE ? PieceColor.BLACK : PieceColor.WHITE, moveCount: 0};
   }
+  if (action.type === Action.CLEAR_SELECTED_PIECE) {
+    if (state.selectedPiece) {
+      return selectPieceReducer(state, state.selectedPiece);
+    }
+  }
   return {...state};
 };
