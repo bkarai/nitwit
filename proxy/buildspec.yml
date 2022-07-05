@@ -9,8 +9,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker-compose build proxy
-      - docker tag nitwit_proxy:latest 591937736746.dkr.ecr.us-east-1.amazonaws.com/nitwit-proxy:${CODEBUILD_RESOLVED_SOURCE_VERSION}
+      - docker build . -t nitwit_proxy:latest 591937736746.dkr.ecr.us-east-1.amazonaws.com/nitwit-proxy:${CODEBUILD_RESOLVED_SOURCE_VERSION}
   post_build:
     commands:
       - echo Build completed on `date`
