@@ -29,8 +29,16 @@ services:
       DB_PASSWORD: 123456
       DB_DATABASE: operational
 
+  frontend:
+    image: 591937736746.dkr.ecr.us-east-1.amazonaws.com/nitwit-frontend:e2bcb452bbb7a378726ef3bccd5ffd2c988458e5
+    depends_on:
+      - backend
+    environment:
+      ENV: production
+      NODE_ENV: production
+
   proxy:
-    image: 591937736746.dkr.ecr.us-east-1.amazonaws.com/nitwit-proxy:cce52a580d43a227e2fd47386e0ccf5c2f24e2a5
+    image: 591937736746.dkr.ecr.us-east-1.amazonaws.com/nitwit-proxy:e2bcb452bbb7a378726ef3bccd5ffd2c988458e5
     depends_on:
       - backend
       - frontend
