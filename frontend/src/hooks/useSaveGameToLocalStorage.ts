@@ -16,7 +16,6 @@ export function useSaveGameToLocalStorage() {
   const { state: { currentTurn, winner }, board } = useContext(GameContext);
 
   useEffect(() => {
-    console.log(board.apiSafeSerialize());
     mergeToLocalStorage({ board: board.apiSafeSerialize() });
   }, [board]);
 

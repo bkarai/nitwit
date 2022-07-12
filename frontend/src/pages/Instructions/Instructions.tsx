@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { ContentWrapper, Button, Box } from "components";
+import { Button, Box } from "components";
 import initialSetupImage from 'assets/instructions/initial-setup.png';
 import standardPieceMoves from 'assets/instructions/standard-piece-moves.png';
 import powerPieceMoves from 'assets/instructions/power-piece-moves.png';
@@ -23,7 +23,7 @@ export function Instructions({
   onClose,
 }: InstructionsProps) {
   return (
-    <ContentWrapper>
+    <Box textAlign='center' display="flex" flexDirection='column' justifyContent='center' p={8}>
       <h1>How to Play Nitwit</h1>
       <Box mb={3}>
         <Box className="mt-4">
@@ -67,6 +67,6 @@ export function Instructions({
         </Box>
       </Box>
       {onClose && <Button style={{ width: '35%', maxWidth: '300px', alignSelf: 'center' }} className='mt-4' onClick={onClose}>Close</Button>}
-    </ContentWrapper>
+    </Box>
   );
 }
