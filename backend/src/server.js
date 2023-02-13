@@ -325,7 +325,7 @@ const redirect = express();
 redirect.use(expressLogger);
 
 redirect.get('*', (req, res) => {
-  res.redirect(301, `https://play-nitwit.com${req.originalUrl}`);
+  res.redirect(301, `https://nitwit-game.com${req.originalUrl}`);
 });
 
 redirect.listen(redirectPort, () => {
