@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Box, Button, Dialog, HelpOutlineIcon, Tooltip, NewGameModalContent } from 'components'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Instructions } from 'pages/Instructions';
-import { PublicOutlined } from '@mui/icons-material';
 
 export const Header = React.memo(function() {
   const [helpDisabled, setHelpDisabled] = useState(false);
