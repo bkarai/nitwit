@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import { Button } from 'components';
+import { Button } from '@mui/material';
 import { createMatch } from 'api';
+import { Box } from '@mui/material';
+import { PublicOutlined } from '@mui/icons-material';
 
 interface NewNetworkGameButtonProps {
   buttonProps?: Partial<React.ComponentProps<typeof Button>>;
@@ -20,6 +22,19 @@ export function NewNetworkGameButton({
   }, [setDisabled]);
 
   return (
-    <Button disabled={disabled} onClick={handleClick} {...buttonProps}>Online Game</Button>
+    <Button
+      size='large'
+      sx={{ textTransform: 'none' }}
+      disabled={disabled}
+      onClick={handleClick}
+      {...buttonProps}
+    >
+      <Box height="60%" width="60%" display="flex" flexDirection='column'>
+        <PublicOutlined sx={{ height: '100%', width: '100%' }}/>
+        <Box>
+          Online Game
+        </Box>
+      </Box>
+    </Button>
   );
 }

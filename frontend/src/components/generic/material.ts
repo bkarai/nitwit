@@ -8,7 +8,9 @@ export {
 } from '@mui/material';
 
 export {
-  Info as InfoIcon
+  Info as InfoIcon,
+  HelpOutline as HelpOutlineIcon,
+  Gamepad as GamepadIcon,
 } from '@mui/icons-material';
 
 export {

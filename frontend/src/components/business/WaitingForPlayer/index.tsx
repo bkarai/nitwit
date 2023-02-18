@@ -20,17 +20,33 @@ export const IconWrapper = styled(Box)({
   },
 });
 
+function fireSuccessCopyLinkAlert() {
+  return Swal.fire({
+    title: 'Success',
+    text: 'Your game link has been copied to the clipboard',
+    icon: 'success',
+    heightAuto: false,
+  });
+}
+
+function fireFailCopyLinkAlert() {
+  return Swal.fire({
+    title: 'Oops!',
+    text: 'Please copy the link manually.',
+    icon: 'error',
+    heightAuto: false,
+  });
+}
+
 export function WaitingForPlayer() {
   const gameAccessKey = useGameAccessKey();
   const linkToJoinGame = `${window.location.origin}/game/${gameAccessKey}/join/`;
+  const copyLinkAvailable = !!navigator.clipboard && false;
+
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(linkToJoinGame);
-    Swal.fire({
-      title: 'Success',
-      text: 'Your game link has been copied to the clipboard',
-      icon: 'success',
-      heightAuto: false,
-    });
+    if (copyLinkAvailable) {
+      navigator.clipboard.writeText(linkToJoinGame).then(fireSuccessCopyLinkAlert).catch(fireFailCopyLinkAlert);
+    }
   };
 
   return (
@@ -42,10 +58,10 @@ export function WaitingForPlayer() {
         Copy the link below to invite a player to your game
       </h2>
       <Box className="input-group mb-5 mt-5" height='auto'>
-        <output className="form-control">
+        <output className="form-control" aria-label='Contains the link to the online game. Your opponent should use this link to join the game.'>
           {linkToJoinGame}
         </output>
-        <Button className="input-group-append" style={{ width: '25%' }} onClick={copyToClipboard}>Copy</Button>
+        {copyLinkAvailable && <Button className="input-group-append" style={{ width: '25%' }} onClick={copyToClipboard}>Copy</Button> }
       </Box>
       <IconWrapper>
         <EmailShareButton className="me-2" openShareDialogOnClick url={linkToJoinGame} subject="Join a game of Nitwit!" body="Hello, you've been invited to a game of Nitwit. Copy and paste the following link in your browser address bar to join the game: ">

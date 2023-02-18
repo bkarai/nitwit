@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Box, Button, Dialog, InfoIcon, Tooltip, NewGameModalContent } from 'components'
+import { Box, Button, Dialog, HelpOutlineIcon, Tooltip, NewGameModalContent } from 'components'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Instructions } from 'pages/Instructions';
+import { PublicOutlined } from '@mui/icons-material';
 
 export const Header = React.memo(function() {
   const [helpDisabled, setHelpDisabled] = useState(false);
@@ -59,6 +60,11 @@ export const Header = React.memo(function() {
         open={newGameOpen}
         onClose={handleCloseModal}
         maxWidth='md'
+        PaperProps={{
+          sx: {
+            height: '50%'
+          }
+        }}
       >
         <NewGameModalContent />
       </Dialog>
@@ -69,11 +75,11 @@ export const Header = React.memo(function() {
         <Tooltip title="Click here to learn how to play" arrow enterDelay={500} enterNextDelay={2000}>
           <Button onClick={handleClickHelp} disabled={helpDisabled}> 
             <Box>
-              <InfoIcon/>
+              <HelpOutlineIcon/>
             </Box>
           </Button>
         </Tooltip>
-        <Button href='#new-game' onClick={handleClickNewGame}>New Game</Button>
+        <Button href='#new-game' onClick={handleClickNewGame}>Play Game...</Button>
       </Box>
     </>
   );
