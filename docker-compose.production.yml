@@ -12,7 +12,7 @@ services:
     # To open the client, run 'mysql -u root -p'
 
   backend:
-    image: nitwit-backend:af33dd6225d7376927b01a26ad0a3856a9f3e7cb
+    image: nitwit-backend:latest
     depends_on:
       - database
     ports:
@@ -30,7 +30,7 @@ services:
       DB_DATABASE: operational
 
   frontend:
-    image: nitwit-frontend:af33dd6225d7376927b01a26ad0a3856a9f3e7cb
+    image: nitwit-frontend:latest
     depends_on:
       - backend
     restart: always
@@ -39,7 +39,7 @@ services:
       NODE_ENV: production
 
   proxy:
-    image: nitwit-proxy:af33dd6225d7376927b01a26ad0a3856a9f3e7cb
+    image: nitwit-proxy:latest
     depends_on:
       - backend
       - frontend
