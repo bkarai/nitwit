@@ -33,6 +33,7 @@ services:
     image: nitwit-frontend:af33dd6225d7376927b01a26ad0a3856a9f3e7cb
     depends_on:
       - backend
+    restart: always
     environment:
       ENV: production
       NODE_ENV: production
