@@ -16,14 +16,11 @@ services:
     build: ./backend
     depends_on:
       - database
-    ports:
-      - "8080:8080"
     restart: always
     environment:
       ENV: production
       NODE_ENV: production
       SERVER_PORT: 3000
-      REDIRECT_PORT: 8080
       DB_HOST: database
       DB_PORT: 3306
       DB_USER: root

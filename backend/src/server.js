@@ -316,22 +316,3 @@ app.listen(serverPort, () => {
 });
 
 // *** END Application ***
-
-// *** START Redirect ***
-
-const redirectPort = parseInt(process.env.REDIRECT_PORT, 10);
-
-const redirect = express();
-redirect.use(expressLogger);
-
-redirect.get('*', (req, res) => {
-  res.redirect(301, `https://nitwit-game.com${req.originalUrl}`);
-});
-
-redirect.listen(redirectPort, () => {
-  logger.info({
-    message: `Listening for connections on port ${redirectPort}`,
-  });
-});
-
-// *** END Redirect ***
