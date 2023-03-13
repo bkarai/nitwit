@@ -70,7 +70,7 @@ export function WaitingForPlayer() {
         <FacebookShareButton className="me-2" url={linkToJoinGame}>
           <FacebookIcon />
         </FacebookShareButton>
-        <FacebookMessengerShareButton className="me-2" url={linkToJoinGame} appId="TODO">
+        <FacebookMessengerShareButton className="me-2" url={linkToJoinGame} appId="1330815067487108">
           <FacebookMessengerIcon />
         </FacebookMessengerShareButton>
         <WhatsappShareButton className="me-2" url={linkToJoinGame}>
