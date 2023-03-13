@@ -41,7 +41,7 @@ function fireFailCopyLinkAlert() {
 export function WaitingForPlayer() {
   const gameAccessKey = useGameAccessKey();
   const linkToJoinGame = `${window.location.origin}/game/${gameAccessKey}/join/`;
-  const copyLinkAvailable = !!navigator.clipboard && false;
+  const copyLinkAvailable = !!navigator.clipboard;
 
   const copyToClipboard = () => {
     if (copyLinkAvailable) {

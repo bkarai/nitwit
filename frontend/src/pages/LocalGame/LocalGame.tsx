@@ -1,5 +1,4 @@
-import { useReducer, useContext, useCallback, useMemo, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useReducer, useContext, useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { GameContext } from 'context/game';
 import { finishTurn } from 'context/game';
@@ -10,13 +9,8 @@ import { Board } from 'model';
 import { LOCAL_STORAGE_KEY } from 'utilities';
 
 function LocalGameComponent() {
-  const navigate = useNavigate();
   const { state, dispatch } = useContext(GameContext);
   const { ready } = state;
-
-  useEffect(() => {
-    navigate('./?continue=true', { replace: true });
-  }, [navigate]);
 
   const handleFinishTurn = useCallback(() => {
     dispatch(finishTurn());
