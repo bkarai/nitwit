@@ -69,7 +69,12 @@ export const Header = React.memo(function() {
       </Dialog>
       <Box component='nav' height="100%" width="100%" className="navbar navbar-light bg-light ps-3 pe-3" display="flex">
         <Tooltip title="Home" arrow enterDelay={500} enterNextDelay={2000}>
-          <Link className="navbar-brand" to="/">Nitwit</Link>
+          <Link className="navbar-brand" to="/">
+            <Box display="flex" alignItems="center" gap="8px">
+              <img src="/favicon.ico"/>
+              Nitwit
+            </Box>
+          </Link>
         </Tooltip>
         <Tooltip title="Click here to learn how to play" arrow enterDelay={500} enterNextDelay={2000}>
           <Button onClick={handleClickHelp} disabled={helpDisabled}> 
