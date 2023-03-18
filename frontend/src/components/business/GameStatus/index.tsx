@@ -12,16 +12,16 @@ function GameStatusLocalGame({
   currentTurn
 }: GameStatusLocalGameProps) {
   return (
-    <Box border="4px solid" display='flex' justifyContent="center" alignItems="center" height="100%">
-        <span>
-          It is &nbsp; 
-        </span>
+    <Box display='flex' justifyContent="center" alignItems="center" height="100%">
+        <h2>
+          It's now {currentTurn === PieceColor.WHITE ? "white's" : "black's"} &nbsp;
+        </h2>
         <Box display='inline-block' height="40px" width="40px">
           <SimplePiece isWhite={currentTurn === PieceColor.WHITE} isSelected={false} isMove={false} isPower={false}/>
         </Box>
-        <span>
+        <h2>
           &nbsp; turn
-        </span>
+        </h2>
     </Box>
   )
 }
@@ -37,25 +37,25 @@ function GameStatusNetworkGame({
 }: GameStatusNetworkGameProps) {
   const isMobile = useIsMobile();
   return (
-    <Box display="flex" justifyContent="center" height='100%'>
-      <Box width="50%" border="4px solid" display='flex' justifyContent="center" alignItems="center">
-        <span>
+    <Box display="flex" justifyContent="center" height='100%' flexDirection='column'>
+      <Box display='flex' justifyContent="center" alignItems="center">
+        <h2>
           You are &nbsp;
-        </span>
+        </h2>
         <Box display='inline-block' height="40px" width="40px">
           <SimplePiece isWhite={userType === PieceColor.WHITE} isSelected={false} isMove={false} isPower={false}/>
         </Box>
       </Box>
-      <Box width="50%" border="4px solid" display='flex' justifyContent="center" alignItems="center">
+      <Box display='flex' justifyContent="center" alignItems="center">
         {isMyTurn ? (
-          <span>It is your turn!</span>
+          <h2>It is your turn!</h2>
         ): (
           <>
-            <span>Waiting for &nbsp;</span>
+            <h2>Waiting for &nbsp;</h2>
             <Box display='inline-block' height="40px" width="40px">
               <SimplePiece isWhite={userType !== PieceColor.WHITE} isSelected={false} isMove={false} isPower={false}/>
             </Box>
-            {!isMobile && <span>&nbsp; to make their move</span>}
+            {!isMobile && <h2>&nbsp; to make their move</h2>}
           </>
         )}
       </Box>
@@ -72,10 +72,10 @@ function GameOverNetworkGame({
   thisUserWon
 }: GameOverNetworkGameProps) {
   return (
-    <Box border="4px solid" display='flex' justifyContent="center" alignItems="center" height="100%">
-      <span className='lead fw-bold'>
+    <Box display='flex' justifyContent="center" alignItems="center" height="100%">
+      <h2>
         {thisUserWon ? 'You win!' : 'You lost!'}
-      </span>
+      </h2>
     </Box>
   );
 }
@@ -88,13 +88,16 @@ function GameOverLocalGame({
   winner
 }: GameOverLocalGameProps) {
   return (
-    <Box border="4px solid" display='flex' justifyContent="center" alignItems="center" height="100%">
+    <Box display='flex' justifyContent="center" alignItems="center" height="100%">
+      <h2>
+        {winner === PieceColor.WHITE ? "White" : "Black"} &nbsp;
+      </h2>
       <Box display='inline-block' height="40px" width="40px">
         <SimplePiece isWhite={winner === PieceColor.WHITE} isSelected={false} isMove={false} isPower={false}/>
       </Box>
-      <span>
+      <h2>
         &nbsp; wins!
-      </span>
+      </h2>
     </Box>
   );
 }
@@ -118,18 +121,12 @@ function GameStatusContent() {
 };
 
 export function GameStatus() {
-  const isMobile = useIsMobile();
-
   return (
     <Box sx={{
-      px: isMobile ? '0' : '10vw',
+      px: '10vw',
+      py: '2vh'
     }}>
-      <Box className='bg-primary' sx={{
-        height: '7vh',
-        maxHeight: '64px',
-      }}>
-        <GameStatusContent />
-      </Box>
+      <GameStatusContent />
     </Box>
   )
 }
