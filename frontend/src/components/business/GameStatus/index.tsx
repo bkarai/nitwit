@@ -17,7 +17,7 @@ function GameStatusLocalGame({
           It's now {currentTurn === PieceColor.WHITE ? "white's" : "black's"} &nbsp;
         </h2>
         <Box display='inline-block' height="40px" width="40px">
-          <SimplePiece isWhite={currentTurn === PieceColor.WHITE} isSelected={false} isMove={false} isPower={false}/>
+          <SimplePiece isWhite={currentTurn === PieceColor.WHITE} isSelected={false} isMove={false} isPower={true}/>
         </Box>
         <h2>
           &nbsp; turn
@@ -40,10 +40,10 @@ function GameStatusNetworkGame({
     <Box display="flex" justifyContent="center" height='100%' flexDirection='column'>
       <Box display='flex' justifyContent="center" alignItems="center">
         <h2>
-          You are &nbsp;
+          You are {userType === PieceColor.WHITE ? "White" : "Black"} &nbsp;
         </h2>
         <Box display='inline-block' height="40px" width="40px">
-          <SimplePiece isWhite={userType === PieceColor.WHITE} isSelected={false} isMove={false} isPower={false}/>
+          <SimplePiece isWhite={userType === PieceColor.WHITE} isSelected={false} isMove={false} isPower={true}/>
         </Box>
       </Box>
       <Box display='flex' justifyContent="center" alignItems="center">
@@ -51,9 +51,9 @@ function GameStatusNetworkGame({
           <h2>It is your turn!</h2>
         ): (
           <>
-            <h2>Waiting for &nbsp;</h2>
+            <h2>Waiting for {userType !== PieceColor.WHITE ? "White" : "Black"} &nbsp;</h2>
             <Box display='inline-block' height="40px" width="40px">
-              <SimplePiece isWhite={userType !== PieceColor.WHITE} isSelected={false} isMove={false} isPower={false}/>
+              <SimplePiece isWhite={userType !== PieceColor.WHITE} isSelected={false} isMove={false} isPower={true}/>
             </Box>
             {!isMobile && <h2>&nbsp; to make their move</h2>}
           </>
@@ -93,7 +93,7 @@ function GameOverLocalGame({
         {winner === PieceColor.WHITE ? "White" : "Black"} &nbsp;
       </h2>
       <Box display='inline-block' height="40px" width="40px">
-        <SimplePiece isWhite={winner === PieceColor.WHITE} isSelected={false} isMove={false} isPower={false}/>
+        <SimplePiece isWhite={winner === PieceColor.WHITE} isSelected={false} isMove={false} isPower={true}/>
       </Box>
       <h2>
         &nbsp; wins!
