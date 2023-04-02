@@ -54,7 +54,7 @@ services:
     environment:
       ENV: production
     volumes:
-      - tls_certs:/etc/letsencrypt/live/play-nitwit-game.com
+      - tls_certs:/etc/letsencrypt
 
 volumes:
   db_data: {}
