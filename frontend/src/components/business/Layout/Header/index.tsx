@@ -71,7 +71,7 @@ export const Header = React.memo(function() {
         <Tooltip title="Home" arrow enterDelay={500} enterNextDelay={2000}>
           <Link className="navbar-brand" to="/">
             <Box display="flex" alignItems="center" gap="8px">
-              <img src="/favicon.ico"/>
+              <img src="/favicon.ico" alt="Icon"/>
               Nitwit
             </Box>
           </Link>
