@@ -26,6 +26,7 @@ services:
       DB_USER: root
       DB_PASSWORD: 123456
       DB_DATABASE: operational
+      GOOGLE_APPLICATION_CREDENTIALS: /app/google-cloud-credentials.json
     volumes:
       - "./backend:/app"
 
