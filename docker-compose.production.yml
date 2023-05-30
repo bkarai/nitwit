@@ -27,6 +27,8 @@ services:
       DB_PASSWORD: 123456
       DB_DATABASE: operational
       GOOGLE_APPLICATION_CREDENTIALS: /app/google-cloud-credentials.json
+    volumes:
+      - ${PWD}/backend/google-cloud-credentials.json:/app/google-cloud-credentials.json
 
   frontend:
     image: nitwit-frontend:latest
